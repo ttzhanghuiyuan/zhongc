@@ -1,0 +1,205 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	.member-wrapper .member-wrap-content{
+		margin-left: 0;
+		border: 0;
+	}
+	.uploadify,.uploadify-button,.uploadify-queue {
+		display: inline-block;
+	}
+	.uploadify{
+		border: 1px solid #ccc;
+		color: rgb(51,152,204);
+	}
+
+	.uploadify-button{
+		/*padding: 8px;*/
+		text-align: center;
+		color: rgb(51,152,204);
+        /*border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;*/
+	}
+	.download{
+		display: inline-block;
+		border: 1px solid #ccc;
+    	color: rgb(51,152,204);
+    	/*height: 24px;*/
+    	width: 80px;
+    	text-align: center;
+    	/*vertical-align: middle;*/
+    	padding: 5px 0;
+	}
+	.btn{
+		background: rgb(51,152,204);
+		color: #fff;
+		padding-left: 24px;
+		padding-right: 24px;
+		border: 0;
+	}
+	.btn:hover{
+		color: #fff;
+	}
+	</style>
+</block>
+<block name="body">
+	<div class="i_leftTit clearfix user-head">
+		<a href="/index/index.html">首页</a>
+		<span> &gt; </span>
+		<a href="javascript:void(0);">会员中心</a> &gt; 
+		<a href="{:U('Member/orders?mod=0')}">订单列表</a> &gt;
+		<span class="a-item">订单合同确认</span>
+	</div>
+	
+	<div class='member-wrapper clearfix'>
+		<div class='member-wrap-content' >
+			<include file="Public/alert"/>
+			<div class="view_scroll">
+			<div class='my_show'>
+				<div style=' text-align: center;font-size: 25px;margin-bottom: 5px;'>起点化工有限公司购销合同及送货凭证</div>
+				<div style='text-align: right;font-size: 18px;font-weight: bold;margin: 12px auto;'>NO.<span style='color:#F00;'>{$order_no|default=''}</span></div>
+				<div  style='text-indent:25px; margin:15px auto;line-height: 28px;'>购货单位（乙方）<em style="text-decoration: underline;width:350px;border-bottom: 1px solid #545454;display:inline-block;margin-right:10px;"></em>向供货单位（甲方）七点化工有限公司购进如下产（商）聘，共同遵守如下责任条款</div>
+				<table style='border: 1px solid #ccc;border-collapse: collapse;width: 100%;margin: 0 auto;font-size: 16px;'>
+					<tbody>
+						<tr>
+							<td style='padding:8px;border:1px solid #ccc;'>产品类型</td>
+							<td style='padding:8px;border:1px solid #ccc;'>产品名称</td>
+							<td style='padding:8px;border:1px solid #ccc;'>包装规格(kg/桶)</td>
+							<td style='padding:8px;border:1px solid #ccc;'>数量(桶)</td>
+							<td style='padding:8px;border:1px solid #ccc;'>重量</td>
+							<td style='padding:8px;border:1px solid #ccc;'>单价(元/kg)</td>
+							<td style='padding:8px;border:1px solid #ccc;'>合计(元)</td>
+						</tr>
+						<volist name="list" id="vo">
+							<tr>
+								<td style="padding:8px;border:1px solid #ccc;">{$vo['catename']}</td>
+								<td style="padding:8px;border:1px solid #ccc;">{$vo['good_name']}</td>
+								<td style="padding:8px;border:1px solid #ccc;">{$vo['package']}</td>
+								<td style="padding:8px;border:1px solid #ccc;">{$vo['good_nums']}</td>
+								<td style="padding:8px;border:1px solid #ccc;">{$vo['weight']}</td>
+								<td style="padding:8px;border:1px solid #ccc;">{$vo['unit_price']}</td>
+								<td style="padding:8px;border:1px solid #ccc;">{$vo['total_price']}</td>
+							</tr>
+						</volist>
+						<tr>
+							<td style='padding:8px;border:1px solid #ccc;'>金额合计</td>
+							<!-- <td colspan='6' style='padding:8px;border:1px solid #ccc;text-align:right;'>¥<em style="text-decoration: underline;width:120px;border-bottom: 1px solid #545454;display:inline-block;margin-right:10px;"></em></td> -->
+							<td colspan='6' style='padding:8px;border:1px solid #ccc;text-align:right;'>¥<span style="border-bottom:1px solid #545454;margin-right:25px;">{$sumtotal|default=0.00}</span></td>
+						</tr>
+						<tr>
+							<td style='padding:8px;border:1px solid #ccc;'>收货日期</td>
+							<td style='padding:8px;border:1px solid #ccc;'></td>
+							<td style='padding:8px;border:1px solid #ccc;'>付款方式</td>
+							<td style='padding:8px;border:1px solid #ccc;'></td>
+							<td style='padding:8px;border:1px solid #ccc;'>付款期限</td>
+							<td colspan='2' style='padding:8px;border:1px solid #ccc;'>{$priceterm_remark}</td>
+						</tr>
+						<tr>
+							<td style='padding:8px;border:1px solid #ccc;'>备注</td>
+							<td colspan='6' style='line-height: 28px;padding:8px;border:1px solid #ccc; '>
+								1、乙方购进甲方以上产（商）品保证在付款期限内付清所购货款项。逾期不付清该货款，甲方有权将逾期金额按日万分之七计收违约金并向乙方收取欠款。<br/>
+								2、甲方所供上列产（商）品均是合格产品，乙方如有异议应在收货后七天内提出书面异议。逾期不提出的，视为质量合格。甲乙双方对产品质量约定与条款约定有抵触的，以本条款为准。<br/>
+								3、以上合同经甲、乙代表签订生效，必须按期付清货款。如果有争议或纠纷，由甲方所在地人民法院受理起诉。<br/>
+								4、供方保留由于原材料价格的波动而调整价格的权利，并在调价前5天通知需方。<br/>
+								5、本合同经双方签字后具有法律效力，并作违约诉讼依据。本合同并作收货依据、送货凭证。
+								<table  style='text-align:center;border: none;margin:0;margin-top:15px;line-height:28px;' >
+									<tr>
+
+										<td style='border:none;padding-left:0px;padding-left:50px;'>甲方（盖章）<br/>供货代表：{$company_name}</td>
+
+										<td style='border:none;padding-left:0px;padding-left:70px;'>乙方（盖章）<br/>收货代表：</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+				<div style='margin:15px auto;'>
+					①甲方业务存查(白)②甲方财务存查(红)③乙方财务存查(绿)④随货同行(黄)
+				</div>
+				<div >
+					<div class="left">
+						<a class="download" href="{:U( 'Member/ordercontract?orderid='.$order_no )}" target='_blank'>合同下载</a>
+						<br/>
+						<br/>
+						<input type="file" id="upload_file" class='upload_file'>
+						<span style="border:1px solid #ccc;display:inline-block;"><input type="text" class='text noborder text' disabled="disabled" value="" /></span>
+					</div>
+					<div class="right">
+						<a class="btn" href="javascript:history.back(-1);">取消</a>
+						<br/>
+						<br/>
+						<form id="form" method="post" action="{:U('setstatus')}" class="form" >
+							<input type="hidden" name="order_contract" value="">
+							<input type="hidden" name="order_no" value="{$order_no}">
+							<button type="submit" class="btn ajax-post" target-form="form">确定</button>
+						</form>
+					</div>
+					<div class="clear"></div>	
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<script type="text/javascript">
+	 $(function(){
+	 	$('div.i_service').wrap("<div class='wappers'></div>");
+	});
+	 $("#upload_file").uploadify({
+	 	"height"          : 24,
+	 	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+	 	"fileObjName"     : "download",
+	 	"buttonText"      : '上传合同',
+	 	"uploader"        : "{:U('File/upload',array('session_id'=>session_id()))}",
+	 	"width"           : 80,
+	 	'removeTimeout'	  : 1,
+	 	'fileTypeExts'	  : '*.pdf; *.doc; *.docx; *.jpg; *.png;',
+	 	
+	 	"onUploadSuccess" : function(file, data){
+	 		var data = $.parseJSON(data);
+	 		if(data.status){
+	 			$('.text').val(data.name);
+	 			$('input[name=order_contract]').val(data.id);
+	 		} else {
+	 			updateAlert(data.info);
+	 			setTimeout(function(){
+	 				$('#top-alert').find('button').click();
+	 			},1500);
+	 		}
+	 	},
+	 	'onFallback' : function() {
+	 		alert('未检测到兼容版本的Flash.');
+	 	}
+	 });
+	</script>
+
+</block>

@@ -1,0 +1,135 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.small{
+		display: none;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	</style>
+</block>
+<block name="body">
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		<div class='member-wrap-content' >
+			<div class="clearfix mhead">
+				<a class="item selected inline-block" href="javascript: void(0)">收货地址
+				</a>	
+			</div>
+			<div>
+				<a class="addnew ksbtn ml30" href="{:U('addAddr')}">新增收货地址</a>
+			</div>
+			<include file="Public/alert"/>
+
+			<div class="address-list">
+				<!-- <div class="table-wrap   de-wrap">
+					<h3 class="ml20 title">
+						深圳邦部
+						<span class="small ml20">默认地址</span>
+					</h3>
+					<table class="body" border="0" cellpadding="0" cellspacing="0">
+						<tbody class="tbody">
+							<tr>
+								<td class="first">收货人：</td>
+								<td class="second">叶日创</td>
+							</tr>
+							<tr>
+								<td class="first">邮编：</td>
+								<td class="second">518000</td>
+							</tr>
+							<tr>
+								<td class="first">手机：</td>
+								<td class="second">13544409938</td>
+							</tr>
+							<tr>
+								<td class="first">地址：</td>
+								<td class="second">深圳罗湖新秀</td>
+								<td class="caozuo">
+									<a class="updateAddress" href="/members/address.html?addrId=125">编辑</a>
+									<a class="deleteAddress" href="javascript:void(0);" addrid="125">删除</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div> -->
+				<notempty name="list_data">
+					<volist name="list_data" id="vo">
+						<div class="table-wrap   de-wrap">
+							<h3 class="ml20 title">
+								<notempty name="vo['company_name']">
+									{$vo['company_name']}
+									<else/>
+									{$vo['linkman']}
+								</notempty>
+								<span class="small ml20" <eq name="vo['isdefault']" value="1">style="display:inline-block" </eq> >默认地址</span>
+							</h3>
+							<table class="body" border="0" cellpadding="0" cellspacing="0">
+								<tbody class="tbody">
+									<tr>
+										<td class="first">收货人：</td>
+										<td class="second">{$vo['recipients']}</td>
+									</tr>
+									<tr>
+										<td class="first">邮编：</td>
+										<td class="second">{$vo['zip_code']}</td>
+									</tr>
+									<tr>
+										<td class="first">手机：</td>
+										<td class="second">{$vo['recipient_phone']}</td>
+									</tr>
+									<tr>
+										<td class="first">地址：</td>
+										<td class="second">{$vo['address']}</td>
+										<td class="caozuo">
+											<a class="" href="{:U('editadr?id='.$vo['id'])}">编辑</a>
+											<a class="ajax-get confirm" href="{:U('delAddr?id='.$vo['id'])}" >删除</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</volist>
+				</notempty>
+			</div>
+
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<!--<script type="text/javascript" src="__JS__/jquery.smint.js"></script>-->
+	<script type="text/javascript">
+	 $(function(){
+
+	});
+
+	highlight_subnav("{:U('addrs')}");
+	</script>
+
+</block>

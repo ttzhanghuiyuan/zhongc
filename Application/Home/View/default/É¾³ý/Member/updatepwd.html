@@ -1,0 +1,77 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	</style>
+</block>
+<block name="body">
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		<div class='member-wrap-content' >
+			<div class="clearfix mhead">
+				<a class="item selected inline-block" href="javascript:void(0)">修改密码
+				</a>	
+			</div>
+			<include file="Public/alert"/>
+			<form id="password-form" method="post" action="{:U('Member/updatepwd')}"  class="form-horizontal">
+				<div class="pass-info clearfix">
+					<span class="left">旧密码：</span>
+					<input type="password" name="old" vreg="NOTHML">
+					<input type='hidden' name='id' value="{:session('member_auth.uid')}">
+					<span class="show-error-text" id="errors-oldPwd"></span>
+				</div>
+
+				<div class="pass-info clearfix">
+					<span class="left">新密码：</span>
+					<input type="password" name="password" vreg="NOTHML">
+					<span class="show-error-text" id="errors-newPwd"></span>
+				</div>
+
+				<div class="pass-info clearfix">
+					<span class="left">确认新密码：</span>
+					<input type="password" name="repassword" vreg="NOTHML">
+					<span class="show-error-text" id="errors-confirmNewPwd"></span>
+				</div>
+				<button type="submit"  class="password-save ksbtn ajax-post" id="passwordPersonSave"  target-form="form-horizontal" >保存</button>
+			</form>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	 $(function(){
+	 	$('div.i_service').wrap("<div class='wappers'></div>");
+	 	
+
+	});
+	 highlight_subnav("{:U('updatepwd')}");
+	</script>
+
+</block>

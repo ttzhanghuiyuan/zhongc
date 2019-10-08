@@ -1,0 +1,176 @@
+<extend name="Base/common"/>
+<block name="style">
+    <style type="text/css">
+    .i_leftTit{
+        border-bottom: 0px;
+    }
+    .i_leftTit a{
+        display: inline-block;
+        padding: 0 5px;
+    }
+    .i_leftCon{
+        width: auto;
+        border: 1px solid #ccc;
+        margin: 0px;
+    }
+    
+    </style>
+</block>
+
+<block name="body">
+	<div class="i_market clearfix">
+        <!--产品展示-->
+        <div class="i_market_left page-detail" id="usd_market">
+            <div class="i_leftTit clearfix">
+                <a href="{:U('Index/index')}">首页</a>
+                <span> &gt; </span>
+                <a href="{:U('Articles/index?cate='.$cate['id'])}">{$cate['title']}</a> &gt; {$info['title']}
+            </div>
+            <div class="i_leftCon">
+                <div class="show">
+                    <div class="title">{$info['title']}</div>
+                    <div class='other'>
+                        
+                        <div class="bdsharebuttonbox">
+                            <span  style='float:left;'>时间：{$info['create_time']} &nbsp; 责任编辑：起点超市 &nbsp;</span>
+                            <span style='float:left;'> 分享到：</span>
+                            <a href="#" class="bds_more" data-cmd="more"></a>
+                            <a href="#" class="bds_fbook" data-cmd="fbook"></a>
+                            <a href="#" class="bds_twi" data-cmd="twia"></a>
+                            <a href="#" class="bds_linkedin" data-cmd="linkedin"></a>
+                            <a href="#" class="bds_tsina" data-cmd="tsina"></a>
+                            <a href="#" class="bds_weixin" data-cmd="weixin"></a>
+                        </div>
+                        <script>
+                        window._bd_share_config = {
+                        "common": {
+                        "bdSnsKey": {},
+                        "bdText": "",
+                        "bdMini": "2",
+                        "bdPic": "",
+                        "bdStyle": "0",
+                        "bdSize": "16"
+                        },
+                        "share": {},
+                        "image": {
+                        "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"],
+                            "viewText": "分享到：",
+                            "viewSize": "16"
+                        },
+                        "selectShare": {
+                            "bdContainerClass": null,
+                            "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]
+                        }
+                        };
+                        with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+                        </script>
+                    </div>
+                    <div class='content'>{$info['content']}</div>
+                </div>
+                <div class='share'>
+                    <div class="bdsharebuttonbox">
+                            <span  style='float:left;'>分享到：</span>
+                            <a href="#" class="bds_more" data-cmd="more"></a>
+                            <a href="#" class="bds_fbook" data-cmd="fbook"></a>
+                            <a href="#" class="bds_twi" data-cmd="twia"></a>
+                            <a href="#" class="bds_linkedin" data-cmd="linkedin"></a>
+                            <a href="#" class="bds_tsina" data-cmd="tsina"></a>
+                            <a href="#" class="bds_weixin" data-cmd="weixin"></a>
+                    </div>
+
+                </div>
+                <script>
+                     window._bd_share_config = {
+                        "common": {
+                        "bdSnsKey": {},
+                        "bdText": "",
+                        "bdMini": "2",
+                        "bdPic": "",
+                        "bdStyle": "0",
+                        "bdSize": "16"
+                        },
+                        "share": {},
+                        "image": {
+                        "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"],
+                            "viewText": "分享到：",
+                            "viewSize": "16"
+                        },
+                        "selectShare": {
+                            "bdContainerClass": null,
+                            "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]
+                        }
+                        };
+                        with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+                </script>
+                <div class='copyright'>
+                    <p class='title'>【版权与免责声明】</p>
+                    <p class='content'>
+                        1、凡本网注明“来源：起点”或未明确注明出处的信息，版权均属于本网站，未经本网授权，任何单位及个人不得转载、 摘编或以其它方式使用上述作品。已经本网授权使用信息的，应在授权范围内使用，并注明“来源：起点”。违反上述声明 者，本网将追究其相关法律责任。 <br/>
+
+                        2、凡本网注明 “来源：起点”的作品，均转载自其它媒体，转载目的在于传递更多信息，并不代表本网赞同其 观点或对其真实性负责。如其他媒体、网站或个人从本网下载使用，必须保留本网注明的"稿件来源"，并自负版权等法律责任。 <br/>如擅自篡改为"稿件来源：起点"，本网将依法追究责任。如对稿件内容有疑议，请及时与我们联系。 <br/>
+
+                        3、本网站不保证本站信息的绝对准确性和绝对完整性，网站中的内容或在这些内容中介绍的产品、价格等会随时变更，恕不另行通知。
+                    </p>
+                </div>
+            </div>
+            <div class='bottom clearfix'>
+                <div class='prev left'> 
+                    <span class="hide-device"><</span><span class="hide-device">&nbsp;</span>上一篇：
+                    <notempty name="front">
+                        <a href="{:U('Articles/detail?cate='.$cate['id'].'&id='.$front['id'])}">{$front['title']}</a> 
+                        <else />无 
+                    </notempty> 
+                </div>
+                <!-- <label class='center'></label> -->
+                <div class='next right'>
+                    下一篇：
+                    <notempty name="after">
+                        <a href="{:U('Articles/detail?cate='.$cate['id'].'&id='.$after['id'])}">{$after['title']}</a> 
+                        <else />无 
+                    </notempty> &nbsp;<span class="hide-device">></span>  
+                </div>
+                 <div class='clear'></div>
+            </div>
+
+        </div>
+        
+        <div class="i_market_right">
+        	<!--最新交易-->
+            <div class="iConWrap index_height div-border">
+                <!-- <div class="iConTitle">最新交易</div>
+                <div class="items_container yichi">
+                    <ul style="top: 0px;">
+                        <li>市***公司<em class="red">成功采购1</em>LDPE60.000吨</li>
+                        <li>塑***公司<em class="red">成功采购2</em>苯乙烯500.000吨</li>
+                        <li>市***公司<em class="red">成功采购3</em>LDPE60.000吨</li>
+                        <li>塑***公司<em class="red">成功采购4</em>苯乙烯500.000吨</li>
+                        <li>市***公司<em class="red">成功采购5</em>LDPE60.000吨</li>
+                    </ul>
+                </div> -->
+                {:W('Sidenews/trades')}
+            </div>
+
+            <div class="iConWrap index_height div-border" style='margin-bottom:0px;'>
+                <!-- <div class="iConTitle">资讯推荐</div>
+                <div class="items_container" >
+                    <ul>
+                        <li>市***公司<em class="red">成功采购1</em>LDPE60.000吨</li>
+                        <li>塑***公司<em class="red">成功采购2</em>苯乙烯500.000吨</li>
+                        <li>市***公司<em class="red">成功采购3</em>LDPE60.000吨</li>
+                        <li>塑***公司<em class="red">成功采购4</em>苯乙烯500.000吨</li>
+                        <li>市***公司<em class="red">成功采购5</em>LDPE60.000吨</li>
+                    </ul>
+                </div> -->
+                {:W('Sidenews/lists')}
+            </div>
+
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+    var url="{:U('Articles/index')}";
+    highlight_nav(url);
+    </script>
+</block>

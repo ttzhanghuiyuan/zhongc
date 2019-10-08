@@ -1,0 +1,149 @@
+<extend name="Base/common"/>
+<block name="style">
+    <style type="text/css">
+    .focus img{
+        max-height: 102px;
+    }
+    .i_leftCon{
+        width: auto;
+    }
+    </style>
+</block>
+<block name="body">
+	<div class="i_market clearfix">
+        <div class="steps-wrap">
+            <div class="step-img-wrap clearfix">
+                <i class="step-img img1"></i>
+                <i class="step-img img4"></i>
+                <i class="step-img img3"></i>
+            </div>
+
+            <div class="step-word-wrap clearfix">
+                <span class="step-word word">我的购物车</span>
+                <span class="step-word">填写核对信息</span>
+                <span class="step-word">成功提交订单</span>
+            </div>
+        </div>
+
+        <div class="address">
+            <h3>确认收货地址</h3>
+            <div class="clearfix selected">
+                <i class=" marker iconfont"></i>
+                <span class="marker-tip">寄送至</span>  
+                <div class="address-info">
+                    <!-- <a href="javascript:void(0);" class="J_Modify modify">修改本地址</a> -->
+                    <label class="user-address">
+                      {$addr['address']} ({$addr['recipients']} 收) <em>{$addr['recipient_phone']}</em>
+                    </label>
+                  <em class="tip">
+                    <eq name="addr['isdefault']" value='1'>
+                        默认地址
+                    </eq>
+                </em>
+              </div>
+          </div>
+        </div>
+
+        <div class="order_no">
+            <span class="head">订单编号：{$order_params['order_no']}</span><span class="time">{$order_params['order_date']|time_format}</span>
+        </div>
+
+        <div class="div-tables">
+            <table cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed">
+                <thead class="purpose-head">
+                    <tr>
+                        <th class="start">产品/型号</th>
+                        <th class="hide-device">包装规格</th>
+                        <th class="hide-device">重量(kg//包装规格)</th>
+                        <th class="">数量</th>
+                        <th class="hide-device">市场参考价(¥/kg)</th>
+                        <th class="end">参考总价</th>
+                    </tr>
+                </thead>
+                <tbody class="purpose-body">
+                    <notempty name="list">
+                        <volist name="list" id="vo">
+                            <tr>
+                                <td>{$vo['good_name']}<span>/</span>{$vo['name']}</td>
+                                <td class="hide-device">{$vo['package']}</td>
+                                <td class="hide-device">{$vo['weight']}</td>
+                                <td>{$vo['good_nums']}</td>
+                                <td class="hide-device">{$vo['good_price']}</td>
+                                <td>{$vo['good_price']|addup=$vo['good_nums'],###}</td>
+                            </tr>
+                        </volist>
+                    </notempty>
+                </tbody>
+            </table>
+            <div class="census" style="margin-top:10px;"> 
+                <label style='color:#ff7800;font-weight:bold' id='totalweight'>0.00</label>kg 商品，
+                总金额<label style='color:#ff7800;font-weight:bold' >¥<span id='totalmoney'>0.00</span></label>元 
+            </div>
+        </div>
+        <div class="order-go">
+            <div class="address-confirm clearfix">
+                <div class="box">
+                    <div class="realPay"><em class="t">实付款：</em>
+                        <span class="price g_price ">
+                            <span>￥</span> <em class="style-large-bold-red " id="outcome">0.00</em>
+                        </span>
+                    </div>
+                    <div class="address">
+                        <p class="buy-footer-address">
+                            <span class="buy-line-title buy-line-title-type">寄送至：</span>
+                            <span class="buy-footer-address-detail ">
+                                {$addr['address']}                           
+                            </span>
+                        </p>
+                        <p class="buy-footer-address">
+                            <span class="buy-line-title">收货人：</span>
+                            <span class="buy-footer-address-detail">
+                                {$addr['recipients']} {$addr['recipient_phone']}
+                            </span>
+                        </p>
+                    </div>
+                    <notempty name="mode">
+                    <div class="submitOrder">
+                        <div class="go-btn-wrap">
+                            <a href="{:U('order_add')}" class="btn-go">提交订单</a>
+                        </div>
+                    </div>
+                    <a href="{$href}" class="return-cart" >
+                        <i class="iconfont icon-fanhui"></i>返回商品详情
+                    </a>
+                    <else />
+                    <div class="submitOrder">
+                        <div class="go-btn-wrap">
+                            <a href="{:U('submitorder')}" class="btn-go">提交订单</a>
+                        </div>
+                    </div>
+                    <a href="{:U('Cart/index')}" class="return-cart" >
+                        <i class="iconfont icon-fanhui"></i>返回购物车
+                    </a>
+                    </notempty>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+    $(function(){
+
+        var totalmoney=0, totalweight=0;
+
+        $('.div-tables table tbody tr').each(function(){
+
+            totalmoney+=parseFloat($(this).children('td').eq(5).text().replace(",",""));
+
+            totalweight+=parseFloat($(this).children('td').eq(2).text().replace(",",""))*parseFloat($(this).children('td').eq(3).text().replace(",",""));
+
+        });
+        $('#totalmoney').text(fmoney(totalmoney,2));
+        $('#totalweight').text(fmoney(totalweight,2));
+        $('#outcome').text(fmoney(totalmoney,2));
+
+    });
+    </script>
+</block>

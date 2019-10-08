@@ -1,0 +1,169 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title cf">
+        <h2>{:isset($info['id'])?'编辑':'新增'}文章类别</h2>
+    </div>
+    <div class="tab-wrap">
+        <form action="{:U()}" method="post" class="form-horizontal">
+            <if condition="empty($_GET['concern_id']) and empty($_GET['id'])">
+                <div class="form-item cf">
+                    <label class="item-label">语言选择<span class="check-tips"></span></label>
+                    <div class="form-item cf">
+                        
+                        <empty name="_GET['pid']"><!-- 默认添加 -->
+                            <?php
+                                $language = getlang();
+                                $data_src = U('Belong/popbelong',array('input'=>'belong_pid','lang'=>$language[0]['id']));
+                            ?>
+                            <select class="input-mid lang" name="lang">
+                                <volist name="language" id="vo">
+                                    <option value="{$vo['id']}">{$vo['lang_name']}</option>
+                                </volist>
+                            </select>
+                            <else /><!-- 添加子分类 -->
+                            <?php
+                                $language = getlang();
+                                $data_src = U('Belong/popbelong',array('input'=>'belong_pid','lang'=>$_GET['lang']));
+                            ?> 
+                            <select class="input-mid lang" name="lang" disabled="disabled" >
+                                <volist name="language" id="vo">
+                                    <option value="{$vo['id']}" <eq name="vo['id']" value="$_GET['lang']">selected</eq> >{$vo['lang_name']}</option>
+                                </volist>
+                            </select>
+                            <input type="hidden" name="lang" value="{$_GET['lang']}" />
+                        </empty>
+                        
+                    </div>
+                </div>
+                <else />
+                <div class="form-item cf">
+                    <label class="item-label">语言选择<span class="check-tips"></span></label>
+                    <div class="form-item cf">
+                        <?php
+                            $language = getlang();
+                        ?>
+                        <select class="input-mid" onchange="window.location=this.value;">
+                            <volist name="language" id="vo">
+                                <?php
+                                    $concern_id = empty($_GET['concern_id']) ? $_GET['id'] : $_GET['concern_id'];
+
+                                    $forward =  empty($translate[$vo['id']])
+
+                                    ? U('add?concern_id='.$concern_id.'&lang_id='.$vo['id'] ) 
+                                    : U('edit?id='.$translate[$vo['id']].'&lang_id='.$vo['id'] ) ;
+
+                                    if($vo['id'] == $_GET['lang_id']){
+
+                                        $lang_tag =   $vo['lang_tag'] ;
+                                    }
+
+                                    $data_src =empty($_GET['id']) ? U('Belong/popbelong',array('input'=>'belong_pid','lang'=>$_GET['lang_id'])) : U('Belong/popbelong',array('input'=>'belong_pid','lang'=>$_GET['lang_id'],'b_id'=>$_GET['id'] ));
+                                ?>
+                                <option value="{$forward}" <eq name="_GET['lang_id']" value="$vo['id']">selected</eq>  >
+                                    {$vo['lang_name']}
+                                </option>
+
+                            </volist>
+                        </select>
+                        <input type="hidden" name="lang_tag" value="{$lang_tag}" />
+                        <input type="hidden" name="lang" value="{$_GET['lang_id']}" /> 
+                        <input type="hidden" name="concern_id" value="{$_GET['concern_id']}" />
+                    </div>
+                </div>
+            </if>
+            <div class="form-item">
+                <label class="item-label">上级菜单<span class="check-tips">（未选择代表顶级分类）</span></label>
+                <div class="controls">
+                    <div class="listselect">
+                        <if condition="!empty($info['belong_pid']) or !empty($_GET['pid'])">
+                            <div class="btn-group">
+                                <?php
+                                    $pid = empty($info['belong_pid']) ? $_GET['pid'] : $info['belong_pid'];
+                                    $parent_name = M('belong')->where(array('id'=>$pid))->getField('belong_name');
+                                ?>
+                                <a class="btn btn-blue btn-text" href="javascript:;">{$parent_name}</a>
+                                <a class="btn btn-blue btn-del-belong"  href="javascript:;">
+                                    X
+                                </a>
+                            </div>
+                        </if>
+                        <a href="javascript:;" data-src="{$data_src}" class="btn btn-info btn-popwin">选择</a>
+                        <input type="hidden" name="belong_pid" value="{$pid|default=0}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="item-label">名称<span class="check-tips"></span></label>
+                <div class="controls">
+                    <input type="text" class="text input-large" name="belong_name" value="{$info.belong_name|default=''}">
+                </div>
+            </div>
+             <div class="form-item">
+                <label class="item-label">图片<span class="check-tips"></span></label>
+                <div class="controls">
+                    <a href="javascript:;" data-src="{:U('Picture/popimg')}" data-width="700px" class="btn uploadify-button btn_img_belong_ico">上传图片</a>
+                    <input type="hidden" name="belong_ico" id="cover_id_belong_ico" value="{$info['belong_ico']|default=null}" />
+                    <div class="upload-img-box">
+                        <notempty name="info['belong_ico']">
+                            <div class="upload-pre-item"><img src="{$info['belong_ico']|get_cover='path'}"/></div>
+                        </notempty>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="item-label">排序<span class="check-tips">（用于类别显示的顺序）</span></label>
+                <div class="controls">
+                    <input type="text" class="text input-large" name="belong_sort" value="{$info.belong_sort|default=0}">
+                </div>
+            </div>
+            <div class="form-item">
+                <input type="hidden" name="jump" value="1">
+                <input type="hidden" name="id" value="{$info.id|default=''}">
+                <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+                <button type="button" url="{:get_redirect_url()}" class="btn btn-return btn-history-back" >返 回</button><!-- onclick="javascript:history.back(-1);return false;" -->
+            </div>
+        </form>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+    /*<present name="info.id">
+        Think.setValue("belong_pid", {$info.belong_pid|default = 0});
+        
+    </present>
+    <present name="_GET['pid']">
+        Think.setValue("belong_pid", {$_GET['pid']|default = 0});
+
+        Think.U('Admin/Qiniu/dealImage','key='+key+'&imageInfo=1')
+
+    </present>*/
+    //导航高亮
+    $(function(){
+        $('.lang').change(function(){
+            var lang = $(this).children('option:selected').val();
+            var input = 'belong_pid';
+            $('a.btn-popwin').attr('data-src',Think.U('Admin/Belong/popbelong','input='+input+'&lang='+lang));
+
+        });
+        
+    });
+    
+    $(function(){
+        $('.btn_img_belong_ico').on('click',
+
+            function(){
+                var ifm_src = $(this).attr('data-src');
+                var title = $(this).attr('data-title');
+                var redirect = $(this).attr('data-redirect');
+                var height = $(this).attr('data-height');
+                var width = $(this).attr('data-width');
+                var before = $(this).attr('data-before');
+
+                open_pop_file(ifm_src,title,redirect,height,width,before,1,"cover_id_belong_ico",0);
+            });
+    });
+    highlight_subnav('{:U('lists')}');
+    </script>
+</block>

@@ -1,0 +1,96 @@
+<div class="headBox">
+    <!--顶部-->
+    <div class="headtop auto">
+        <ul class="H_left">
+            <php>
+                define('uid',member_is_login());
+
+                if( empty( cookie('Cart_num') ) ){
+                   $cart_num = 0;
+                }
+                else{
+                   $cart_num = cookie('Cart_num');
+                }
+            </php>
+
+            <if condition="!uid">
+                <li>您好，欢迎来到起点超市【<a href="{:U('Public/login')}">会员登录</a>&nbsp;|&nbsp;<a href="{:U('Public/register')}">免费注册</a>】
+                </li>
+                <else />
+                <li>尊敬的<a href="{:U('Member/info')}" style='color: rgb(243,124,0);'>{:session('member_auth.account')}</a>【<a href="{:U('Public/logout')}">退出</a>】欢迎来到起点超市!
+                </li>
+            </if>
+        </ul>
+        <ul class="H_right">
+            <li>
+                <a href="{:U('Member/info')}" class="dp_btn">个人中心</a>
+            </li>
+            <li>
+                <a href="{:U('Member/orders?mod=0')}" class="dp_btn">我的订单</a>
+            </li>
+            <li class="hd_menu">
+                <a  href="{:U('Cart/index')}" class="dp_btn cart hd_menu_tit">购物车</a>
+                <span class="minicart index_sprite" id="shopcart-count">{$cart_num}</span>
+                <s class="arrow"></s>
+                <div class="hd_submenu fore2" >
+                    <div class="tc cartbox">
+                        <p class="tc number">购物车中还剩余<b id="surplusShopCartCount">{$cart_num}</b>件产品</p>
+                        <a class="btn_check" href="{:U('Cart/index')}" >查看购物车</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="javascript:void(0);" class="dp_btn">交易热线：{$company['trading_hotline']}</a>
+            </li>
+            <li>
+                <a href="javascript:void(0);" class="dp_btn dp_no">交易时间：{$company['trading_time']}<em class="newHint" style="display:none"></em></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--Logo-->
+<div class="headLogo_box">
+    <div class="headLogo auto">
+        <div class="base_logo">
+            <a href="{:U('Index/index')}"><img alt="起点化工" name="logo" src="{$company['logo']|get_cover=path}"></a>
+        </div>
+        <div class="base_search">
+            <div class="base_search_box">
+                <div class="base_search_tab clearfix">
+                    <ul>
+                        <li class="selected">输入商品类别/型号</li>
+                    </ul>
+                </div>
+                <div class="base_search_form">
+                    <form class="search_form" method="get" action="{:U('Goodlist/index')}">
+                        <input type="text" class="base_search_input" placeholder="请输入商品类别/型号" name="cate" autocomplete="off" />
+                        <input type="submit" class="base_search_btn" target-form = "search_form" value="搜索" />
+                    </form>
+                </div>
+                <input type="button" class="base_search_btn exact_search" url="{:U('Common/getUrl')}" target-form = "search_form" value="精确查找" />
+                <!-- <div class="base_search_drop">
+                    <ul>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!--菜单-->
+<div class="MenuBox">
+    <div class="Menu auto">
+        <div class="show-device">
+                <a href="javascript:void(0);">商品分类</a>
+                {:W('Goodcate/mobilelists')}
+        </div>
+        <ul>
+            <li id="cates" class="hide-device">
+                <a class="current" href="javascript:void(0);">商品分类</a>
+                {:W('Goodcate/lists')}
+            </li>
+            <li><a href="{:U('Index/index')}">首页</a></li>
+            <li><a class="" href="{:U('Goodlist/index')}">商品</a></li>
+            <li><a href="{:U('Articles/index')}" rel="nofollow">资讯</a></li>
+        </ul>
+    </div>
+</div>

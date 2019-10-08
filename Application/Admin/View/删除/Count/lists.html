@@ -1,0 +1,212 @@
+<extend name="Public/base"/>
+<block name="style">
+	<style>
+		.tongji2
+		{
+			margin:30px 0 20px 0;
+		}
+		.tongji
+		{
+			overflow:hidden;
+			background:#f1f1f1;
+			padding:20px 0;
+		}
+
+		.tongji ul
+		{
+			overflow:hidden;
+		}
+
+		.tongji ul li
+		{
+			float:left;
+			width:24%;
+			text-align:center;
+			border-right:1px #e2e2e2 solid;
+		}
+
+		.tongji ul li h3
+		{
+			font-size:36px;
+			color:#f60;
+			margin-top:8px;
+			font-weight:800!important;
+			line-height:54px;
+		}
+
+
+	</style>
+</block>
+
+
+
+
+<block name="body">
+
+
+
+
+
+
+<div class="tongji tongji2">
+	    <ul>
+	        <li>
+	            <p>今日新增会员</p>
+	            <h3><if condition="$list_data['membership'] eq null">0<else />{$list_data['membership']}</if></h3>
+	        </li>
+
+	        <li>
+	            <p>今日PV(页面访问量)</p>
+	            <h3><if condition="$list_data['pageview'] eq null">0<else />{$list_data['pageview']}</if></h3>
+	        </li>
+
+	        <li>
+	            <p>今日UV(独立访客数)</p>
+	            <h3><if condition="$list_data['userview'] eq null">0<else />{$list_data['userview']}</if></h3>
+	        </li>
+
+	        <li style="border-right:0;">
+	            <p>今日IP数</p>
+	            <h3><if condition="$list_data['ipcount'] eq null">0<else />{$list_data['ipcount']}</if></h3>
+	        </li>
+
+	    </ul>
+</div>
+
+<!-- 图表 -->
+<!-- <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div> -->
+
+<h3 style="padding:20px 0 10px 20px;">今日流量记录详情</h3> 
+      <div class="data-table" style="padding-bottom:20px;">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th width="16%" >受访时间</th>
+                <th width="29%" >受访页面</th>
+                <th width="29%" >来源页面</th>
+                <th width="11%" >IP地址</th>
+                <th width="15%" >所在地</th>              
+              </tr>
+            </thead>
+            
+            <!-- 列表 -->
+            <tbody>
+	            <if condition="$list eq null">
+	               <tr>
+	                  <td style="text-align: center;padding: 20px 0;color:#f00;" colspan="7"> aOh! 暂时还没有内容! </td>
+	               </tr>
+
+	               <else />
+	               		<volist name="list" id="vo">
+		               		<tr>
+		               			<td>{$vo['createtime']|date="Y-m-d H:i:s",###}</td>
+		               			<td><a href="{$vo['surveyed']}" target="_blank">{$vo['surveyed']}</a></td>
+		               			<td><a href="{$vo['source']}" target="_blank">{$vo['source']}</a></td>
+		               			<td>{$vo['ipadress']}</td>
+		               			<td>{$vo['adress']}</td>
+		               		<tr>
+	               		</volist>
+	            </if>            
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="page">{$page}</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+</block>
+
+<block name="script">
+<script src="__JS__/highcharts.js"></script>
+<script src="__JS__/exporting.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+// var json = {$data};
+
+//  $.each(json,function(index,data){
+
+//  	 $('#container').highcharts({
+
+// 						            title: {
+// 						                text: '近日流量统计',
+// 						                x: -20 //center
+// 						            },
+// 						            subtitle: {
+// 						                text: '<php>echo date("Y-m-d",time());</php>',
+// 						                x: -20
+// 						            },
+// 						            xAxis: {
+// 						                categories: json.createtime
+// 						            },
+// 						            yAxis: {
+// 						                title: {
+// 						                    text: '流量数'
+// 						                },
+// 						                plotLines: [{
+// 						                    value: 0,
+// 						                    width: 1,
+// 						                    color: '#808080'
+// 						                }]
+// 						            },						      
+// 						            legend: {
+// 						                layout: 'vertical',
+// 						                align: 'right',
+// 						                verticalAlign: 'middle',
+// 						                borderWidth: 0
+// 						            },
+// 						            series: [{
+// 						                name: 'IP',
+// 						                data: json.ipcount
+// 						            }, {
+// 						                name: 'UV',
+// 						                data: json.userview
+// 						            }, {
+// 						                name: 'PV',
+// 						                data: json.pageview
+// 						            }, {
+// 						                name: '会员',
+// 						                data: json.membership
+// 						            }]
+// 						        });
+
+
+
+// });
+
+
+ $('.time').datetimepicker({
+            	format: 'yyyy-mm-dd',
+            	language:"zh-CN",
+            	minView:2,
+            	autoclose:true
+            });
+
+
+
+			
+})
+
+
+
+</script>
+
+</block>

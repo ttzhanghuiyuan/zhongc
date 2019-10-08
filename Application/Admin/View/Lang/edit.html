@@ -1,0 +1,69 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title cf">
+        <h2>{:isset($info['id'])?'编辑':'新增'}语言</h2>
+    </div>
+    <div class="tab-wrap">
+        <form action="{:U()}" method="post" class="form-horizontal">
+            <div class="form-item">
+                <label class="item-label">语言标签<span class="check-tips">（所属的语言标签）</span></label>
+                <div class="controls">
+                    <?php
+                        //$isable = isset($info['id']) ? 'disabled="disabled"' : '';
+                    ?>
+                    <select name="lang_tag">
+                        <volist name=":getlanguages()" id="vo">
+                            <option value="{$key}" <eq name="info.lang_tag" value="$key">selected</eq>>{$vo}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="item-label">语言图标<span class="check-tips"></span></label>
+                <div class="controls">
+                    <a href="javascript:;" data-src="{:U('Picture/popimg')}" data-width="700px" class="btn uploadify-button btn_img">上传图片</a>
+                    <input type="hidden" name="lang_ico" id="cover_id_lang_ico" value="{$info['lang_ico']}" />
+                    <div class="upload-img-box">
+                        <notempty name="info['lang_ico']">
+                            <div class="upload-pre-item"><img src="{$info['lang_ico']|get_cover='path'}"/></div>
+                        </notempty>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="item-label">语言名称<span class="check-tips"></span></label>
+                <div class="controls">
+                    <input type="text" class="text input-large" name="lang_name" value="{$info.lang_name|default=''}">
+                </div>
+            </div>
+            
+            <div class="form-item">
+                <input type="hidden" name="id" value="{$info.id|default=''}">
+                <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+                <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+            </div>
+        </form>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+    $(function(){
+        $('.btn_img').on('click',
+
+            function(){
+                var ifm_src = $(this).attr('data-src');
+                var title = $(this).attr('data-title');
+                var redirect = $(this).attr('data-redirect');
+                var height = $(this).attr('data-height');
+                var width = $(this).attr('data-width');
+                var before = $(this).attr('data-before');
+
+                open_pop_file(ifm_src,title,redirect,height,width,before,1,"cover_id_lang_ico",0);
+            });
+    });
+    //导航高亮
+    highlight_subnav('{:U('lists')}');
+    </script>
+</block>

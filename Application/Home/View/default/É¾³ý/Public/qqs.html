@@ -1,0 +1,85 @@
+<php>
+	$list = get_hotline();
+</php>
+<div class="hotline">
+	<ul>
+		<li>
+			<a class="qqs" href="javascript:void(0);"><span></span>QQ客服</a>
+			<ul>
+				<!-- <li>
+					<a href="tencent://message/?uin=2853299148&site=qq&menu=yes" target="_blank">
+						<img border="0"  title="点击这里给我发消息" alt="点击这里给我发消息" src="__IMG__/qqx12.png" />
+						&nbsp;客服：CC
+					</a>
+				</li>
+				<li>
+					<a href="tencent://message/?uin=2853299148&site=qq&menu=yes" target="_blank">
+						<img border="0"  title="点击这里给我发消息" alt="点击这里给我发消息" src="__IMG__/qqx12.png" />
+						&nbsp;客服：理查德 1584114809
+					</a>
+				</li> -->
+				<volist name="list" id="vo">
+					<li>
+						<a 
+						href="tencent://message/?uin={$vo['qqacount']}&site=qq&menu=yes" target="_blank" rel="nofollow">
+							<img border="0" title="点击这里给我发消息" alt="点击这里给我发消息" src="__IMG__/qqx12.png" />
+							&nbsp;{$vo['name']}
+						</a>
+					</li>
+				</volist>
+			</ul>
+		</li>
+		<li>
+			<a class="phone" href="javascript:void(0);"><span></span></a>
+			<ul>
+				<li>
+					<a href="javascript:void(0);">
+						<img src="__IMG__/Tel19x20.png" />
+						&nbsp;{$company['trading_hotline']}
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>
+<script type="text/javascript">
+(function(){	
+	var is_weixn = function(){
+	    var ua = navigator.userAgent.toLowerCase();
+	    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+	        return '1';
+	    }else{
+	        return '0';
+	    }
+	}
+
+	var exceptions = [];
+
+	
+	var platform = navigator.userAgent.toLowerCase();
+	var referer = document.referrer;
+
+	for(var i in exceptions){
+		if(referer.indexOf(exceptions[i]) > -1){
+			return false;
+		}
+	}
+
+	var data = {
+		referer 	:	referer,
+		target		:	window.location.href,
+		platform	:	platform
+	};	
+
+	var arr = [];
+	for(var key in data){
+		arr.push(key + '=' + encodeURIComponent(data[key]));
+	}
+
+	var s = document.createElement('script');
+	var tongji_src = "{:U('Tongji/stats')}";
+    s.type = "text/javascript";
+    s.src = tongji_src + '?' + arr.join('&') + '&_t=' + (new Date()).valueOf();
+    document.body.appendChild(s);
+})();
+</script>

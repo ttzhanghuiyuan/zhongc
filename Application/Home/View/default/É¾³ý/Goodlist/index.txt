@@ -1,0 +1,74 @@
+<volist name='list_data' id="vo">
+<div class="item div-border left">
+<div class="pic">
+<a href="{:U('Goodlist/detail?id='.$vo['id'])}">
+<!-- <span></span> -->
+<notempty name="vo['path']">
+<img class="img-lazyload"  data-src="{$vo['path']}" />
+<else />
+<img class="img-lazyload"  data-src="__IMG__/item-pic.jpg" />
+</notempty>
+</a>
+</div>
+<div class="pro_name">
+<a href="{:U('Goodlist/detail?id='.$vo['id'])}">{$vo['good_name']}</a>
+</div>
+<div class="pro_cate">
+{$vo['name']}
+</div>
+<div class='pro_price'>
+<span class="a_btn right">
+<span class="arrow-left"></span><a class='a_sample'  href="{:U('Goodlist/detail?id='.$vo['id'])}">取样<span class='tip'>&nbsp;</span></a>
+</span>
+¥{$vo['marketprice']}
+</div>
+<div class="pro_use">
+{$vo['solvents']|get_implode=###,$solvent}&nbsp;|&nbsp;{$vo['application']|get_implode=###,$apply}
+</div>
+</div>
+</volist>
+
+<present name="GET['c1']">
+<input type='hidden' name="c1" value="{$GET['c1']}" />
+</present>
+<present name="GET['c3']">
+<input type='hidden' name="c3" value="{$GET['c3']|default=0}" />
+</present>
+<notempty name="GET['c2']">
+<input type='hidden' name="c2" value="{$GET['c2']}" />
+</notempty>
+<present name="GET['c4']">
+<input type='hidden' name="c4" value="{$GET['c4']}" />
+</present>
+<present name="GET['c5']">
+<input type='hidden' name="c5" value="{$GET['c5']}" />
+</present>
+<present name="GET['c6']">
+<input type='hidden' name="c6" value="{$GET['c6']}" />
+</present>
+
+<present name="GET['cate']">
+<input type='hidden' name="cate" value="{$GET['cate']}" />
+</present>
+
+<ul class="trads" style="top: 11px;">
+<volist name="trads" id="vo">
+<li>
+<php>
+if(!empty($vo['company_name']))
+{
+$company_name = mb_substr($vo['company_name'],0,1,'utf-8').'***公司';
+}
+else if(!empty($vo['linkman']))
+{
+$company_name = mb_substr($vo['linkman'],0,1,'utf-8').'***个人';
+}
+else{
+$company_name = "市***公司";
+}
+</php>
+{$company_name}
+<em class="red">&nbsp;&nbsp;成功采购&nbsp;&nbsp;</em>{$vo['good_name']}{$vo['total_weight']} kg
+</li>
+</volist>
+</ul> 

@@ -1,0 +1,154 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<!--<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>-->
+	<div class="main-title">
+		<h2>{:isset($info['id'])?'编辑':'新增'}会员</h2>
+	</div>
+	<div class="tab-wrap">
+		
+		<form action="{:U()}" method="post" class="form-horizontal">
+			<!-- 基础 -->
+			<div class="form-item">
+				<label class="item-label">会员账号<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" disabled="disabled" class="text input-large"  value="{$info['account']|default=''}" />
+				</div>
+			</div>
+
+			
+
+			<div class="form-item">
+				<label class="item-label">姓名<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="fullname" class="text input-large"  value="{$info['fullname']|default=''}"/>
+				</div>
+			</div>
+
+			
+			<div class="form-item">
+				<label class="item-label">手机<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text"  disabled="disabled" class="text input-large"  value="{$info['mobile']|default=''}"/> 
+				</div>
+			</div>
+			
+			<div class="form-item">
+				<label class="item-label">邮箱<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text"  disabled="disabled" class="text input-large"  value="{$info['email']|default=''}"/> 
+				</div>
+			</div>
+			
+
+			
+			<!-- <div class="controls">
+				<label class="item-label">身份证正面</label>
+				<notempty name="info['card_front']">
+					<a class='btn' href="{:U('File/downLocalFile')}?id={$info.card_front}&flag=1" target="_blank">文件下载</a>
+					<div class="upload-img-box">
+						<div class="upload-pre-item"><img src="__ROOT__{$info.card_front|get_cover='path'}"/></div>
+					</div>
+				<else />
+						<a class='btn' href="javascript:void(0);">暂无文件</a>
+			    </notempty>
+			</div>
+
+			<div class="controls">
+				<label class="item-label">身份证背面</label>
+				
+				<notempty name="info['card_back']">
+					<a class='btn' href="{:U('File/downLocalFile')}?id={$info.card_back}&flag=1" target="_blank">文件下载</a>
+					<div class="upload-img-box">
+						<div class="upload-pre-item"><img src="__ROOT__{$info.card_back|get_cover='path'}"/></div>
+					</div>
+				<else />
+					<a class='btn' href="javascript:void(0);">暂无文件</a>
+				</notempty>
+			</div> -->
+
+		    <php>
+		    	$member_status=$info['member_status']==1?'正常':'禁用';
+		    	$audit_status=$info['audit_status']==1?'审核通过':($info['audit_status']==0?'未审核':'未通过');
+
+		    </php>
+
+			<div class="form-item">
+				<label class="item-label">审核人<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text"  disabled="disabled" class="text input-large"  value="{$info['audit_person']|default=''}"/>  
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">审核状态<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text"  disabled="disabled" class="text input-large"  value="{$audit_status}"/>  
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">审核时间<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text"  disabled="disabled" class="text input-large"  value="{$info['audit_date']|time_format}"/>  
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">会员状态<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text"  disabled="disabled" class="text input-large"  value="{$member_status}"/>  
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">注册日期<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text"  disabled="disabled" class="text input-large"  value="{$info['create_date']|time_format}"/>  
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">备注<span class="check-tips"></span></label>
+				<div class="controls">
+					<label class="textarea input-large">
+						<textarea name="remarks">{$info.remarks|htmlspecialchars_decode}</textarea>
+					</label>  
+				</div>
+			</div>
+
+			<div class="form-item">
+
+				<input type="hidden" name="id" value="{$info.id|default=''}">
+
+				<button type="submit"  class="btn submit-btn ajax-post" target-form="form-horizontal" >确 定</button>
+
+				<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+			</div>
+		</form>
+		
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+
+		$(function(){
+			showTab();
+
+            $('.form-horizontal').find('input').keyup(function(event){
+            	if(event.keyCode===13){
+            		$('.ajax-post').click();
+            	}
+            });
+
+		});
+		//导航高亮
+		var id='{$info["id"]}';
+		var nav_active = id >0 && id!= '' ?"{:U('lists')}": '{:U("add")}';
+		var nav_custom_active = '{$nav_active}';
+		nav_active = nav_custom_active && nav_custom_active != '' ? nav_custom_active : nav_active;
+		highlight_subnav(nav_active);
+
+	</script>
+</block>

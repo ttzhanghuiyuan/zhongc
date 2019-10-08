@@ -1,0 +1,91 @@
+<extend name="Base/logincommon" />
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #F2F2F2;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		border-top: 2px solid rgb(50,156,198);
+	}
+	#site-logo{
+		background: url("{$company['logo']|get_cover=path}") center center no-repeat;
+	}
+	@media screen and (max-width: 600px){
+		#site-logo{
+			background-size: contain;
+    		background-position: center;
+		}
+	}
+	</style>
+</block>
+<block name='body'>
+<div id="wraper">
+	<a href="javascript:" id="ads">
+		<img src="__IMG__/login_qd.png">
+	</a>
+	<form class="login-form" action="{:U('Public/login')}" method="post">
+		<div class="username">
+			<input type="text" name="account" placeholder="手机号码 / 注册邮箱" tabindex="1"  autocomplete="off" />
+		</div>
+		<div class="password">
+			<input type="password" name="pwd" placeholder="密码" tabindex="2"  autocomplete="off" />
+			<input type="password" name="confirmPassword" tabindex="3" style='display:none;'>
+		</div>
+		<button type="submit" class="login" id='login'>
+			<span class="in">登 录 中 ...</span>
+            <span class="on">登 录</span>
+		</button>
+		<p class="check-tips"></p>
+	</form>
+	<div id="account-action">
+		<a href="/Public/register" class="common-link">免费注册</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="/Public/identity" class="common-link">忘记密码</a>
+	</div> 
+</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	
+	$(document)
+	.ajaxStart(function(){
+		$("button:submit").addClass("log-in").attr("disabled", true);
+	})
+	.ajaxStop(function(){
+		$("button:submit").removeClass("log-in").attr("disabled", false);
+	});
+
+	$("form").submit(function(){
+		var self = $(this);
+		//alert(self.attr('action'));
+		$.post(self.attr("action"), self.serialize(), success, "json");
+		return false;
+
+		function success(data){
+			if(data.status){
+				//alert(data.url);
+				if (data.url) {
+					location.href=data.url;
+				}
+			} else {
+				self.find(".check-tips").text(data.info);
+    				//刷新验证码$(".reloadverify").click();
+    			}
+    		}
+    });
+
+    $(function(){
+		$('div.i_service').wrap("<div class='wappers'></div>");
+	});
+
+
+	</script>
+
+</block>

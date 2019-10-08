@@ -1,0 +1,117 @@
+<notempty name="lists">
+	<volist name="lists" id="vo">
+		<switch name="vo.input_type">
+			<case value="0">
+				<li id="{$vo['id']}" class="">
+				    <div class="menu-head"><span class="title">{$vo['input_name']}</span><a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+				    <div class="menu-setting">
+				        <p>
+				            <label>
+				                输入框名
+				                <br />
+				                <input type="text" name="input_name" value="{$vo['input_name']}" />
+				            </label>
+				        </p>
+				        
+				        <p>
+				            <label>
+				                输入规则
+				                <br />
+				                <select name="input_rule">
+				                    <option value='0' <eq name="vo.input_rule" value="0">selected</eq> >否</option>
+				                    <option value='1' <eq name="vo.input_rule" value="1">selected</eq> >必填</option>
+				                    <option value="2" <eq name="vo.input_rule" value="2">selected</eq> >手机</option>
+				                    <option value="3" <eq name="vo.input_rule" value="3">selected</eq> >电话</option>
+				                    <option value="4" <eq name="vo.input_rule" value="4">selected</eq> >邮箱</option>
+				                </select>
+				            </label>
+				        </p>
+				        
+				        <p>
+				            <a class="del" href="javascript:void(0);">移除</a>
+				        </p>
+				        <input type="hidden" name="input_type" value="{$vo['input_type']}">
+				    </div>
+				</li>
+			</case>
+			<case value="1">
+				<li id="{$vo['id']}" class="">
+				    <div class="menu-head"><span class="title">{$vo['input_name']}</span><a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+				    <div class="menu-setting">
+				        <p>
+				            <label>
+				                输入框名
+				                <br />
+				                <input type="text" name="input_name" value="{$vo['input_name']}" />
+				            </label>
+				        </p>
+				        
+				        <p>
+				            <label>
+				                输入规则
+				                <br />
+				                <select name="input_rule">
+				                    <option value='0' <eq name="vo.input_rule" value="0">selected</eq> >否</option>
+				                    <option value='1' <eq name="vo.input_rule" value="1">selected</eq> >必填</option>
+				                </select>
+				            </label>
+				        </p>
+				        
+				        <p>
+				            <a class="del" href="javascript:void(0);">移除</a>
+				        </p>
+				        <input type="hidden" name="input_type" value="{$vo['input_type']}" >
+				    </div>
+				</li>
+			</case>
+			<case  value="2">
+				<li id="{$vo['id']}" class="">
+				    <div class="menu-head"><span class="title">{$vo['input_name']}</span><a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+				    <div class="menu-setting">
+				        <p>
+				            <label>
+				                输入框名
+				                <br />
+				                <input type="text" name="input_name" value="{$vo['input_name']}" />
+				            </label>
+				        </p>
+				        
+				        <p>
+				            <label>
+				                输入规则
+				                <br />
+				                <select name="input_rule">
+				                    <option value='0' <eq name="vo.input_rule" value="0">selected</eq> >否</option>
+				                    <option value='1' <eq name="vo.input_rule" value="1">selected</eq> >必填</option>
+				                </select>
+				            </label>
+				        </p>
+
+				        <p class="option tab_panel">
+				             <label>
+				                下拉选项
+				                <br />
+				                <!-- <span class="option">
+				                    <input type="text"  value="" />
+				                    <a class="option-del" href="javascript:void(0);">删除</a>
+				                </span> -->
+				                <volist name="vo['option']" id="vos">
+				                	<span class="option">
+					                    <input type="text"  value="{$vos['name']}" />
+					                    <a class="option-del" href="javascript:void(0);">删除</a>
+					                </span>
+				                </volist>
+				                <span><a class="option-add" href="javascript:void(0);">添加选项</a></span>
+				            </label>
+				        </p>
+				        
+				        <p>
+				        	<a class="del" href="javascript:void(0);">移除</a>
+				        </p>
+				        <input type="hidden" name="input_type" value="{$vo['input_type']}" >
+				    </div>
+				</li>
+			</case>
+		</switch>
+	</volist>
+</notempty>

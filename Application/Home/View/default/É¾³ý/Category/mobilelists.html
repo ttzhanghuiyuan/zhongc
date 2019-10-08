@@ -1,0 +1,24 @@
+<div class="SubMenu">
+    <volist name="list" id="vo">
+        <div class="item-nav" style="position:relative;" >
+            <div class="sub_item">
+                <div class="HomeTitle">
+                    <a href="javascript:void(0);"><i>></i>{$vo['name']}</a>
+                </div> 
+            </div>
+            <div class="product_sort pa" >
+                <div class="sortitem">
+                    <dl class="subitem clearfix">
+                        <dt>型号</dt>
+                        <dd>
+                            <!-- <a href="/market-HDPE/" class="hot">HDPE</a> -->
+                            <volist name="vo['_']" id='vos'>
+                                <a href="{:U('Goodlist/index?c2='.$vos['id'])}">{$vos['name']}</a>
+                            </volist>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </volist>
+</div>

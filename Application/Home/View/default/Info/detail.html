@@ -1,0 +1,107 @@
+<extend name="Base/common"/>
+<block name="style">
+
+</block>
+<block name="body">
+
+    <main role="main" id="main">
+
+      <div style="width: 100%; height: auto;  background:#ffffff;">
+        <div class="container block_container" >
+          <div class="block" style="padding-top: 5%;"></div>
+          <div class="block detail_article_block">
+            <div class="detail_article_news">
+              <p style="font-family: MicrosoftYaHei;font-size: 14px;color: #333333;letter-spacing: 0;border-bottom: 1px solid #eee; padding: 8px 0; width: 100%; ">
+                <span>首页</span>
+                <span>  /  </span>
+                <span>资讯中心</span>
+              </p>
+              <div class="block" style="padding-top: 2.5%; "></div>
+              <p style="font-family: MicrosoftYaHei;font-size: 28px;color: #333333;letter-spacing: 0;">{$info_detail['info_title']}</p>
+              <p style="font-family: MicrosoftYaHei;font-size: 14px;color: #999999;letter-spacing: 0;">发布时间：{$info_detail['add_time']}</p>
+              <div class="block" style="padding-top: 2.5%; "></div>
+              <img style="width: 100%" src="{$info_detail['path']}"/>
+              <p></p>
+              <div class="block" style="padding-top: 2.5%; "></div>
+              <p style="font-family: MicrosoftYaHei;font-size: 14px;color: #999999;letter-spacing: 0;line-height: 30px;text-align: justify">{$info_detail['info_content']}</p>
+               <div class="block" style="padding-top: 2.5%; border-bottom: 1px solid #EEEEEE "></div>
+              <div class="block" style="padding-top: 2.5%;  "></div>
+              <div class="block share" style="line-height: 28px;  font-size: 14px; color: #888;">
+                <font>分享：</font>
+                <img src="__IMG__/qq_share.png" id="qq_share">
+                <img src="__IMG__/qzone_share.png" id="qzone_share">
+                <img src="__IMG__/weixin_share.png" id="weixin_share">
+                <img src="__IMG__/weibo_share.png">
+              </div>
+            </div>
+
+            <div class="detail_article_news_img">
+              <div class="block" style="padding-top: 40%;">
+                <div id="qrcode"></div>
+                <p></p>
+                <p style="font-family: MicrosoftYaHei;font-size: 14px;color: #333333;letter-spacing: 0; text-align: center">扫一扫在手机上阅读本文章</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="block" style="padding-top: 5%; "></div>
+
+        </div>
+      </div>
+
+    </main>
+</block>
+
+<block name="script">
+  <script src="__STATIC__/public_js/qrcode.min.js"></script>
+  <script src="__STATIC__/public_js/space.js"></script>
+  <script type="text/javascript">
+      $('#qzone_share').click(function(){
+              var p = {
+                  url:location.href,
+                  showcount:'1',/*是否显示分享总数,显示：'1'，不显示：'0' */
+                  desc:'',/*默认分享理由(可选)*/
+                  summary:'',/*分享摘要(可选)*/
+                  title:'',/*分享标题(可选)*/
+                  site:'',/*分享来源 如：腾讯网(可选)*/
+                  pics:'', /*分享图片的路径(可选)*/
+                  style:'203',
+                  width:98,
+                  height:22
+              };
+              var s = [];
+              for(var i in p){
+                  s.push(i + '=' + encodeURIComponent(p[i]||''));
+              }
+              var url ="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?"+s.join('&');
+              window.open(url);
+              //window.location.href = url;
+          })();
+  </script>
+  <script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>
+  <script type="text/javascript">
+      $('#qq_share').click(function(){
+          var p = {
+              url:location.href, /*获取URL，可加上来自分享到QQ标识，方便统计*/
+              desc:'', /*分享理由(风格应模拟用户对话),支持多分享语随机展现（使用|分隔）*/
+              title:'', /*分享标题(可选)*/
+              summary:'', /*分享摘要(可选)*/
+              pics:'', /*分享图片(可选)*/
+              flash: '', /*视频地址(可选)*/
+              site:'', /*分享来源(可选) 如：QQ分享*/
+              style:'202',
+              width:24,
+              height:24
+          };
+          var s = [];
+          for(var i in p){
+              s.push(i + '=' + encodeURIComponent(p[i]||''));
+          }
+          var url ="http://connect.qq.com/widget/shareqq/index.html?"+s.join('&');
+          window.open(url);
+          //window.location.href = url;
+          //document.write(['<a class="qcShareQQDiv" href="http://connect.qq.com/widget/shareqq/index.html?',s.join('&'),'" target="_blank">分享到QQ</a>'].join(''));
+      })();
+  </script>
+  <script src="http://connect.qq.com/widget/loader/loader.js" widget="shareqq" charset="utf-8"></script>
+</block>

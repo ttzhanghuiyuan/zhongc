@@ -1,0 +1,99 @@
+body{
+	padding-top: 50px;
+  *text-align: center;
+  *width: 100%;
+  margin:0px;
+
+}
+
+a{
+	text-decoration: none;
+}
+
+.btn {
+  display: inline-block;
+  color: #514545!important;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25)!important;
+  background-image: none!important;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  box-shadow: none!important;
+  -webkit-transition: all ease .15s;
+  -moz-transition: all ease .15s;
+  -o-transition: all ease .15s;
+  transition: all ease .15s;
+  cursor: pointer;
+  vertical-align: middle;
+  margin: 0;
+  position: relative;
+  padding: 0 12px 1px;
+  line-height: 32px;
+  font-size: 14px;
+}
+
+.btn:hover {
+    color: #fff;
+    background: #ccc;
+    border-color:#fff;
+}
+
+.my_show ,.print{
+  *text-align: left;
+	width: 90%;
+	margin: 10px auto;
+  *width: 1000px;
+
+}
+
+
+
+.my_show .title{
+  text-align: center;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.my_show .remark{
+  margin: 15px auto;
+}
+.my_show .title-no{
+  text-align: right;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 12px auto;
+}
+
+.my_show .title-no .order-no{
+  color: red;
+}
+.my_show table {
+	/*font-size:11px;*/
+	color:#333333;
+	border: 1px solid #151212;
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0 auto;
+  font-size: 16px;
+}
+
+.my_show table td {
+	padding: 8px;
+	border: 1px solid #151212;
+	background-color: #ffffff;
+}
+
+.my_show table.no-border{
+  width: 80%;
+  margin: 0;
+
+}
+
+.my_show table.no-border td{
+  padding-left:0px; 
+}
+
+.my_show table.no-border,.my_show table.no-border td{
+  border: none;
+}
+
+

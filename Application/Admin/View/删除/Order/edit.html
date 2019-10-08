@@ -1,0 +1,249 @@
+<extend name="Public/base"/>
+ <block name="style">
+ <style type="text/css">
+.form-horizontal .item-label{
+ 	font-weight: normal;
+ }
+ 
+
+ .form-horizontal .form-item,.form-horizontal .controls{
+ 	margin-bottom: 14px;
+ }
+
+ .form-horizontal .form-item:last-child{
+ 	margin-top:35px; 
+ }
+
+ .form-horizontal .form-item span:first-child{
+ 	display: inline-block;
+ 	width: 75px;
+ }
+
+
+ .uploadify{
+ 	display: inline-block;
+ }
+ .uploadify-button {
+ 	display: inline-block;
+ }
+.form-horizontal .form-item  span.uploadify-button-text{
+ 	width: auto;
+ }
+ </style>
+ </block>
+
+<block name="body">
+	<div class="main-title">
+		<h2>订单详情编辑</h2>
+	</div>
+	<div class="tab-wrap">
+		
+		<form action="{:U()}" method="post" class="form-horizontal">
+			<!-- 基础 -->
+			<div class="form-item">
+				<table>
+					<tr><th colspan='4'>订单项</th></tr>
+					<tr><td>订单编号：</td><td>{$info['order_no']|default=''}</td>
+						<td>下单时间：</td><td>{$info['order_date']|time_format}</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="controls">
+				<h3>商品信息</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>产品类型</th><th>产品名称</th><th>包装规格</th><th>件数</th><th>重量(kg)</th><th>单价(元)</th><!-- <th>账期内容</th> <th>金额(元)</th>-->
+						</tr>
+					</thead>
+					<tbody>
+
+						<volist name='list' id='vo'>
+							<tr>
+								<td>{$vo.catename}</td>
+								<td>{$vo.order_good_name}</td>
+								<td>{$vo.order_good_package}</td>
+								<td>{$vo.order_good_nums}</td>
+								<td>{$vo.order_good_weight}</td>
+								<td>{$vo.order_good_price}</td>
+								<!-- <td>{$vo.priceterms}</td> 
+								<td>{$vo.total_price}</td>-->
+							</tr>
+						</volist>
+					</tbody>
+
+				</table>
+			</div>
+			<div class="form-item">
+				总重量：<label style='color:red;font-weight:bold' id='totalweight'></label>kg &nbsp;&nbsp;&nbsp;&nbsp;
+				总金额：<label style='color:red;font-weight:bold' id='totalmoney'>{$info['total_price']}</label>元 &nbsp;&nbsp;&nbsp;&nbsp;
+				
+			</div>
+
+			<div class="form-item">
+				<table>
+					<tr><th colspan='4'>会员信息</th></tr>
+					<tr>
+						<td>联系人：</td><td>{$info['linkman']|default=''}</td>
+						<td>联系电话：</td><td>{$info['mobile']|default=''}</td>
+					</tr>
+					<!-- <tr><td>联系电话：</td><td>{$info['mobile']|default=''}</td>
+						<td>联系地址：</td><td>{$info['addr']|default=''}</td>
+					</tr> -->
+				</table>
+			</div>
+
+			<div class="form-item">
+				<table>
+					<tr><th colspan='4'>收货地址</th></tr>
+					<tr><td>收货人：</td><td>{$info['recipients']|default=''}</td>
+						<td>收货人联系电话：</td><td>{$info['recipient_phone']|default=''}</td>
+					</tr>
+					<tr><td>邮编：</td><td>{$info['zip_code']|default=''}</td>
+						<td>收货地址：</td><td>{$info['address']|default=''}</td>
+					</tr>
+				</table>
+			</div>			
+
+			<h3>订单状态</h3>
+
+			<switch name="status">
+				<case value="1">
+					<div class='form-item'>
+						<label class='item-label'>
+							<span>订单状态</span><span>：未支付</span>
+						</label>
+					</div>
+				</case>
+				<case value="2">
+					<div class='form-item'>
+						<label class='item-label'>
+							<span>订单状态</span><span>：取消</span>
+						</label>
+					</div>
+				</case>
+				<case value="5">
+					<div class='form-item'>
+						<label class='item-label'>
+							<span>订单状态</span><span>：待发货</span>
+						</label>
+					</div>
+				</case>
+				<case value="6">
+					<div class='form-item'>
+						<label class='item-label'>
+							<span>订单状态</span><span>：已发货</span>
+						</label>
+					</div>
+				</case>
+				
+				<default />
+					<div class='form-item'>
+						<label class='item-label'>
+							<span>支付状态</span><span>：已支付</span>
+						</label>
+					</div>
+					<div class='form-item'>
+						<label class='item-label'>
+							<span>订单状态</span><span>：已完成</span>
+						</label>
+					</div>
+			</switch>
+			<!-- <h3>电子合同</h3>
+
+			<div class='form-item'>
+				<span>系统合同</span><span>：</span>
+				<a  href="{:U( 'Order/ordercontract?orderid='.$info['order_no'] )}" target='_blank'>起点化工有限公司购销合同及送货凭证{$info['order_no']}.pdf</a>
+			</div>
+
+			<div class='form-item'>
+				<span>客户合同</span><span>：</span>
+				<notempty name="info['order_contract']">
+					<a href="{:U('File/downLocalFile')}?id={$info.order_contract}&flag=0" target="_blank">
+						文件下载
+					</a>
+				<else />
+					<a  href="javascript:void(0);">暂无文件</a>
+				</notempty>
+			</div> -->
+
+
+			<div class='form-item'>
+				<span>操作人</span><span>：</span>
+				<span>{:session('user_auth.username')}</span>
+			</div>
+
+			<div class="form-item">
+
+				<!-- <input type="hidden" name="status" value="{$status}">
+
+				<input type="hidden" name="order_no" value="{$info.order_no|default=''}">
+
+				<input type='hidden' name="brokerage" value="{:session('user_auth.username')}"> -->
+
+				<eq name="status" value="1">
+					<a class='btn confirm ajax-get' href="{:U('updatestatus',array('orderid'=>$info['order_no'],'status'=>4))}">订单取消</a>
+				</eq>
+
+				<eq name="is_hide_confirm" value="1">
+					<else/>
+					<button type="submit"  class="btn submit-btn ajax-post" target-form="form-horizontal" >确定</button>
+				</eq>
+
+				<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+
+				<!-- <a class='btn' href="{:U( 'Order/printview?orderid='.$info['order_no'] )}" target='_blank'>打印预览</a> -->
+
+			</div>
+		</form>
+		
+	</div>
+</block>
+
+<block name="script">
+	<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+	<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+	<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+	    
+		$(function(){
+			showTab();
+
+            $('.form-horizontal').find('input').keyup(function(event){
+            	if(event.keyCode===13){
+            		$('.ajax-post').click();
+            	}
+            });
+
+            $('.time').datetimepicker({
+            	format: 'yyyy-mm-dd hh:ii',
+            	language:"zh-CN",
+            	minView:2,
+            	autoclose:true
+            });
+
+            var totalmoney=0, totalweight=0;
+
+            $('.controls table tbody tr').each(function(){
+
+            	//totalmoney+=parseFloat($(this).children('td').eq(7).text().replace(",",""));
+
+            	totalweight+=parseInt($(this).children('td').eq(3).text())*parseFloat($(this).children('td').eq(4).text().replace(",",""));
+
+            });
+
+            //$('#totalmoney').text(fmoney(totalmoney,2));
+            $('#totalweight').text(fmoney(totalweight,2));
+
+		});
+		//导航高亮
+		var id='{$info["id"]}';
+		var nav_active = id >0 && id!= '' ?"{:U('lists')}": '{:U("add")}';
+		var nav_custom_active = '{$nav_active}';
+		nav_active = nav_custom_active && nav_custom_active != '' ? nav_custom_active : nav_active;
+		highlight_subnav(nav_active);
+	</script>
+</block>

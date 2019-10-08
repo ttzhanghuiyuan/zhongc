@@ -1,0 +1,287 @@
+<extend name="Base/common"/>
+
+<block name="style">
+    <style type="text/css">
+    .items_container.jy {
+      overflow: hidden;
+      position: relative;
+    }
+    .i_market .rows .items_container.jy {
+      /*height: 242px;*//*2015-12-4*/
+      height: 345px;
+    }
+    .i_market .rows .items_container.jy ul {
+      padding: 0px;
+    }
+    .items_container.jy ul {
+      position: absolute;
+      top: 0px;
+    }
+    .iConWrap ul li{
+        height: 33px;
+        line-height: 33px;
+    }
+    </style>
+    
+</block>
+
+<block name="header">
+</block>
+
+<block name="side">
+<!-- 左侧 nav -->
+</block>
+
+<block name="body">
+    <include file="Public/require" />
+    <include file="Public/alert" />
+    <!--焦点图、产品分类-->
+    <div class="i_OneBox clearfix">
+        <div class="OneLeft">
+            <div class="i_slide clearfix">
+                <!--产品类目-->
+                
+                 <!--焦点图-->
+                 <div class='left'>
+                 <div class="slideBox">
+                    <ul>
+                        <volist name="list_data" id="vo" key="i" >
+                            <li <eq name="i" value="1">class="show"</eq> ><a href="{$vo['linkurl']}"><img alt="{$vo['name']}" class="img-lazyload" data-src="{$vo['path']}"></a></li>
+                        </volist>
+                    </ul>
+                    <div class="slideBtn">
+                        <for start="0" end="$count">
+                            <span <eq name="i" velue="1">class="curr"</eq> ></span>
+                        </for>
+                    </div>
+                </div>
+                <!--化塑汇优势-->
+                <div class="i_good clearfix div-border hide-device">
+                    <ul>
+                        <li class="g_2 showQR">
+                            <a href="{:U('Public/login')}">
+                                <div>
+                                    <s></s>
+                                    <span class="i_good_tit"><em>登录</em></span>
+                                    <span>登录起点，可以任意采购</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="i_line"></li>
+                        <li class="g_4 overturn">
+                            <a href="{:U('Public/register')}">
+                                <div>
+                                    <s></s>
+                                    <span class="i_good_tit"><em>注册</em></span>
+                                    <span>注册会员，成为起点一员</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="i_line"></li>
+                        <li class="g_1 overturn">
+                            <a class="ajax-require" href="javascript:void(0);">
+                                <div>
+                                    <s></s>
+                                    <span class="i_good_tit"><em>快速找货</em></span>
+                                    <span>快“速淘”到好产品</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="i_btn_right hide_pc">
+                    <a href="{:U('Public/login')}">登录</a>
+                    <a class="register" href="{:U('Public/register')}">注册</a>
+                    <a class="ajax-require" href="javascript:void(0);">快速找货</a>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="OneRight">
+            <div class="ShopNews">
+                <ul class="ShopNewsTab clearfix">
+                    <li class="">资讯行情</li>
+                    <li class="selected">最后更新:{$last_time}</li>
+                </ul>
+                <ul class="ShopNewsCon">
+                    <volist name="news" id="vo">
+                        <li>
+                            <a href="{:U('Articles/detail?cate='.$vo['category_id'].'&id='.$vo['id'])}">
+                                {$vo['title']}
+                            </a>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+            <div class="announcement hide-device">
+                <h3 class="index_sprite1">
+                    <a class="more right" href="{:U('Articles/index?cate=44')}" >
+                        更多 &gt;
+                    </a> 
+                    <span class="title">公告资讯</span>
+                </h3>
+                <ul class="newslist clearfix">
+                    <volist name="ads" id="vo">
+                        <li>
+                            <a href="{:U('Articles/detail?cate='.$vo['category_id'].'&id='.$vo['id'])}">
+                                {$vo['title']}
+                            </a>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="i_market">
+        <!--产品展示-->
+        <volist name="cate" id="vos" key="k" >
+        <div class="row-title"><a class="more right bg_color_1" href="{:U('Goodlist/index?c1='.$vos['id'])}">更多&gt;</a>
+            <span class="h1"><span class="fcolor_1">{$k}F&nbsp;</span>{$vos['name']}</span>
+        </div>
+        <div class="rows clearfix">
+            <div class="i_market_main">
+                <table>
+                    <thead>
+                        <tr>
+                            <td class="col1"><div>商品名称</div></td>
+                            <td class="col2"><div>型号</div></td>
+                            <td class="col3"><div>商品特性</div></td>
+                            <td class="col4"><div>建议应用领域</div></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <volist name="goods" id="vo">
+                            <eq name="vo['pid']" value="$vos['id']">
+                                <tr>
+                                    <td class="col1"><div><a href="{:U('Goodlist/detail?id='.$vo['id'])}">{$vo['good_name']}</a></div></td>
+                                    <td class="col2"><div>{$vo['name']}</div></td>
+                                    <td class="col3"><div>{$vo['describe']|cutstr=###,100}</div></td>
+                                    <td class="col4"><div>{$vo['application']|get_implode=###,$apply}</div></td>
+                                </tr>   
+                            </eq>
+                        </volist>
+                        <!--<tr>
+                            <td class="col1"><div>塑胶涂料用热塑性丙烯酸树脂</div></td>
+                            <td class="col2"><div>ZY501-50</div></td>
+                            <td class="col3"><div>干性,湿性</div></td>
+                            <td class="col4"><div>家具，玩具,罩光漆</div></td>
+                        </tr>
+                         <tr>
+                            <td class="col1"><div>塑胶涂料用热塑性丙烯酸树脂</div></td>
+                            <td class="col2"><div>ZY501-50</div></td>
+                            <td class="col3"><div>干性,湿性</div></td>
+                            <td class="col4"><div>家具，玩具,罩光漆</div></td>
+                        </tr>
+                        <tr>
+                            <td class="col1"><div>塑胶涂料用热塑性丙烯酸树脂</div></td>
+                            <td class="col2"><div>ZY501-50</div></td>
+                            <td class="col3"><div>干性,湿性</div></td>
+                            <td class="col4"><div>家具，玩具,罩光漆</div></td>
+                        </tr>
+                        <tr>
+                            <td class="col1"><div>塑胶涂料用热塑性丙烯酸树脂</div></td>
+                            <td class="col2"><div>ZY501-50</div></td>
+                            <td class="col3"><div>干性,湿性</div></td>
+                            <td class="col4"><div>家具，玩具,罩光漆</div></td>
+                        </tr>
+                        <tr>
+                            <td class="col1"><div>塑胶涂料用热塑性丙烯酸树脂</div></td>
+                            <td class="col2"><div>ZY501-50</div></td>
+                            <td class="col3"><div>干性,湿性</div></td>
+                            <td class="col4"><div>家具，玩具,罩光漆</div></td>
+                        </tr>
+                        <tr>
+                            <td class="col1"><div>塑胶涂料用热塑性丙烯酸树脂</div></td>
+                            <td class="col2"><div>ZY501-50</div></td>
+                            <td class="col3"><div>干性,湿性</div></td>
+                            <td class="col4"><div>家具，玩具,罩光漆</div></td>
+                        </tr>
+                        <tr>
+                            <td class="col1"><div>塑胶涂料用热塑性丙烯酸树脂</div></td>
+                            <td class="col2"><div>ZY501-50</div></td>
+                            <td class="col3"><div>干性,湿性</div></td>
+                            <td class="col4"><div>家具，玩具,罩光漆</div></td>
+                        </tr>
+                        <tr>
+                            <td class="col1"><div>塑胶涂料用热塑性丙烯酸树脂</div></td>
+                            <td class="col2"><div>ZY501-50</div></td>
+                            <td class="col3"><div>干性,湿性</div></td>
+                            <td class="col4"><div>家具，玩具,罩光漆</div></td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="i_market_right border-right-bottom">
+                <div class="iConWrap" style='margin-bottom:0px;'>
+                    <div class="iConTitle">火热<span class="fcolor_1">交易</span></div>
+                    <div class="items_container jy jy_{$k}">
+                        <ul style="top: 0px;">
+                            <volist name="orders" id="vo">
+                                <eq name="vo['pid']" value="$vos['id']">
+                                    <li>
+                                        <php>
+                                            if(!empty($vo['company_name']))
+                                            {
+                                            $company_name = mb_substr($vo['company_name'],0,1,'utf-8').'***公司';
+                                            }
+                                            else if(!empty($vo['linkman']))
+                                            {
+                                            $company_name = mb_substr($vo['linkman'],0,1,'utf-8').'***个人';
+                                            }
+                                            else{
+                                            $company_name = "市***公司";
+                                            }
+                                        </php>
+                                        {$company_name}
+                                    <em class="red">成功采购</em>{$vo['good_name']}{$vo['total_weight']} kg
+                                </li>
+                            </eq>
+                        </volist>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        </volist>
+    </div>
+
+</block>
+<block name="script">
+    <script type="text/javascript">
+    $(function () {
+        var count = $('.sub_item').length-1;
+        $('.sub_item').slice(7,count).css('display', 'none');
+
+        $('.SubMenu').hover(function(){
+            $('.sub_item').slice(7,count).css('display', '');
+        },function(){
+            $('.sub_item').slice(7,count).css('display', 'none');
+        });
+
+        $('li#cates').addClass('active');
+
+        count = $('div.rows').length+1;
+        
+        for (var i = 1; i < count; i++) {
+            turnItem("jy_"+i);            
+        };
+
+        for (var i = 0; i < count-1; i++) {
+
+            $('div.rows').eq(i).find('.item-ul li').eq(3).css({'border-right':0});
+            $('div.rows').eq(i).find('.item-ul li').eq(7).css({'border-right':0});
+        };
+
+        $('.ajax-require').click(function(){
+            require();
+            return false;
+        });
+
+    });
+
+    </script>
+</block>

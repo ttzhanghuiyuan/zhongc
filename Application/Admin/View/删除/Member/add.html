@@ -1,0 +1,89 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<!--<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>-->
+	<div class="main-title">
+		<h2>{:isset($info['id'])?'编辑':'新增'}会员</h2>
+	</div>
+	<div class="tab-wrap">
+		
+		<form action="{:U()}" method="post" class="form-horizontal">
+			<!-- 基础 -->
+			<div class="form-item">
+				<label class="item-label">会员账号<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="account" class="text input-large"  value="" />
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">姓名<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="fullname" class="text input-large"  value=""/>
+				</div>
+			</div>
+
+			
+			<div class="form-item">
+				<label class="item-label">手机<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text"  name="mobile" class="text input-large"  value=""/> 
+				</div>
+			</div>
+			
+			<div class="form-item">
+				<label class="item-label">邮箱<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text"  name="email" class="text input-large"  value=""/> 
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">登陆密码<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="password" name="password" class="text input-large"  value="" />
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">备注<span class="check-tips"></span></label>
+				<div class="controls">
+					<label class="textarea input-large">
+						<textarea name="remarks"></textarea>
+					</label>  
+				</div>
+			</div>
+
+			<div class="form-item">
+
+				<button type="submit"  class="btn submit-btn ajax-post" target-form="form-horizontal" >确 定</button>
+
+				<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+			</div>
+		</form>
+		
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+
+		$(function(){
+			// showTab();
+
+   //          $('.form-horizontal').find('input').keyup(function(event){
+   //          	if(event.keyCode===13){
+   //          		$('.ajax-post').click();
+   //          	}
+   //          });
+
+		});
+		//导航高亮
+		/*var id='{$info["id"]}';
+		var nav_active = id >0 && id!= '' ?"{:U('lists')}": '{:U("add")}';
+		var nav_custom_active = '{$nav_active}';
+		nav_active = nav_custom_active && nav_custom_active != '' ? nav_custom_active : nav_active;*/
+		highlight_subnav("{:U('lists')}");
+
+	</script>
+</block>

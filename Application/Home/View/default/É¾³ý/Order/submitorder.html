@@ -1,0 +1,81 @@
+<extend name="Base/common"/>
+<block name="style">
+    <style type="text/css">
+    .focus img{
+        max-height: 102px;
+    }
+    .i_leftCon{
+        width: auto;
+    }
+    </style>
+</block>
+<block name="body">
+	<div class="i_market clearfix">
+        <div class="steps-wrap">
+            <div class="step-img-wrap clearfix">
+                <i class="step-img img1"></i>
+                <i class="step-img img4"></i>
+                <i class="step-img img5"></i>
+            </div>
+
+            <div class="step-word-wrap clearfix">
+                <span class="step-word word">我的购物车</span>
+                <span class="step-word">填写核对信息</span>
+                <span class="step-word">订单提交结果</span>
+            </div>
+        </div>
+        <if condition=" $is_commit eq 1 ">
+        <div class="success-tb">
+            <div class="success-tc">
+                <div class="success-td">
+                    <img src="__IMG__/icon-succ.png" alt="">
+                </div>
+                <div class="success-tf">
+                    <div class="success-l25">
+                        <span class="success-tg">订单提交成功！</span>                 
+                        订单号：
+                        <a href="{:U('Member/orders?mod=0')}" >
+                            <span class="wst-ods-success-th">{$order_no}</span>
+                        </a>&nbsp; 应付金额：<span class="wst-ods-success-ti">{$total_price}</span>元
+                    </div>                          
+                </div>
+                <div class="clear"></div>
+            </div>             
+        </div>
+        <else />
+        <div class="success-tb">
+            <div class="success-tc fail">
+                <div class="success-td">
+                    <!-- <img src="__IMG__/icon-succ.png" alt=""> -->
+                </div>
+                <div class="success-tf">
+                    <div class="success-l25">
+                        <span class="success-tg fail">订单提交失败！</span>                 
+                    </div>                          
+                </div>
+                <div class="clear"></div>
+            </div>             
+        </div>
+        </if>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+    $(function(){
+
+        var totalmoney=0, totalweight=0;
+
+        $('.div-tables table tbody tr').each(function(){
+
+            totalmoney+=parseFloat($(this).children('td').eq(5).text().replace(",",""));
+
+            totalweight+=parseFloat($(this).children('td').eq(3).text().replace(",",""));
+
+        });
+        $('#totalmoney').text(fmoney(totalmoney,2));
+        $('#totalweight').text(fmoney(totalweight,2));
+        $('#outcome').text(fmoney(totalmoney,2));
+
+    });
+    </script>
+</block>

@@ -1,0 +1,107 @@
+<extend name="Public/basefull"/>
+
+<block name="body">
+    <div class="main-title">
+            <h2>{$meta_title}</h2>
+    </div>
+    <div class="cf">
+        <if condition="!$is_hide_rightbox">
+            <div class="search-form fr cf">
+                <form action="{:U('','extra='.$model['name'],false)}" method="get">
+                
+                <div class="sleft">
+                        <?php
+                            $search_key_arr=explode(':',$model['search_key']);
+                            $search_key =$search_key_arr? $search_key_arr[0]:'title';
+                            unset($_GET[$search_key]);
+                        ?>
+                    <button type="submit" class="btn search">搜索</button>
+                    <input type="text" name="{$search_key}" class="search-input" value="{:I($search_key)}" placeholder="请输入{$search_key_arr[1]}">
+                   
+                    <if condition="$data_row">
+                            <div class="search-row">
+                                <select name="row" class="form-control input-sm">
+                                    <option selected="selected" value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <?php
+                                unset($_GET['row'])
+                            ?>
+                    </if> 
+                </div>
+                <volist name="_GET" id="vo">
+                    <input type="hidden" name="{$key}" value="{$vo}" />
+                </volist>
+                </form>
+            </div>
+        </if>
+    </div>
+    <div class="data-table">
+        <table >
+            <thead>
+                <tr >
+                    <th class="row-selected row-selected">
+                        <input class="check-all" type="checkbox">
+                    </th> 
+                    <volist name="list_grids" id="field">
+                        <th>{$field['title']}</th>
+                    </volist>
+                </tr>
+            </thead>
+
+            <tbody>  
+                <notempty name="list_data">
+                    <volist name="list_data" id="data">
+                        <tr>
+                            <td>
+                                <input class="ids" type="checkbox" name="ids[]" value="{$data.id}">    
+                            </td>
+                            <volist name="list_grids" id="grid">
+                                <td>{:get_list_field($data,$grid,$model)}</td>
+                            </volist>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <td colspan="{:count($list_grids) + 1}" class="text-center"> aOh! 暂时还没有内容! </td>
+                </notempty>
+            </tbody>
+        </table>
+    </div>
+    <if condition="$_page">
+        <div class="page">
+            {$_page}
+        </div>
+    </if>
+</block>
+
+<block name="script">
+    <script>
+        //set_nav('{:U()}');
+
+        $(function(){
+            $('.btn-list-select').click(function(){
+                var id = '{:I("extra")}';
+                var input = '{:I("input")}';
+                var value = $(this).parents('tr').find('.ids').val();
+                var title = $(this).parents('tr').find('td').eq(1).text();
+
+                var tr = {};
+
+                $(this).parents('tr').find('td').each(function(i,item){
+                    var name = $(this).attr('data-name');
+                    if(name){
+                        tr[name] = $(this).text();
+                    }
+                });
+
+                window.parent.call_mainframe_setlistselect(id,value,title,input,tr);
+                return false;
+            });
+        });
+
+        
+    </script>
+</block>

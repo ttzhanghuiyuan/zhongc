@@ -1,0 +1,404 @@
+<extend name="Base/common"/>
+<block name="style">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/qtip/jquery.qtip.min.css" media="all">
+</block>
+<block name="body">
+    <?php
+        $html = '';
+        
+        if(isset($GET['c1'])){
+            $html .= "<input type='hidden' name='c1' value=".$GET['c1']." />";
+        }
+        if (isset($GET['c2'])) {
+            $html .= "<input type='hidden' name='c2' value=".$GET['c2']." />";
+        }
+        if (isset($GET['c3'])) {
+            $html .= "<input type='hidden' name='c3' value=".$GET['c3']." />";
+        }
+        if (isset($GET['c4'])) {
+            $html .= "<input type='hidden' name='c4' value=".$GET['c4']." />";
+        }
+        $formstr = $html;
+        //$form1=$form2=$form3=$html;
+
+        if (isset($GET['c5'])) {
+            $html .= "<input type='hidden' name='c5' value=".$GET['c5']." />";
+        }
+        if (isset($GET['c6'])) {
+            $html .= "<input type='hidden' name='c6' value=".$GET['c6']." />";
+        }
+        if (isset($GET['cate'])) {
+            $html .= "<input type='hidden' name='cate' value=".$GET['cate']." />";
+        }
+
+        if (isset($GET['min_vis'])) {
+            //$form2 .= "<input type='hidden' name='min_vis' value=".$GET['min_vis']." />";
+            //$form3 .= "<input type='hidden' name='min_vis' value=".$GET['min_vis']." />";
+            $html .= "<input type='hidden' name='min_vis' value=".$GET['min_vis']." />";
+        }
+        if (isset($GET['max_vis'])) {
+            //$form2 .= "<input type='hidden' name='max_vis' value=".$GET['max_vis']." />";
+            //$form3 .= "<input type='hidden' name='max_vis' value=".$GET['max_vis']." />";
+            $html .= "<input type='hidden' name='max_vis' value=".$GET['max_vis']." />";
+        }
+        if (isset($GET['min_aci'])) {
+            //$form1 .= "<input type='hidden' name='min_aci' value=".$GET['min_aci']." />";
+            //$form3 .= "<input type='hidden' name='min_aci' value=".$GET['min_aci']." />";
+            $html .= "<input type='hidden' name='min_aci' value=".$GET['min_aci']." />";
+        }
+        if (isset($GET['max_aci'])) {
+            //$form1 .= "<input type='hidden' name='max_aci' value=".$GET['max_aci']." />";
+            //$form3 .= "<input type='hidden' name='max_aci' value=".$GET['max_aci']." />";
+            $html .= "<input type='hidden' name='max_aci' value=".$GET['max_aci']." />";
+        }
+        if (isset($GET['left_solid'])) {
+            //$form1 .= "<input type='hidden' name='left_solid' value=".$GET['left_solid']." />";
+            //$form2 .= "<input type='hidden' name='left_solid' value=".$GET['left_solid']." />";
+            $html .= "<input type='hidden' name='left_solid' value=".$GET['left_solid']." />";
+        }
+        if (isset($GET['right_solid'])) {
+            //$form1 .= "<input type='hidden' name='right_solid' value=".$GET['right_solid']." />";
+            //$form2 .= "<input type='hidden' name='right_solid' value=".$GET['right_solid']." />";
+            $html .= "<input type='hidden' name='right_solid' value=".$GET['right_solid']." />";
+        }
+    ?>
+	<div class="i_market clearfix">
+        <div class="screen clearfix">
+            <div class="screen_tit">筛选条件</div>
+            <div class="condition">
+                <ul class="S_category btn_slt">
+                    <li class="c_category">类别：</li>
+                    <li><a href="{:U('?'.$urlvar1.'c1=0')}" <if condition="($GET['c1'] eq 0) or ($GET['c1'] eq null)">class="ScreenCur"</if> >全部</a></li>
+                    <volist name="cate_parent" id="vo">
+                        <li><a href="{:U('?'.$urlvar1.'c1='.$vo['id'])}" <eq name="GET['c1']" value="$vo['id']">class="ScreenCur"</eq> >{$vo['name']}</a></li>
+                    </volist>
+                </ul>
+                <div class="Sub_category btn_slt clearfix">
+                    <span class="c_category">&nbsp;</span>
+                    <div>
+                       <volist name="cate_child" id="vo">
+                            <span><a href="{:U('?'.$urlvar2.'c2='.$vo['id'])}" <eq name="GET['c2']" value="$vo['id']">class="ScreenCur"</eq> >{$vo['name']}</a></span>
+                       </volist>
+                    </div>       
+                </div>
+                <ul class="btn_slt">
+                    <li class="c_category">溶剂：</li>
+                    <li><a href="{:U('?'.$urlvar3.'c3=0')}" <if condition="($GET['c3'] eq 0) or ($GET['c3'] eq null)">class="ScreenCur"</if> >全部</a></li>
+                    <volist name='solvent' id='vo'>
+                        <li><a href="{:U('?'.$urlvar3.'c3='.$vo['id'])}" <eq name="GET['c3']" value="$vo['id']">class="ScreenCur"</eq> >{$vo['name']}</a></li>
+                    </volist>
+                </ul>
+                <ul class="btn_slt">
+                    <li class="c_category">应用领域：</li>
+                    <li><a href="{:U('?'.$urlvar4.'c4=0')}" <if condition="($GET['c4'] eq 0) or ($GET['c4'] eq null)">class="ScreenCur"</if> >全部</a></li>
+                    <volist name='apply' id='vo'>
+                        <li><a href="{:U('?'.$urlvar4.'c4='.$vo['id'])}" <eq name="GET['c4']" value="$vo['id']">class="ScreenCur"</eq> >{$vo['name']}</a></li>
+                    </volist>
+                </ul>
+                <div class="Sub_category btn_slt clearfix">
+                    <div class="sub_more"><button type="button"><span>更多&nbsp;</span><span class="down">∨</span><span class="up">∧</span></button></div>
+                <form method="post" action="{:U('Common/getUrl')}" class="params_form">
+                <ul class="btn_slt">
+                    <li class="c_category">粘度：</li>
+                    
+                    <li>
+                        <!-- <label class="checkbox" title='清空或输入完成后按回车键(Enter)'> -->
+                        <input name="min_vis" placeholder="最小值" onkeyup="checkNum(this)" type="text" value="{$GET['min_vis']|default=''}">
+                        <!-- </label> -->
+                             — 
+                        <!-- <label class="checkbox" title='清空或输入完成后按回车键(Enter)'> -->
+                        <input name="max_vis" placeholder="最大值" onkeyup="checkNum(this)" type="text" value="{$GET['max_vis']|default=''}">
+                        <!-- </label> -->
+                    </li>
+                </ul>
+                <ul class="btn_slt">
+                    <li class="c_category">酸值：</li>
+                    
+                    <li>
+                        <!-- <label class="checkbox" title='清空或输入完成后按回车键(Enter)'> -->
+                        <input name="min_aci" placeholder="最小值" onkeyup="checkNum(this)" type="text" value="{$GET['min_aci']|default=''}">
+                        <!-- </label> -->
+                             — 
+                        <!-- <label class="checkbox" title='清空或输入完成后按回车键(Enter)'> -->
+                        <input name="max_aci" placeholder="最大值" onkeyup="checkNum(this)" type="text" value="{$GET['max_aci']|default=''}">
+                        <!-- </label> -->
+                    </li>
+                </ul>
+                <ul class="btn_slt">
+                    <li class="c_category">固体份：</li>
+                   
+                    <li>
+                        <!-- <label class="checkbox" title='清空或输入完成后按回车键(Enter)'> --> 
+                        <input name="left_solid" placeholder="左边值" onkeyup="checkNum(this)" type="text" value="{$GET['left_solid']|default=''}">&nbsp;
+                        <!-- </label> -->
+                        ±
+                        <!-- <label class="checkbox" title='清空或输入完成后按回车键(Enter)'>&nbsp; -->
+                        <input  name="right_solid" placeholder="右边值" onkeyup="checkNum(this)" type="text" value="{$GET['right_solid']|default=''}">
+                        <!-- </label> -->
+                    </li>
+                </ul>
+                <ul class="btn_slt">
+                    <li class="c_category">
+                    </li>
+                    <li>
+                        {$formstr}
+                        <input class="commit ajax-commit" type="submit" value="确认" target-form="params_form" />
+                    </li>
+                </ul>
+                </form>
+                </div>
+            </div>
+        </div>
+        <div class="result">
+            <div class="result_tit"><span class='right'>共有<span class='font-color'>{$count}</span>件相关商品</span>
+                筛选结果
+                <present name="GET['cate']">
+                    <span>搜索关键词：<span style='color:red'>{$GET['cate']}</span></span>
+                </present>
+                
+            </div>
+            <ul class="S_rankBox clearfix">
+                <li class='right'>
+                    {$page_meta}
+                </li>
+                <li class="S_rank {$cur_c7}">
+                    <a href="{:U('?'.$urlvar7)}" style="padding-right: 20px;">默认</a>
+                </li>
+                <li class="S_rank {$cur_c5} {$cur_c5_arrow}">
+                    <a href="{:U('?'.$urlvar5)}">价格</a><s></s>
+                </li>
+                <li class="S_rank {$cur_c6} {$cur_c6_arrow}">
+                    <a href="{:U('?'.$urlvar6)}">销售量</a><s></s>
+                </li>
+                <li class="S_rank_input">
+                    <form method="post" action="{:U('Common/getUrl')}" class="horizon_form">
+                        {$html}
+                        <input id="price_start" onkeyup="checkNum(this)" placeholder="￥最低价" name="sprice" type="text" value="{$GET['sprice']|default=''}">
+                        &nbsp;-&nbsp;
+                        <input id="price_end" onkeyup="checkNum(this)" placeholder="￥最高价" name="eprice" type="text" value="{$GET['eprice']|default=''}">
+                        <input class="ajax-get" type="submit" value="查询" target-form="horizon_form">
+                    </form>
+                </li>
+
+            </ul>
+            <div class="resultContents clearfix">
+                <notempty name="list_data">
+                    <div class="goods_nav hide-device">
+                        <table>
+                            <tbody >
+                                <tr >
+                                    <th class="td_1">型号/产品</th>
+                                    <th class="td_2">外观</th>
+                                    <th class="td_3">色数</th>
+                                    <th class="td_4">粘度</th>
+                                    <th class="td_5">酸值</th>
+                                    <th class="td_6">固体份</th>
+                                    <th class="td_7">溶剂</th>
+                                    <th class="td_8">羟值</th>
+                                    <th class="td_9">产品特性</th>
+                                    <th class="td_10">建议应用领域</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="goods_data">
+                        <volist name="list_data" id="vo">
+                            <table>
+                                <!-- <thead class="hide">
+                                    <tr>
+                                        <th class="td_1">型号/产品</th>
+                                        <th class="td_2">外观</th>
+                                        <th class="td_3">色数</th>
+                                        <th class="td_4">粘度</th>
+                                        <th class="td_5">酸值</th>
+                                        <th class="td_6">固体份</th>
+                                        <th class="td_7">溶剂</th>
+                                        <th class="td_8">羟值</th>
+                                        <th class="td_9">产品特性</th>
+                                        <th class="td_10">建议应用领域</th>
+                                    </tr>
+                                </thead> -->
+                                <tbody>
+                                    <tr>
+                                        <td data-title="型号/产品" class="td_1 clearfix">
+                                            <div>
+                                                <a href="{:U('Goodlist/detail?id='.$vo['id'])}">{$vo['name']}/{$vo['good_name']}</a>
+                                            </div>
+                                        </td>
+                                        <td data-title="外观" class="td_2 clearfix"><div>{$vo['surface']}</div></td>
+                                        <td data-title="色数" class="td_3 clearfix"><div>{$vo['chromatic']}</div></td>
+                                        <td data-title="粘度" class="td_4 clearfix"><div>{$vo['min_vis']}-{$vo['max_vis']}/{$vo['vis_unit']}</div></td>
+                                        <td data-title="酸值" class="td_5 clearfix"><div>{$vo['min_aci']|default=''}{$vo['aci_sign']|aci_sign}{$vo['max_aci']}</div></td>
+                                        <td data-title="固体份" class="td_6 clearfix"><div>{$vo['left_solid']}±{$vo['right_solid']}</div></td>
+                                        <td data-title="溶剂" class="td_7 clearfix"><div>{$vo['solvents']|get_implode=###,$solvent,1}</div></td>
+                                        <td data-title="羟值" class="td_8 clearfix"><div>{$vo['hydroxyl']}</div></td>
+                                        <td data-title="产品特性" class="td_9 clearfix"><div>{$vo['describe']|cutstr=###,250}</div></td>
+                                        <td data-title="建议应用领域" class="td_10 clearfix"><div>{$vo['application']|get_implode=###,$apply}</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td_11 clearfix" colspan="10">
+                                            <span>市场参考价格&nbsp;&nbsp;<span style="color:red;">¥{$vo['marketprice']}&nbsp;&nbsp;</span></span>
+                                            <span>销量&nbsp;&nbsp;<span style="color:red;">{$vo['salescount']}</span>&nbsp;&nbsp;</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </volist>
+                    </div>
+                    <else />
+                    <div class='no-result'>
+                        <div class="words">
+                            <h2>噢~没找到相关产品 </h2>
+                            <p>建议您：</p>
+                            <p>1：看看输入的文字是否有误</p>
+                            <p>2：调整关键词或筛选条件，如："HDPE BL3" 改为"BL3"</p>
+                        </div>
+                    </div>
+                </notempty>
+            </div>
+            <div class="page-box clearfix">
+                {$_page}
+            </div>
+        </div>
+
+    </div>
+</block>
+<block name='script'>
+    <!--<script type="text/javascript" src="__STATIC__/qtip/jquery.qtip.min.js"></script>-->
+    
+    <script type="text/javascript">
+    $(function() {
+
+        $(".params_form").hide();
+        $('span.up').hide();
+
+        $(".sub_more button").click(function(){
+            $(".params_form").toggle();
+            $('span.up').toggle();
+            $('span.down').toggle();
+        });
+
+       $('.ajax-get').click(function(){
+            var error=false;
+
+            var val=$('input[name=sprice]').val(), val2=$('input[name=eprice]').val();
+
+            if(val == '' && val2 == ''){
+                var target_form = $(this).attr('target-form');
+                var form = $('.'+target_form);
+                var target = form.get(0).action ,query = form.find('input[type=hidden]').serialize();
+                $.post(target,query).success(function(data){
+                    window.location = data.url;
+                });
+                return false;
+            }
+            else if(val==''|| val2 ==''){
+                alert('请输入数值');
+                return false;
+            }
+            else if(parseFloat(val) > parseFloat(val2)){
+                alert('最高价应该高于最低价');
+                return false;
+            }
+            else{
+                var target_form = $(this).attr('target-form');
+                var form = $('.'+target_form);
+                var target = form.get(0).action ,query = form.serialize();
+
+                $.post(target,query).success(function(data){
+                    window.location = data.url;
+                });
+
+                return false;
+            }
+             return false;
+       });
+
+        $('.ajax-commit').click(function(){
+            /*var error=false;
+
+            var val=$('input[name=sprice]').val(), val2=$('input[name=eprice]').val();
+
+            if(val == '' && val2 == ''){
+                var target_form = $(this).attr('target-form');
+                var form = $('.'+target_form);
+                var target = form.get(0).action ,query = form.find('input[type=hidden]').serialize();
+                $.post(target,query).success(function(data){
+                    window.location = data.url;
+                });
+                return false;
+            }
+            else if(val==''|| val2 ==''){
+                alert('请输入数值');
+                return false;
+            }
+            else if(parseFloat(val) > parseFloat(val2)){
+                alert('最高价应该高于最低价');
+                return false;
+            }
+            else{*/
+                var target_form = $(this).attr('target-form');
+                var form = $('.'+target_form);
+                var target = form.get(0).action ,query = form.serialize();
+
+                $.post(target,query).success(function(data){
+                    window.location = data.url;
+                });
+
+                return false;
+            /*}
+             return false;*/
+       });
+
+    /*$("ul.btn_slt li")
+        .on("submit", "form", function(){
+            var self = $(this);
+            $.post(
+                self.attr("action"),
+                self.serialize(),
+                function(data){
+                    window.location = data.url;
+                },
+                "json"
+                );
+            return false;
+        })
+        .on("focus","input",function(){
+            $(this).data('param',$(this).closest("form").serialize());
+
+        })
+        .on("keypress", "input", function(event){
+            if (event.keyCode == "13") {
+                if($(this).data('param')!=$(this).closest("form").serialize()){
+                    $(this).closest("form").submit();
+                }
+            }
+        });*/
+
+        /*$('.checkbox').each(function(){
+            $(this).qtip({
+                content: {
+                    text: $(this).attr('title')
+                    //title: $(this).text()
+                },
+                position: {
+                    my: 'left center',
+                    at: 'top center',
+                    target: $(this)
+                },
+                style: {
+                    classes: 'qtip-dark',
+                    tip: {
+                        corner: true,
+                        mimic: false,
+                        width: 10,
+                        height: 10
+                    }
+                }
+            });
+        });*/
+    });
+    //var url=;
+    highlight_nav("{:U('Goodlist/index')}");
+    </script>
+</block>

@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-white brand-nav"  >
+    <div class="container">
+        <a class="navbar-left" href="/">
+            <img src="__IMG__/logo.png" alt="Brand" class="brand-img">
+        </a>
+        <div class="do-m-menustate do-btn-line do-nav-btn">
+            <input type="checkbox" id="do-m-menustate-checkbox"  style="display: none"/>
+            <label class="do-m-menu-btn" for="do-m-menustate-checkbox" >
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+        </div>
+        <div class="collapse navbar-collapse  nav "   id="navbarCollapse">
+            <ul class="navbar-nav mr-0 navbar-nav-style">
+                <li class="nav-item nav-link-style <if condition='$router eq Index'>active</if>">
+                    <a class="nav-link" href="/Index/index">
+                        <span>网站首页</span>
+                    </a>
+                </li>
+                <li class="nav-item nav-link-style <if condition='$router eq About'>active</if>" >
+                    <a class="nav-link" href="/About/index">
+                        <span >关于我们</span>
+                    </a>
+                </li>
+                <li class="nav-item nav-link-style <if condition='$router eq Space'>active</if>">
+                    <a class="nav-link" href="/Space/index">
+                        <span>空间展示</span>
+                    </a>
+                </li>
+
+                <li class="nav-item nav-link-style <if condition='$router eq Info'>active</if>">
+                    <a class="nav-link" href="/Info/index">
+                        <span>资讯中心</span>
+                    </a>
+                </li>
+                <li class="nav-item nav-link-style <if condition='$router eq Team'>active</if>">
+                    <a class="nav-link" >
+                        <span>团队入驻</span>
+                    </a>
+                    <div class="nav-select">
+                      <a class="nav-link" href="/Team/condition">
+                        <span>入驻条件</span>
+                      </a>
+                      <a class="nav-link" href="/Team/progress">
+                        <span>入驻流程</span>
+                      </a>
+                      <a class="nav-link" href="/Team/apply">
+                        <span>入驻申请</span>
+                      </a>
+                    </div>
+                </li>
+                <li class="nav-item nav-link-style <if condition='$router eq Contact'>active</if>">
+                    <a class="nav-link" href="/Contact/index">
+                        <span>联系我们</span>
+                    </a>
+                </li>
+            </ul>
+        </div></div>
+    </div>
+</nav>
+<label style="display: none;" id="do-m-menustate-label"  for="do-m-menustate-checkbox2"></label>
+<input type="checkbox" id="do-m-menustate-checkbox2"  style="display: none"/>
+<div class="do-nav-m-bar animate">
+    <ul class="do-nav-m-ul clearfix">
+        <li>
+            <a href="/Index/index">
+                <span>网站首页</span>
+            </a>
+        </li>
+        <li>
+            <a href="/About/index">
+                <span>关于我们</span>
+            </a>
+        </li>
+        <li>
+            <a href="/Space/index">
+                <span>空间展示</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/Info/index">
+                <span>资讯中心</span>
+            </a>
+        </li>
+        <li>
+            <a href="/Team/index">
+                <span>团队入驻</span>
+            </a>
+        </li>
+        <li>
+            <a href="/Contact/index">
+                <span>联系我们</span>
+            </a>
+        </li>
+    </ul>
+
+</div>

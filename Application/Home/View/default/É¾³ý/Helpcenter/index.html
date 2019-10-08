@@ -1,0 +1,111 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.small{
+		display: none;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	.member-wrapper .member-side-menu{
+		border:none;
+	}
+	.member-wrap-content{
+		padding: 0 50px;
+	}
+	@media screen and (max-width: 600px){
+		.member-wrapper .member-wrap-content {
+  			padding: 0 12px; 
+		}
+	}
+
+	</style>
+</block>
+<block name="body">
+	<div class="i_leftTit clearfix user-head">
+		<a href="{:U('Index/index')}">首页</a>
+		<span> &gt; </span>
+		<span class='a-item'>帮助中心</span> &gt; 
+		<span class='a-item'>{$info['title']}</span>
+	</div>
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			<div class="head"><span class="home-icon"></span>帮助中心</div>
+			<div class="item-wrap">				
+				<volist name="cates" id="cate">
+					<div class="item">
+						<span class="content <eq name="cate['id']" value="$cate_id">selected </eq> "  >
+							{$cate['title']}
+						</span>
+					</div>
+					<div class="article-wrap" 
+					<eq name="cate['id']" value="$cate_id">style="display:block;"</eq>
+					>
+						<volist name="list" id="vo">
+							<eq name="vo['category_id']" value="$cate['id']">
+								<a href="{:U( '?cate='.$vo['category_id'].'&id='.$vo['id'] )}"
+								<eq name="vo['id']" value="$id"> class="selected" </eq> >
+									{$vo['title']}
+								</a>
+							</eq>
+						</volist>                
+					</div>
+				</volist> 
+				<div class="item">
+					<span class="content"  >
+						<a href="{:U('feedback')}">意见反馈</a>
+					</span>
+				</div>           
+				<!-- 
+				<div class="item">
+					<span class="content ">我要买塑料</span>
+				</div>
+				<div class="article-wrap">       
+					<a class=" ">如何找货</a>                   
+					<a class=" ">发布需求</a>                   
+					<a class=" ">订单查询</a>                  
+				</div> -->
+			</div>
+		</div>
+		<div class='member-wrap-content' >
+			<div class="head">
+				<span class="chinese">{$info['title']}</span>
+			</div>
+			<div class='content'>
+				{$info['content']}
+			</div>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	 $(function() {
+        $(".member-side-menu .item-wrap .item").click(function() {
+            $(this).next(".article-wrap").toggle()
+        })
+    })
+	</script>
+
+</block>

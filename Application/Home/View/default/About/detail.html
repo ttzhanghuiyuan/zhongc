@@ -1,0 +1,58 @@
+<extend name="Base/common"/>
+<block name="style">
+
+</block>
+<block name="body">
+
+    <main role="main" id="main">
+      <!--导航-->
+      <div class="slide_content">
+        <div class="slide_image">
+          <div class="swiper-container slide_container" style="height: auto">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide swiper-no-swiping">
+                <div class="slide_back about" style="background-image: url({$banner_url})"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--成员详情-->
+      <div class="container block_container" >
+        <div class="block" style="padding-top: 5%;"></div>
+        <div class="block" style="display:table;">
+          <div class="element-team-img" style="display:table-cell;">
+            <img src="{$worker_detail['path']}">
+          </div>
+          <div class="element-team-text" style="display:table-cell;">
+            <div class="block" style=" padding-top:4.530011325028313%;"></div>
+            <div class="block">
+              <div class="element-text">
+                <div class="element-text-content">
+                  <div class="html-content">
+                    <p style="line-height: 1; text-align: left; margin-bottom: 8px;"><span style="font-family: SimHei; font-size:28px; color: #333333;">{$worker_detail['worker_name']}</span></p>
+                    <p style="line-height: 1; text-align: left;">
+                      <span style="font-family: Arial, Helvetica, sans-serif; font-size: 18px; color: #333333;"><span>{$worker_detail['worker_position']}</span>
+                      <!--<span style="color: #999999;">（ {$worker_detail['worker_brief']} ）</span>-->
+                    </p>
+                    <p style="height: 5px; text-align: left; width: 100%; text-align: center; margin-bottom: 6px; "><span style="display: block;background: #666666; width: 25px; height: 5px; "></span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="block" style="padding-top:2.2650056625141564%;"></div>
+            <div class="block" style="text-align: justify">
+              <span style="font-family:'Microsoft YaHei'; font-size: 14px; line-height: 26px; color: rgb(153, 153, 153);">
+                {$worker_detail['woker_record']}
+              </span>
+
+              <div class="block" style="padding-top:5%;"></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="block" style="padding-top: 5%;"></div>
+      </div>
+    </main>
+
+</block>

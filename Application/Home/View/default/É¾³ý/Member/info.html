@@ -1,0 +1,305 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.uploadify,.uploadify-button {
+		display: inline-block;
+	}
+
+	.uploadify-button{
+		/*padding: 8px;*/
+		text-align: center;
+		background: rgb(51,152,204);
+		color: #fff;
+	}
+
+	.margin-bottom{
+		margin-bottom: 18px;
+	}
+	/*.div-border{
+		height: 32px;
+		line-height: 32px;
+	}*/
+	.i_leftTit{
+		border-bottom: none;
+	}
+	</style>
+</block>
+<block name="body">
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		<div class='member-wrap-content' >
+			<div class="clearfix mhead">
+				<a class="item selected inline-block" href="javascript:void(0)">个人信息
+				</a>	
+			</div>
+			<include file="Public/alert"/>
+			<div class="head-div">
+				<div class='wrapper'>
+					<span class=' inline-block inline-block-div'>
+						<if condition="$info['audit_status'] eq 1 ">
+							个人账户
+							<else />
+							
+							公司账户
+						</if>
+					</span>
+					<div class='arrow-wrapper'><div class="arrow-down"></div></div>
+					
+				</div>
+			</div>
+			<div class='form-div'>
+				<form action="{:U()}" method="post" class="form-horizontal">
+					<div class="form-item">
+						<label class="item-label">欢迎来到会员中心</label>
+						<label class="item-label">
+							<span class="check-tips">
+								<if condition="$info['audit_status'] eq 1 ">
+									信息已认证，恭喜您获得更多的贸易机会。
+									<else />
+									您的信息还未认证，请完善认证信息，通过认证，可以提供交易方的信任度，获得更多的贸易机会。
+								</if>
+							</span>
+						</label>
+					</div>
+					<!-- 基础 -->
+					<div class="form-item">
+						<label class="item-label">会员账号<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='account'  value="{$info['account']|default=''}" />
+						</div>
+					</div>
+
+					<div class="form-item" <eq name="info.type" value="1">style='display:none;'</eq> >
+						<label class="item-label">公司名称<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='company_name'  value="{$info['company_name']|default=''}"/>
+						</div>
+					</div>
+
+					<div class="form-item">
+						<label class="item-label">联系人<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='linkman'  value="{$info['linkman']|default=''}"/>
+						</div>
+					</div>
+
+					<div class="form-item">
+						<label class="item-label">联系地址<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='addr'   value="{$info['addr']|default=''}"/> 
+						</div>
+					</div>
+					<!-- <div class="form-item">
+						<label class="item-label">手机<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='mobile'  value="{$info['mobile']|default=''}"/> 
+						</div>
+					</div> -->
+					<div class="form-item">
+						<label class="item-label">固话<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='Tel'  value="{$info['Tel']|default=''}"/>  
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">邮箱<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='email'  value="{$info['email']|default=''}"/> 
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">传真<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='fax'  value="{$info['fax']|default=''}"/>  
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">开户人<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='bank_holder'  value="{$info['bank_holder']|default=''}"/>  
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">开户银行<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='bank'  value="{$info['bank']|default=''}"/>  
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">银行账号<span class="check-tips"></span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name='bank_account'  value="{$info['bank_account']|default=''}"/>  
+						</div>
+					</div>
+
+					<if condition=" $info['type'] eq 0">
+
+						<div class="form-item">
+							<label class="item-label">营业注册码<span class="check-tips"></span></label>
+							<div class="controls">
+								<input type="text" class="text input-large" name='business_code'  value="{$info['business_code']|default=''}"/>  
+							</div>
+						</div>
+
+						<div class="form-item">
+							<label class="item-label">公司证件上传</label>
+						</div>
+
+						<div class="form-item margin-bottom clearfix">
+							<div class='div-border left'>
+								<input type="text" class='text noborder  business_license' disabled="disabled" 
+								value="{$info['business_license']|get_cover='picture_name'}" />
+								<input type="file" id="upload_picture_business_license">
+								<input type='hidden' name="business_license" value="{$info['business_license']|default=''}" />
+							</div>
+						</div>
+
+						<div class="form-item margin-bottom clearfix">
+							<div class='div-border left'>
+								<input type="text" class='text noborder organization_code' disabled="disabled"
+								value="{$info['organization_code']|get_cover='picture_name'}" />
+								<input type="file" id="upload_picture_organization_code">
+								<input type='hidden' name="organization_code" value="{$info['organization_code']|default=''}" />
+							</div>
+						</div>
+
+						<div class="form-item margin-bottom clearfix">
+							<div class='div-border left'>
+								<input type="text" class='text noborder tax_reg_cer' disabled="disabled"
+								value="{$info['tax_reg_cer']|get_cover='picture_name'}" />
+								<input type="file" id="upload_picture_tax_reg_cer">
+								<input type='hidden' name="tax_reg_cer" value="{$info['tax_reg_cer']|default=''}" />
+							</div>
+						</div>
+
+						<else />
+
+						<div class="form-item">
+							<label class="item-label">个人身份证上传</label>
+						</div>
+
+						<div class="form-item margin-bottom clearfix">
+							<div class='div-border left'>
+								<input type="text" class='text noborder card_front' disabled="disabled"
+								value="{$info['card_front']|get_cover='picture_name'}" />
+								<input type="file" id="upload_picture_card_front">
+								<input type='hidden' name="card_front" value="{$info['card_front']|default=''}" />
+							</div>
+						</div>
+
+						<div class="form-item margin-bottom clearfix">
+							<div class='div-border left'>
+								<input type="text" class='text noborder card_back' disabled="disabled"
+								value="{$info['card_back']|get_cover='picture_name'}" />
+								<input type="file" id="upload_picture_card_back">
+								<input type='hidden' name="card_back" value="{$info['card_back']|default=''}" />
+							</div>
+						</div>
+
+					</if>
+					<div class="form-item" style='margin:100px 0px 60px;'>
+
+						<input type="hidden" name="id" value="{:session('member_auth.uid')}">
+
+						<button type="submit"  class="btn ajax-post" target-form="form-horizontal"  >确认提交</button>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<script type="text/javascript">
+	function initialupload(name,btn_txt){
+		$("#upload_picture_"+name).uploadify({
+			"height"          : 30,
+			"swf"             : "__STATIC__/uploadify/uploadify.swf",
+			"fileObjName"     : "download",
+			"buttonText"      : btn_txt,
+			"uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+			"width"           : 150,
+			'removeTimeout'	  : 1,
+			'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+			"onUploadSuccess" : function(file, data){
+				var data = $.parseJSON(data);
+				if(data.status){
+					//alert(data.picture_name);
+					$("input[name="+name+"]").val(data.id);
+					if( typeof(data.picture_name)  === 'undefined' )
+					{
+						$('.'+name).val(data.name);
+					}
+					else{
+						$('.'+name).val(data.picture_name);
+					}
+					
+				} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						//$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+				}
+			},
+			'onFallback' : function() {
+				alert('未检测到兼容版本的Flash.');
+			}
+		});
+	}
+	</script>
+	<script type="text/javascript">
+	$(function(){
+	 	$('div.i_service').wrap("<div class='wappers'></div>");
+
+	});
+
+	/*$(function(){
+		
+	});*/
+
+	
+
+	setTimeout(function(){
+		var types="{$info['type']}";
+		if(types==0){
+			initialupload('business_license',"营业执照上传");
+			initialupload('organization_code',"组织机构代码证上传");
+			initialupload('tax_reg_cer',"税务登记证上传");
+		}
+		else{
+			initialupload('card_front',"身份证正面上传");
+			initialupload('card_back',"身份证背面上传");
+		}
+	},1000);
+
+	highlight_subnav("{:U('info')}");
+	</script>
+
+</block>

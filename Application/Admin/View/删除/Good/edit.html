@@ -1,0 +1,277 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title">
+		<h2>{:isset($info['id'])?'编辑':'新增'}商品</h2>
+	</div>
+	<div class="tab-wrap">
+		
+		<form action="{:U()}" method="post" class="form-horizontal">
+			<!-- 基础 -->
+			<div class="form-item">
+				<label class="item-label">名称<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="good_name" class="text input-large"  value="{$info['good_name']|default=''}"/>
+
+				</div>
+			</div>
+
+			{:W('Dropdown/lists',array('goodcates'))}
+
+			
+			<div class="form-item">
+				<label class="item-label">包装规格<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="package" class="text input-large"  value="{$info['package']|default=''}"/>
+				</div>
+			</div>
+			
+			<div class="form-item">
+				<label class="item-label">销售价<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" onkeyup="checkNum(this)" name="marketprice" class="text input-large"  value="{$info['marketprice']|default=''}"/> 人民币
+				</div>
+			</div>
+			<div class="form-item">
+				<label class="item-label">库存量<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" name="stocksize" class="text input-large"  value="{$info['stocksize']|default=''}"/> 
+				</div>
+			</div>
+			<div class="form-item">
+				<label class="item-label">单位重量<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" onkeyup="checkNum(this)" name="weight" class="text input-large"  value="{$info['weight']|default=''}"/>  kg
+				</div>
+			</div>
+			<div class="controls">
+				<label class="item-label">产品图片<span class="check-tips">（图片规格：320X320）</span></label>
+				<input type="file" id="upload_picture">
+				<input type="hidden" name="picture_id" id="icon" value="{$info['picture_id']|default=''}"/>
+				<div class="upload-img-box">
+					<notempty name="info['picture_id']">
+						<div class="upload-pre-item"><img src="__ROOT__{$info.picture_id|get_cover='path'}"/></div>
+					</notempty>
+				</div>
+			</div>
+			<script type="text/javascript">
+					//上传图片
+					/* 初始化上传插件 */
+					$("#upload_picture").uploadify({
+						"height"          : 30,
+						"swf"             : "__STATIC__/uploadify/uploadify.swf",
+						"fileObjName"     : "download",
+						"buttonText"      : "上传图片",
+						"uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+						"width"           : 120,
+						'removeTimeout'	  : 1,
+						'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+						"onUploadSuccess" : uploadPicture,
+						'onFallback' : function() {
+							alert('未检测到兼容版本的Flash.');
+						}
+					});
+					function uploadPicture(file, data){
+						var data = $.parseJSON(data);
+						var src = '';
+						if(data.status){
+							$("#icon").val(data.id);
+							src = data.url || '__ROOT__' + data.path;
+							$("#icon").parent().find('.upload-img-box').html(
+								'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+								);
+						} else {
+							updateAlert(data.info);
+							setTimeout(function(){
+								$('#top-alert').find('button').click();
+								$(that).removeClass('disabled').prop('disabled',false);
+							},1500);
+						}
+					}
+					</script>
+
+					<div class="form-item">
+						<label class="item-label">产品账期表<span class="check-tips">(账期内容:账期值)</span></label>
+						<div class="controls">
+							<input type="text" name="attr[]" class="text input-medium" placeholder="账期内容"  value=""/>  ：
+							<input type="text" onkeyup="checkNum(this)" name="val[]" class="text input-small" placeholder="账期值"  value=""/> <a class='btn-remove' href="javascript:void(0);">删除</a>  
+						</div>
+					</div>
+					<div class="controls">
+						<a class='btn-add' href="javascript:void(0);">+添加账期</a> 
+					</div>
+
+					<!-- <div class="form-item" id='priceterms'>
+						<label class="item-label">产品账期表<span class="check-tips">(账期内容:账期值)</span></label>
+
+						<notempty name='priceterms'>
+							<volist name='priceterms' id='vo'>
+
+								<div class="controls">
+									<input type="text" name="attr[]" class="text input-medium" placeholder="账期内容"  value="{$vo.attr}"/>  ：
+									<input type="text" onkeyup="checkNum(this)" name="val[]" class="text input-small" placeholder="账期值"  value="{$vo.val}"/> <a class='btn-remove' href="javascript:void(0);">删除</a>  
+								</div>
+
+							</volist>
+							<else/>
+							<div class="controls">
+								<input type="text" name="attr[]" class="text input-medium" placeholder="账期内容"  value=""/>  ：
+								<input type="text" onkeyup="checkNum(this)" name="val[]" class="text input-small" placeholder="账期值"  value=""/> <a class='btn-remove' href="javascript:void(0);">删除</a>  
+							</div>
+						</notempty>
+
+						<div class="controls">
+							<a class='btn-add' href="javascript:void(0);">+添加账期</a> 
+						</div>
+
+					</div> -->
+
+					<ul class="tab-nav nav">
+						<li data-tab="tab1" class="current"><a href="javascript:void(0);">商品描述</a></li>
+						<li data-tab="tab2"><a href="javascript:void(0);">工厂</a></li>
+					</ul>
+                    <div class="tab-content">
+                    	<div id="tab1" class="tab-pane in tab1">
+                    		<div class="form-item">
+                    			
+                    			<div class="controls">
+                    				
+                    				<!-- <label class="textarea" style='width:520px;'> -->
+                    					<textarea class='textarea' name="params" rows="15">{$info.params|htmlspecialchars_decode}</textarea>
+
+                    					{:hook('adminArticleEdit', array('name'=>'params' ))}
+
+                    				<!-- </label> -->
+                    			</div>
+                    		</div>
+                    	</div>
+                    	<div id="tab2" class="tab-pane tab2">
+                    		<div class="form-item">
+                    			
+                    			<div class="controls">
+                    				
+                    				<!-- <label class="textarea" style='width:520px;'> -->
+                    					<textarea class='textarea' name="describe" rows="15">{$info.describe|htmlspecialchars_decode}</textarea>
+
+                    					{:hook('adminArticleEdit', array('name'=>'describe'))}
+
+                    				<!-- </label> -->
+                    			</div>
+                    		</div>
+                    	</div>
+		            </div>
+
+					<div class="form-item">
+
+						<notempty name="info['id']">
+							<else />
+							<input type="hidden" name="salescount" value="0" />
+						</notempty>
+
+						<input type="hidden"  name="createdate" value="{:date('Y-m-d H:i',time())}"   />
+
+						<input type="hidden"  name="brokerage" value="{:session('user_auth.username')}"   />
+
+						<input type="hidden" name="id" value="{$info.id|default=''}">
+
+						<input type='hidden' name='priceterms' value="" />
+
+						<button type="button" id="submit" class="btn submit-btn" >确 定</button>
+
+						<button type="submit"  class="btn submit-btn ajax-post" target-form="form-horizontal" style='display:none;'>确 定</button>
+
+						<button type="button" id="change" class="btn" style='display:none;'>下拉框事件</button>
+
+						<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+					</div>
+		</form>
+		
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		<present name="info.id">
+
+		// Think.setValue("application[]", {$info.application|json_encode} || [1]);
+		// Think.setValue("solvents[]", {$info.solvents|json_encode} || [1]);
+		
+		Think.setValue('pid',{$pid|default = 0});
+		// Think.setValue('aci_sign',{$info.aci_sign|default =1 });
+
+		$(function(){
+
+			$('#change').click(function(){
+
+            	$('select[name=pid]').change();
+
+            	Think.setValue('goodcates_id',{$info.goodcates_id|default = ''});
+
+            	$('select[name=aci_sign]').change();
+
+            });
+
+            $('#change').click();
+
+		});
+		</present>
+
+		$(function(){
+			showTab();
+
+			$('body').on('click','#priceterms .btn-remove,#charge .btn-remove',function(){
+				var count=$(this).parent().siblings().length;
+				if(count<3)
+					return false;
+                $(this).parent().remove();
+            });
+
+            $('body').on('click',"#priceterms .btn-add",function()
+            {
+            	var copy=$(this).parent().prev().clone(true);
+
+            	copy.children('.text').attr('value','');
+
+            	$(this).parent().before(copy);
+            });
+
+            $('#submit').click(function(){
+
+          //   	$('input[name="priceterms"]').val('1');
+
+          //   	var attr = $('input[name="attr[]"]'),
+		  //    vals = $('input[name="val[]"]');
+
+          //   	$(attr).each(function(i,item){
+
+          //   		var val = $(item).val(),
+          //   		val2 = vals.eq(i).val();
+
+          //   		if(val == '' || val2 == ''){
+          //   			$('input[name="priceterms"]').val('0');
+          //   			return false;
+          //   		}
+          //   	});
+
+            	$('.ajax-post').click();
+            	return false;
+            });
+
+            $('.form-horizontal').find('input').keyup(function(event){
+            	if(event.keyCode===13){
+            		$("#submit").click();
+            	}
+            });
+
+            
+		});
+		//导航高亮
+		var id='{$info["id"]}';
+		var nav_active = id >0 && id!= '' ?"{:U('lists')}": '{:U("add")}';
+		var nav_custom_active = '{$nav_active}';
+		nav_active = nav_custom_active && nav_custom_active != '' ? nav_custom_active : nav_active;
+		highlight_subnav(nav_active);
+
+	</script>
+</block>

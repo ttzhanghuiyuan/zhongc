@@ -1,0 +1,104 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	</style>
+</block>
+<block name="body">
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		<div class='member-wrap-content' >
+			<div class="clearfix mhead">
+				<a class="item selected inline-block" href="javascript:void(0)">
+					物流详情
+				</a>	
+			</div>
+			<div class='detail-panel'>
+				<div class='panel-title'>你的快递详情</div>
+				<div class='panel-items'>
+					<!-- <p>2015-10-25 11:20:30 到达广州</p>
+					<p>2015-10-25 11:20:30 到达广州</p>
+					<p>2015-10-25 11:20:30 到达广州</p>
+					<p>2015-10-25 11:20:30 到达广州</p> -->
+					<notempty name='list'>
+						<volist name='list' id='vo'>
+							<p>{$vo['detail_time']|time_format} &nbsp;&nbsp; {$vo['detail_content']}
+							</p>
+						</volist>
+						<else />
+						<p>还未发货</p>
+					</notempty>
+				</div>
+				<div class='panel-order'>
+					<div class="order-row">
+						<label class="label">快递单号：</label>
+						<span class="em">
+							{$info['express_no']}
+						</span> 							
+						<label class="label">快递员：</label>
+						<span class="em">
+							{$info['courier']}
+						</span>
+						<label class="label">联系手机：</label>
+						<span class="em">
+							{$info['courier_mobile']}
+						</span>
+					</div>
+					<div class="order-row">
+						<label class="label">卖家：</label>
+						<span class="em">
+							起点超市
+						</span> 							
+					</div>
+					<div class="order-row">
+						<label class="label">收货地址：</label>
+						<span class="em">
+							{$info['address']}&nbsp;&nbsp;{$info['recipients']}
+							&nbsp;&nbsp;{$info['zip_code']}&nbsp;&nbsp;{$info['recipient_phone']}
+						</span> 							
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+</block>
+<block name='script'>
+
+	<script type="text/javascript">
+
+	 $(function(){
+	 	$('div.i_service').wrap("<div class='wappers'></div>");
+
+	});
+
+	 highlight_subnav("{:U('logitics')}");
+	</script>
+
+</block>

@@ -1,0 +1,470 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+
+	.uploadify,.uploadify-button {
+		display: inline-block;
+	}
+
+	.uploadify-button{
+		/*padding: 8px;*/
+		text-align: center;
+		color: #f70;
+        border-left: 1px solid #ccc;
+        /*border-right: 1px solid #ccc;*/
+	}
+	</style>
+</block>
+<block name="body">
+	
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		
+		<!-- <a id="btn-menu" href="javascript:void(0);"></a> -->
+		
+		<div class='member-wrap-content order'>
+			<include file="Public/alert"/>
+			<!-- <div class="clearfix mhead">
+				<a class="item <eq name='mod' value='0'> selected </eq>  inline-block" href="{:U('orders?mod=0&row=4')}">全部订单</a>
+				<a class="item <eq name='mod' value='1'> selected </eq>  inline-block" href="{:U('orders?mod=1&row=4')}">审核中</a>
+				<a class="item <eq name='mod' value='2'> selected </eq>  inline-block" href="{:U('orders?mod=2&row=4')}" >未支付</a>
+				<a class="item <eq name='mod' value='3'> selected </eq>  inline-block" href="{:U('orders?mod=3&row=4')}">待发货</a>
+				<a class="item <eq name='mod' value='4'> selected </eq>  inline-block" href="{:U('orders?mod=4&row=4')}">已发货</a>
+				<a class="item <eq name='mod' value='5'> selected </eq>  inline-block" href="{:U('orders?mod=5&row=4')}">交易成功</a>
+				<a class="item <eq name='mod' value='6'> selected </eq> mall-cancel inline-block" 
+					href="{:U('orders?mod=6&row=4')}">取消订单</a>
+			</div> -->
+			<div class="order_head"><strong>我的订单</strong></div>
+			<div class="order_wraper clearfix">
+				<div class='order_search right'>
+					<form action="{:U('orders')}" method="get">
+						<span class="span_status">
+						状态: 
+						<select name="mod">
+							<option value="0" <eq name='mod' value='0'> selected </eq> >全部</option>
+							<option value="1" <eq name='mod' value='1'> selected </eq> >审核中</option>
+							<option value="2" <eq name='mod' value='2'> selected </eq> >未支付</option>
+							<option value="3" <eq name='mod' value='3'> selected </eq> >待发货</option>
+							<option value="4" <eq name='mod' value='4'> selected </eq> >已发货</option>
+							<option value="5" <eq name='mod' value='5'> selected </eq> >交易成功</option>
+							<option value="6" <eq name='mod' value='6'> selected </eq> >取消订单</option>
+						</select>
+						</span>
+						<span class="span_time">
+						下单日期:
+						<input class="time" type="text" name="startdate" placeholder="开始日期" value="{$startdate|default=''}">
+						-
+						<input class="time" type="text" name="enddate" placeholder="结束日期" value="{$enddate|default=''}">
+						</span>
+						<button type="submit" class="btn">订单搜索</button>
+						<!-- <div class="div-border right">
+						<input class="search-input left" name="keyword" type="text" value="{$keyword|default=''}" placeholder="请输入订单号或商品名称" />
+						</div> -->
+				    </form>
+				</div>
+			</div>
+			<div class="tab_topnav hide-device">
+				<table>
+					<tbody >
+						<tr >
+							<th class="cel_1">商品名称/型号</th>
+							<th class="cel_2">包装规格</th>
+							<th class="cel_3">重量(kg)</th>
+							<th class="cel_4">数量</th>
+							<th class="cel_5">单价(¥/kg)</th>
+							<th class="cel_6">总价(¥)</th>
+							<th class="cel_7">订单状态</th>
+							<th class="cel_8">交易操作</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="clearfix">
+				<!--<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>-->
+				<!-- <notempty name="list_data">
+					<volist name="list_data" id="vo" >
+						<table class='tbody' border="0" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr class='head'>
+									<td colspan='3'>订单编号<span class='td-cell'>{$vo['order_no']}</span></td>
+								</tr>
+								<tr>
+									<td colspan='3'>商品名称/型号<span class='td-cell'>{$vo['good_name']}<span>/</span>{$vo['name']}</span></td>
+								</tr>
+								<tr>
+									<td>包装规格<span class='td-cell'>{$vo['package']}</span></td>
+									<td>件数<span class='td-cell'>{$vo['good_nums']}</span></td>
+									<td>重量(kg)<span class='td-cell'>{$vo['weight']|number_format=###,2}</span></td>
+								</tr>
+								<tr>
+									<td>单价(¥/kg)<span class='td-cell'>{$vo['unit_price']|number_format=###,2}</span></td>
+									<td>金额(¥)<span class='td-cell'>{$vo['total_price']|number_format=###,2}</span></td>
+									<td>状态
+										<span class='td-cell'>
+										<if condition="($vo['audit_status'] eq 1)"> 通过
+											<elseif condition="($vo['audit_status'] eq  0)"/>未审核
+											<else /> 未通过
+										</if>
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td colspan='2'>下单时间<span class='td-cell'>{$vo['order_date']|time_format=###,'Y-m-d H:m:s'}</span></td>
+									<td>
+										<if condition=" $vo['audit_status'] eq 1 ">
+										<a  href="{:U( 'Member/ordercontract?orderid='.$vo['order_no'] )}" target='_blank'>起点合同下载</a>
+										<else />
+										<a href="javascript:void(0);">暂无文件</a>
+										</if>
+									</td>
+								</tr>
+								<tr>
+									<td colspan='3'>
+										<div class='clearfix'>
+											<div class="div-border left">
+												<input type="text" class='text noborder text_{$vo["id"]}' disabled="disabled" value="{$vo['order_contract']|get_table_field=###,'id','name','File'}" />
+												<input type="file" id="upload_file_{$vo['id']}" class='upload_file'>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</volist>
+				</notempyt> -->
+				
+					<!-- <table class="tb_nav">
+						<tbody >						
+							<tr>
+								<td>
+									<label>
+										<input type="checkbox" disabled="" style="margin-right:8px;">
+										<strong style="margin-right:8px;font-weight:bold;">2015-12-20</strong>
+									</label>
+									订单号：
+									<span>1486114919262007</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="tb_data">
+						<tbody>
+							<tr >
+								<td class="cel_1">
+									<div>
+										<a class="order_img" href="#" target="_blank">
+											<img src="//img.alicdn.com/bao/uploaded/i4/TB1SlQMKFXXXXcPXXXXXXXXXXXX_.jpg_80x80.jpg" style="border:1px solid #E8E8E8;max-width:80px;"
+											>
+										</a>
+										<div class="order_name">
+											<a href="#" target="_blank">
+												<span>栗米鸡粒烩饭</span>
+												<br/>
+												<span>型号：xyz</span>
+											</a>
+										</div>
+									</div>
+								</td>
+								<td class="cel_2">
+									<div style="font-family:verdana;font-style:normal;">
+										桶
+									</div>
+								</td>
+								<td class="cel_3">
+									<div>30.00kg</div>
+								</td>
+								<td class="cel_4">
+									<div style="font-family:verdana;font-style:normal;">
+										3
+									</div>
+								</td>
+								<td class="cel_5">
+									<div>
+										10.50¥
+									</div>
+								</td>
+								<td class="cel_6">
+									<div>
+										<strong>33.50¥</strong>
+									</div>
+								</td>
+								<td class="cel_7">
+									<div>
+										<a href="#" target="_blank">交易成功</a>
+									</div>
+								</td>
+								<td class="cel_8">
+									<div>
+										<a class="tp-tag-a" href="#" target="_blank">
+											订单详情
+										</a>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table> -->
+					<volist name="list" id="vo">
+						<?php
+							$iscancel = 0;
+							$isaudit =0;
+							$express = 0;
+							$isreceipt =0;
+						?>
+						<div class="orderslist div-border">
+						<table class="tb_nav">
+							<tbody >						
+								<tr>
+									<td>
+										<label>
+											<!-- <input type="checkbox" disabled="" style="margin-right:8px;"> -->
+											<strong style="margin-right:8px;font-weight:bold;">{$vo['order_date']|time_format=###,'Y-m-d'}</strong>
+										</label>
+										订单号：
+										<span>{$vo['order_no']}</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="tb_data">
+							<tbody>
+							<volist name="vo['key']" id="vos" key="k">
+								<tr >
+									<td data-title="商品名称/型号" class="cel_1 clearfix">
+										<div>
+											<a class="order_img" href="#" target="_blank">
+												<img class="img-lazyload"  data-src="{$vo['path']|default='__IMG__/item-pic.jpg'}" >
+											</a>
+											<div class="order_name">
+												<a href="#" target="_blank">
+													<span>{$vos['good_name']}</span>
+													<br/>
+													<span>型号：{$vos['name']}</span>
+												</a>
+											</div>
+										</div>
+									</td>
+									<td data-title="包装规格" class="cel_2 clearfix">
+										<div style="font-family:verdana;font-style:normal;">
+											{$vos['package']}
+										</div>
+									</td>
+									<td data-title="重量(kg)" class="cel_3 clearfix">
+										<div>{$vos['weight']}</div>
+									</td>
+									<td data-title="数量" class="cel_4 clearfix">
+										<div style="font-family:verdana;font-style:normal;">
+											{$vos['good_nums']}
+										</div>
+									</td>
+									<td data-title="单价(¥/kg)" class="cel_5 clearfix">
+										<div>
+											{$vos['unit_price']}
+										</div>
+									</td>
+									<td data-title="总价(¥)" class="cel_6 clearfix">
+										<div>
+											<strong>{$vos['total_price']}</strong>
+										</div>
+									</td>
+									<eq name="k" value="1">
+									<td data-title="订单状态" class="cel_7 clearfix"  rowspan="{$vo['count']}">
+										<div>
+											<?php
+											$status="";
+											if($vos['order_status']==2){
+												
+												$status="交易取消";
+											}
+											else{
+												if ($vos['order_status']==1) {
+
+													$status="交易完成";
+
+												}else{
+													if(!empty($vos['express_status']) && !empty($vos['order_contract']) ){
+														$express = 1;
+														if ($vos['receipt_status']==1) {
+
+															if(!empty($vos['payment_status'])){
+																$status="已收货且支付";
+															}else{
+																$status="已收货未支付";
+															}
+															
+														}else{
+
+															$isreceipt = 1;
+
+															if(!empty($vos['payment_status'])){
+																$status="已发货且支付";
+															}else{
+																$status="已发货未支付";
+															}
+														}
+														
+													}else if( !empty($vos['order_contract']) ){
+
+														if(!empty($vos['payment_status'])){
+
+															$status="待发货且支付";
+															$iscancel=1;
+														}
+														else{
+															$status="待发货未支付";
+															$iscancel=1;
+														}
+
+													}else{
+
+														if($vos['audit_status']==1){
+															$status="审核通过";
+															$isaudit=1;
+															$iscancel=1;
+														}elseif (empty($vos['audit_status'])) {
+															$status="审核中";
+															$iscancel=1;
+														}elseif ($vos['audit_status']==2) {
+															$status="审核不通过";
+														}
+
+													}
+												}
+											}
+											?>
+											{$status}
+											<if condition="$express eq 1">
+												<br/>
+												<br/>
+												<a style="color:#f70;" href="{:U('logitic?expressid='.$vos['express_id'])}">查看物流</a>
+											</if>
+											<if condition="$isreceipt eq 1">
+												<br/>
+												<br/>
+												<a class="confirm ajax-get" style="color:#f70;" href="{:U('setrecv?orderid='.$vos['order_no'])}">确认收货</a>
+											</if>
+										</div>
+									</td>
+									<td data-title="交易操作" class="cel_8 clearfix" rowspan="{$vo['count']}" >
+										<div>
+											<if condition="$isaudit eq 1">
+												<a class="inquiry" href="{:U('contract?orderid='.$vos['order_no'])}">订单合同确认</a>
+												<br/>
+												<br/>
+											</if>
+											<if condition="$iscancel eq 1">
+												<a class="confirm ajax-get" style="color:red;" href="{:U('setcancel?orderid='.$vos['order_no'])}">取消订单</a>
+												<br/>
+												<br/>
+											</if>
+											<a class="btn" href="{:U('addorder?orderid='.$vos['order_no'])}">再次购买</a>
+										</div>
+									</td>
+									</eq>
+								</tr>
+							</volist>
+						</tbody>
+					</table>
+					</div>
+					</volist>
+			</div>
+			<div class="page-box">
+                {$_page}
+            </div>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<!--<script type="text/javascript">-->
+
+											<!-- setTimeout(function(){
+												
+												$("#upload_file_{$vo['id']}").uploadify({
+														"height"          : 28,
+														"swf"             : "__STATIC__/uploadify/uploadify.swf",
+														"fileObjName"     : "download",
+														"buttonText"      : '上传合同',
+														"uploader"        : "{:U('File/upload',array('session_id'=>session_id()))}",
+														"width"           : 120,
+														'removeTimeout'	  : 1,
+														'fileTypeExts'	  : '*.pdf; *.doc; *.docx;',
+														'onUploadStart': function(file) {
+															var element={};
+															element.order_no="{$vo['order_no']}";
+															$("#upload_file_{$vo['id']}").uploadify('settings','formData',element);
+														},
+														"onUploadSuccess" : function(file, data){
+															var data = $.parseJSON(data);
+															if(data.status){
+																$('.text_{$vo["id"]}').val(data.name);
+															} else {
+																updateAlert(data.info);
+																setTimeout(function(){
+																	$('#top-alert').find('button').click();
+																},1500);
+															}
+														},
+														'onFallback' : function() {
+															alert('未检测到兼容版本的Flash.');
+														}
+												});
+
+											},1500); -->
+	<!-- </script> -->
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	
+	<script type="text/javascript">
+	
+
+	$(function(){
+		$('.time').datetimepicker({
+			format: 'yyyy-mm-dd',
+			language:"zh-CN",
+			minView:2,
+			autoclose:true
+		});
+		$('div.i_service').wrap("<div class='wappers'></div>");
+		/*$('#btn-menu').text($('div.order a.selected').text());
+		$('#btn-menu').click(function(){
+			var mhead = $('.member-wrapper .member-wrap-content.order .mhead');
+
+			if(mhead.hasClass('hover')){
+				mhead.removeClass('hover');
+			}
+			else{
+				mhead.addClass('hover');
+			}
+
+		});*/
+	});
+
+	highlight_subnav("{:U('orders?mod=0')}");
+	</script>
+</block>

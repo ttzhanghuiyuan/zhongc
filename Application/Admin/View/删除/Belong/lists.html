@@ -1,0 +1,107 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>文章类别管理</h2>
+	</div>
+
+	<!-- 表格列表 -->
+	<div class="tb-unit posr">
+		<div class="tb-unit-bar">
+			<a class="btn" href="{:U('add')}">新 增</a>
+		</div>
+		<div class="category">
+			<div class="hd cf">
+				
+				<div class="order">排序</div>
+				
+				<div class="name">名称</div>
+
+				<div class="order">语言</div>
+
+			</div>
+			<volist name="list" id="vo">
+				<dl class="cate-item">
+					<dt class="cf">
+						<form action="{:U('edit')}" method="post">
+							<div class="btn-toolbar opt-btn cf">
+								<?php
+									$language = getlang();
+								    $translate = json_decode($vo['translate_content'],true);
+								    $forward ='';
+								    $concern_id = array_values($translate);
+								    $concern_id = $concern_id[0];
+								    foreach ($language as $vos) {
+								    	//.'&pid='.$vo['belong_pid']
+								        $forward .= empty($translate[$vos['id']])
+								            ? " <a href='".U('add?concern_id='.$concern_id.'&lang_id='.$vos['id'] )."'>[+".$vos['lang_name']."]</a>" 
+								            : " <a href='".U('edit?id='.$translate[$vos['id']].'&lang_id='.$vos['id'].'&pid='.$vo['belong_pid'] )."'>[".$vos['lang_name']."编辑]</a>" ;
+								    }
+								?>
+								<a title="删除" href="{:U('del?ids='.$vo['id'])}" class="confirm ajax-get">删除</a>
+								{$forward}
+								
+							</div>
+
+							<div class="order"><input type="text" name="belong_sort" class="text input-mini" value="{$vo.belong_sort}"></div>
+							
+							<div class="name">
+								<!-- <span class="tab-sign"></span> -->
+								{$vo['title_show']}
+								<input type="hidden" name="id" value="{$vo.id}">
+								<input type="text" name="belong_name" class="text" value="{$vo.belong_name}">
+								
+								<a class="add-sub-cate" title="添加子分类" href="{:U('add?pid='.$vo['id'].'&lang='.$vo['translate_lang_id'])}">
+									添加子分类
+								</a>
+								<span class="help-inline msg"></span>
+							</div>
+							<div class="order">
+								<span>{$vo['lang_name']}</span>
+							</div>
+						</form>
+					</dt>
+				</dl>
+			</volist>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		(function($){
+
+			/* 实时更新分类信息 */
+			$(".category")
+				.on("submit", "form", function(){
+					var self = $(this);
+					$.post(
+						self.attr("action"),
+						self.serialize(),
+						function(data){
+							/* 提示信息 */
+							var name = data.status ? "success" : "error", msg;
+							msg = self.find(".msg").addClass(name).text(data.info)
+									  .css("display", "inline-block");
+							setTimeout(function(){
+								msg.fadeOut(function(){
+									msg.text("").removeClass(name);
+								});
+							}, 1000);
+						},
+						"json"
+					);
+					return false;
+				})
+                .on("focus","input",function(){
+                    $(this).data('param',$(this).closest("form").serialize());
+
+                })
+                .on("blur", "input", function(){
+                    if($(this).data('param')!=$(this).closest("form").serialize()){
+                        $(this).closest("form").submit();
+                    }
+                });
+		})(jQuery);
+	</script>
+</block>

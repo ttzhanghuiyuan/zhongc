@@ -1,0 +1,44 @@
+<notempty name="tree">
+	<volist name="tree" id="vo">
+		<li id="{$vo['id']}">
+		    <div class="menu-head"><span class="title">{$vo['nav_name']}</span>&nbsp;&nbsp;(<span class="remark">{$vo['nav_remark']}</span>)<a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+		    <div class="menu-setting">
+		        <p class="text_url" <if condition="( $vo['nav_type'] eq 'essay') OR ($vo['nav_type'] eq 'belong' ) OR ($vo['nav_type'] eq 'lang' )">hidden</if> >
+		            <label>
+		                链接网址
+		                <br />
+		                <input type="text" name="nav_url" value="{$vo['nav_url']}" />
+		            </label>
+		        </p>
+		        
+		        <p class="text_name"  <if condition=" ($vo['nav_type'] eq 'lang' )">hidden</if> >
+		            <label>
+		                导航命名
+		                <br />
+		                <input type="text" name="nav_name" value="{$vo['nav_name']}" />
+		            </label>
+		        </p>
+		        <p>
+		            <label>
+		                <input type="checkbox"  value="1" name="target" <eq name="vo['nav_target']" value="1" >checked</eq> >
+		                <span>在新窗口或分页开启链接</span>
+		            </label>
+		        </p>
+		        <p class="a_url" <if condition="( $vo['nav_type'] eq 'link')">hidden</if> >
+		            原始：<a href="{$vo['nav_url']}" class="nav_url"  target="_blank">{$vo['nav_name']}</a>
+		        </p>
+		        <p>
+		            <a class="del" href="javascript:void(0);">移除</a>
+		        </p>
+		        <input type="hidden" name="nav_type" value="{$vo['nav_type']}">
+		        <input type="hidden" name="concern_id" value="{$vo['concern_id']}"> 
+		        <input type="hidden" name="remark" value="{$vo['nav_remark']}" > 
+		    </div>
+		    <notempty name="vo['children']">
+			    <ul>
+			    	{:R('Nav/tree', array($vo['children']))}
+			    </ul>
+			</notempty>
+		</li>
+	</volist>
+</notempty>

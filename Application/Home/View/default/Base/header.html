@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<include file="Public/head"/>
+</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public/header"/>
+	<!-- /头部 -->
+	
+	<!-- 主体 -->
+	<include file="Public/body"/>
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	<include file="Public/footer"/>
+	<!-- /底部 -->
+</body>
+<block name="script">
+
+</block>
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	$(function(){
+        $('.time').datetimepicker({
+            format: 'yyyy/mm/dd',
+            language:"zh-CN",
+            minView:2,
+            autoclose:true
+        });
+
+        $('.booktour').click(function(){
+
+        	var time = $('.modal .time').val();
+        	var times = $('.modal .times').val();
+        	var name = $('.modal .name').val();
+        	var mobile = $('.modal .mobile').val();
+
+        	if(name == null || name == '' || name == 'undefined'){
+        		alert('请输入名称');
+                $('.modal .name').focus();
+        		return false;
+        	}
+
+        	if(mobile == null || mobile == '' || mobile == 'undefined'){
+
+        		alert('请输入手机');
+                 $('.modal .mobile').focus();
+        		return false;
+        	}
+
+        	$.post("{:U('Home/Home/book')}",{time:time,times:times,name:name,mobile:mobile},function(data){
+
+                if(data.status){
+
+                	$('.modal-body .tip').css('display','');
+                	$('.booktour').css('display','none');
+                	$('.modal').find('.form-group').css('display','none');
+
+                    $('.modal .name').val('');
+                    $('.modal .mobile').val('');
+
+                }else{
+
+                	alert(data.info);
+
+                }
+
+            });
+
+
+        });
+
+
+    });
+</script>
+</html>

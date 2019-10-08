@@ -1,0 +1,112 @@
+<extend name="Base/common"/>
+<block name="style">
+    <style type="text/css">
+    .focus img{
+        max-height: 102px;
+    }
+    .i_leftCon{
+        width: auto;
+    }
+    </style>
+</block>
+<block name="body">
+	<div class="i_market clearfix">
+        <!--产品展示-->
+        <div class="i_market_left" id="usd_market">
+            <div class="i_leftTit clearfix">
+                <volist name="category" id="vo">
+                	<div class="i_left_title">
+                		<a <eq name="cate" value="$vo['id']"> class='current'</eq> href="{:U('Articles/index?cate='.$vo['id'])}">
+                			{$vo['title']}
+                		</a>
+                	</div>	
+                </volist>
+            </div>
+            <div class="i_leftCon">
+                <div class="i_proList show">
+                	<!-- <article class="excerpt clearfix">
+                		<div class="focus">
+                			<a target="_blank" href="">
+                				<img class="thumb" src="__IMG__/timthumb.jpg" alt="" />
+                			</a>
+                		</div>
+                		<div class='left' style='width:600px'>
+                			<p class='start'>
+                				<a target="_blank" href="" >莫迪36小时横扫硅谷 21世纪属于印度还是中国
+                				</a>
+                				<span class='right'>2015-12-21</span>
+                			</p>
+                			<span class="note">
+                				腾讯科技讯 9月30日消息，据外电报道，苹果首席执行官蒂姆·库克（Tim Cook）周二表示，在截至今年6月末的过去12个月中，苹果来自企业业务的营收已达到250亿美元。虽然他未明确说明苹果如何划分企业业务，但表示这一数据不包括来自使用个人设备进行工作的苹果用户的营收...
+                			</span>
+                			<p class='end'><a href="">[查看详情]</a></p>
+                		</div>
+                	</article> -->
+                    <notempty name="list_data">
+                    	<volist name="list_data" id="vo">
+                    		<article class="excerpt clearfix">
+                    			<div class="focus">
+                    				<a  href="{:U('Articles/detail?cate='.$cate.'&id='.$vo['id'])}">
+                    					
+                                        <img class="img-lazyload" data-src="{$vo['path']|default='__IMG__/timthumb.png'}" />              			
+                    				</a>
+                    			</div>
+                    			<div class='article-width left' style='position: relative;'>
+                    				<p class='start'>
+                    					<a target="_blank" href="{:U('Articles/detail?cate='.$cate.'&id='.$vo['id'])}" >
+                    						{$vo['title']}
+                    					</a>
+                    					<span class='time' >{$vo['create_time']|time_format=###,'Y-m-d'}</span>
+                    				</p>
+                    				<span class="note">
+                    					{$vo['description']|default=""|msubstr=###,0,110,"utf-8",false}
+                    				</span>
+                    				<span class='end'>……<a class='end' href="{:U('Articles/detail?cate='.$cate.'&id='.$vo['id'])}">[查看详情]</a></span>
+                    			</div>
+                    		</article>
+                        </volist>
+                        <else />
+                        <div style="text-align:center;">
+                            <img src="__IMG__/404/404.jpg" />
+                        </div>
+                    </notempty>
+                </div>
+                <div class="page-box">
+                    {$_page}
+                    <!-- <span class="to">转到第 <input type="text" value="" class="n jump_page"> 页</span>
+                    <span class="go">GO</span> -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="i_market_right">
+        	<!--最新交易-->
+            <div class="iConWrap index_height div-border">
+                <!-- <div class="iConTitle">最新交易</div>
+                <div class="items_container yichi">
+                    <ul style="top: 0px;">
+                        <li>市***公司<em class="red">成功采购1</em>LDPE60.000吨</li>
+                    </ul>
+                </div> -->
+                {:W('Sidenews/trades')}
+            </div>
+
+            <div class="iConWrap index_height div-border" style='margin-bottom:0px;'>
+                <!-- <div class="iConTitle">最新交易</div>
+                <div class="items_container">
+                    <ul>
+                        <li>市***公司<em class="red">成功采购1</em>LDPE60.000吨</li>
+                    </ul>
+                </div> -->
+                {:W('Sidenews/lists')}
+            </div>
+
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+    var url="{:U('Articles/index')}";
+    highlight_nav(url);
+    </script>
+</block>

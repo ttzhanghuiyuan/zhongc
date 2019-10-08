@@ -1,0 +1,9 @@
+<notempty name="list_data">
+	<ul>
+		<volist name="list_data" id="vo">
+			<li><input class='ids' type='checkbox' value="{$vo['id']}" /><span class="name">{$vo['name']}</span></li>
+		</volist>
+	</ul>
+	<else />
+		<div class="">沒有符合條件的迴響。</div>
+</notempty>

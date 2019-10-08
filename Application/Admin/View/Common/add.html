@@ -1,0 +1,434 @@
+<extend name="Public/base"/>
+
+
+<block name="body">
+    <div class="main-title cf">
+        <h2>
+            {$meta_title} 
+        </h2>
+    </div>
+    <div class="tab-wrap">
+        <php>
+            $group_count = count(parse_config_attr($model['field_group']));
+        </php>
+        <if condition="$group_count gt 1">
+            <ul class="tab-nav nav">
+                <volist name=":parse_config_attr($model['field_group'])" id="group">
+                    <li <eq name="key" value="1">class="current"</eq>><a data-toggle="tab" href="javascript:void(0);" url="#tab{$key}">{$group}</a></li>
+                </volist>
+            </ul>
+        </if>
+        <div  class="tab-content" >
+            <form action="{:U('add?model='.$model['id'])}" method="post" class="form form-horizontal">
+                <notempty name="model['lang_support']">
+                    <empty name="_GET['concern_id']">
+                        <div class="form-item cf">
+                            <label class="item-label">语言选择<span class="check-tips"></span></label>
+                            <div class="form-item cf">
+                                <?php
+                                    $language = getlang();
+                                ?>
+                                <select name="lang" class="input-mid">
+                                    <volist name="language" id="vo">
+                                        <option value="{$vo['id']}">{$vo['lang_name']}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+                        <else />
+                        <div class="form-item cf">
+                            <label class="item-label">语言选择<span class="check-tips"></span></label>
+                            <div class="form-item cf">
+                                <?php
+                                    $language = getlang();
+                                ?>
+                                <select class="input-mid" onchange="window.location=this.value;">
+                                    <volist name="language" id="vo">
+                                        <?php
+
+                                        $forward =  empty($translate[$vo['id']]) 
+                                                    ? U('add?concern_id='.$_GET['concern_id'].'&lang_id='.$vo['id'] ) 
+                                                    : U('edit?id='.$translate[$vo['id']].'&lang_id='.$vo['id'] ) ;
+
+                                        if($vo['id'] == $_GET['lang_id']){
+
+                                            $lang_tag =   $vo['lang_tag'] ;
+                                        }
+                                            
+                                        ?>
+
+                                        <option value="{$forward}" <eq name="_GET['lang_id']" value="$vo['id']">selected</eq>  >
+                                            {$vo['lang_name']}
+                                        </option>
+
+                                    </volist>
+                                </select>
+                                <input type="hidden" name="lang_tag" value="{$lang_tag}" />
+                                <input type="hidden" name="lang" value="{$_GET['lang_id']}" /> 
+                                <input type="hidden" name="concern_id" value="{$_GET['concern_id']}" />
+                            </div>
+                        </div>
+                    </empty>
+                </notempty>
+                <volist name=":parse_config_attr($model['field_group'])" id="group">
+                    
+                    <div id="tab{$key}" class="tab-pane <eq name="key" value="1">in</eq> tab{$key}">
+                        
+                        <volist name="fields[$key]" id="field">
+                            <if condition="$field['is_show'] == 1 || $field['is_show'] == 2">
+
+                                <div class="form-item cf" style='<eq name="field.type" value="select">display:none</eq>'>
+                                    <label class="item-label">{$field['title']}<span class="check-tips"><notempty name="field['remark']">（{$field['remark']}）</notempty></span></label>
+                                    <div class="form-item">
+                                        <switch name="field.type">
+                                            <case value="num">
+                                                <input type="text" class="text input-large" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" name="{$field.name}" value="{$field.value}">
+                                            </case>
+                                            <case value="string">
+                                                <input type="text" class="text input-large" name="{$field.name}" value="{$field.value}">
+                                            </case>
+                                            <case value="pwd">
+                                                <input type="password" class="text input-large" name="{$field.name}" value="{$field.value}">
+                                            </case>
+                                            <case value="textarea">
+                                                <textarea rows="5"  type="text" class="textarea input-large" name="{$field.name}">{$field.value}</textarea>
+                                            </case>
+                                            <case value="date">
+                                                <input type="text" name="{$field.name}" class="text input-large time" value="" placeholder="选择日期"  />
+                                            </case>
+                                            <case value="datetime">
+                                                <input type="text" name="{$field.name}" class="text input-large time" value="" placeholder="请选择日期"  />
+                                            </case>
+                                            <case value="bool">
+                                                <select name="{$field.name}">
+                                                    <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                                        <option value="{$key}" <eq name="field.value" value="$key">selected</eq>>{$vo}</option>
+                                                    </volist>
+                                                </select>
+                                            </case>
+                                            <case value="select">
+                                                <select name="{$field.name}">
+                                                    <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                                        <option value="{$key}" <eq name="field.value" value="$key">selected</eq>>{$vo}</option>
+                                                    </volist>
+                                                </select>
+                                            </case>
+                                            <case value="radio">
+                                                <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                                    <div class="radio">
+                                                        <label>{$vo}</label>
+                                                        <input type="radio" value="{$key}" name="{$field.name}">
+                                                    </div>
+                                                </volist>
+                                            </case>
+                                            <case value="checkbox">
+                                                <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                                    <div class="checkbox">
+                                                        <label>{$vo}</label>
+                                                        <input type="checkbox" value="{$key}" name="{$field.name}[]">
+                                                    </div>
+                                                </volist>
+                                            </case>
+                                            <case value="editor">
+                                                <textarea rows="5" class="text input-large" type="text" class="form-control" name="{$field.name}"></textarea>
+                                                {:hook('adminArticleEdit', array('name'=>$field['name'],'value'=>''))}
+                                            </case>
+                                            <case value="picture">
+                                                <div class="controls">
+                                                   
+                                                    <a href="javascript:;" data-src="{:U('Picture/popimg')}" data-width="700px" class="btn uploadify-button btn_img_{$field.name}">上传图片</a>
+                                                    
+                                                    <input type="hidden" name="{$field.name}" id="cover_id_{$field.name}"/>
+
+                                                    <div class="upload-img-box">
+                                                        <notempty name="data[$field['name']]">
+                                                            <div class="upload-pre-item"><img src="{$data[$field['name']]|get_cover='path'}"/></div>
+                                                        </notempty>
+                                                    </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                $(function(){
+                                                    $('.btn_img_{$field.name}').on('click',
+
+                                                        function(){
+                                                            var ifm_src = $(this).attr('data-src');
+                                                            var title = $(this).attr('data-title');
+                                                            var redirect = $(this).attr('data-redirect');
+                                                            var height = $(this).attr('data-height');
+                                                            var width = $(this).attr('data-width');
+                                                            var before = $(this).attr('data-before');
+
+                                                            open_pop_file(ifm_src,title,redirect,height,width,before,1,"cover_id_{$field.name}",0);
+                                                        });
+                                                    });
+                                                </script>
+                                            </case>
+                                            <case value="file">
+                                                <div class="controls">
+
+                                                    <a href="javascript:;" data-src="{:U('File/popfile')}" data-width="800px" class="btn uploadify-button btn_file_{$field.name}">上传附件</a>
+
+                                                    <input type="hidden" name="{$field.name}" id="file_id_{$field.name}" />
+
+                                                    <div class="upload-img-box">
+                                                        <present name="data[$field['name']]">
+                                                            <div class="upload-pre-file"><span class="upload_icon_all"></span>{$data[$field['name']]}</div>
+                                                        </present>
+                                                    </div>
+                                                </div>
+                                                
+                                                <script type="text/javascript">
+                                                $(function(){
+                                                    $('.btn_file_{$field.name}').on('click',
+
+                                                        function(){
+                                                            var ifm_src = $(this).attr('data-src');
+                                                            var title = $(this).attr('data-title');
+                                                            var redirect = $(this).attr('data-redirect');
+                                                            var height = $(this).attr('data-height');
+                                                            var width = $(this).attr('data-width');
+                                                            var before = $(this).attr('data-before');
+
+                                                            open_pop_file(ifm_src,title,redirect,height,width,before,1,"file_id_{$field.name}",0);
+                                                        });
+                                                    });
+                                                </script>
+                                            </case>
+
+                                                    <case value="listselect">
+                                                        <div class="listselect">
+                                                            <a href="javascript:;" data-src="{:U('Popup/lists?extra='.$field['extra'])}" class="btn btn-info btn-popwin">选择</a>
+                                                            <input type="hidden" name="{$field.name}" value="">
+                                                        </div>
+                                                    </case>
+                                                    <case value="field">
+                                                        <div class="controls fields-set">
+                                                            <div class="fields-item">
+                                                            <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                                                <input type="text" class="text input-medium" placeholder="{$vo}" name="{$key}" >
+                                                            </volist>
+                                                            
+                                                            </div>  
+                                                        </div>
+                                                       
+                                                        <script>
+                                                        /*$(function(){
+                                                            
+                                                            $('body').on('click','.btn-fields-add-{$field.name}',function(){
+                                                                var tpl = $(this).parents('.controls').prev().find('.fields-item').eq(0).clone();
+                                                                tpl.find('input').val('');
+                                                                $(this).parents('.controls').prev().append(tpl);
+                                                            });
+
+                                                            $('.fields-set').on('click','.btn-remove-{$field.name}',function(){
+                                                                var len = $(this).parents('.fields-set').find('.fields-item').length;
+                                                                if(len < 2) return;
+                                                                $(this).parent().remove();
+                                                            });
+                                                        });*/
+                                                        </script>
+
+                                                        <textarea class="form-control fields-set-input" name="{$field.name}" style="display:none"></textarea>
+
+                                                    </case>
+                                                    <case value="fields">
+                                                        <div class="controls fields-set">
+                                                            <div class="fields-item">
+                                                            <volist name=":parse_field_attr($field['extra'])" id="vo">
+                                                                <input type="text" class="text input-medium" placeholder="{$vo}" name="{$key}" >
+                                                            </volist>
+                                                             <a class='btn-remove-{$field.name}' href="javascript:void(0);">删除</a>
+                                                            </div>  
+                                                        </div>
+                                                        <div class="controls">
+                                                            <a class='btn-fields-add-{$field.name}' href="javascript:void(0);">添加</a> 
+                                                        </div>
+                                                        <script>
+                                                        $(function(){
+                                                            
+                                                            $('body').on('click','.btn-fields-add-{$field.name}',function(){
+                                                                var tpl = $(this).parents('.controls').prev().find('.fields-item').eq(0).clone();
+                                                                tpl.find('input').val('');
+                                                                $(this).parents('.controls').prev().append(tpl);
+                                                            });
+
+                                                            $('.fields-set').on('click','.btn-remove-{$field.name}',function(){
+                                                                var len = $(this).parents('.fields-set').find('.fields-item').length;
+                                                                if(len < 2) return;
+                                                                $(this).parent().remove();
+                                                            });
+                                                        });
+                                                        </script>
+
+                                                        <textarea class="form-control fields-set-input" name="{$field.name}" style="display:none"></textarea>
+
+                                                    </case>
+                                                    <case value="belong">
+                                                        <div class="listselect">
+                                                            <a href="javascript:;" data-src="{$data_src}" class="btn btn-info btn-popwin belong">选择</a>
+                                                            <input type="hidden" class="" name="{$field.name}" value="">
+                                                        </div>
+                                                        <?php
+                                                            
+                                                            $belong = 1;
+
+                                                            $lang_input = $field['name'];
+
+                                                            if(!empty($model['lang_support'])){
+
+                                                                $concern = empty($_GET['lang_id']) ? 0 : $_GET['lang_id'];
+
+                                                                $default_lang =empty($_GET['lang_id']) ? $language[0]['id'] : $_GET['lang_id'];
+                                                            } 
+                                                            
+                                                        ?>
+                                                    </case>
+                                                    <case value="pictures">
+                                                        <div class="controls">
+                                                            <a href="javascript:;" data-src="{:U('Picture/popimg')}" data-width="700px" class="btn uploadify-button btn_multi_{$field.name}">上传图片</a>
+
+                                                            <div id="multi_{$field.name}" class="multi_img">
+                                                                
+                                                                <div class="item" style="display:none">    
+                                                                    <p class="thumbnail">
+                                                                        <img src="">
+                                                                        <span></span>
+                                                                    </p>
+                                                                    <p><a class="del" href="javascript:void(0);">删除</a>
+                                                                    </p>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <script type="text/javascript" src="__STATIC__/jquery.dragsort-0.5.1.min.js">
+                                                        </script>
+                                                        <script type="text/javascript">
+                                                        $(function(){
+                                                            $("#multi_{$field.name}").dragsort({
+                                                                 dragSelector:'p.thumbnail',
+                                                                 placeHolderTemplate: '<div class="placeholder">&nbsp;</div>',
+                                                                 dragBetween:true,  //允许拖动到任意地方
+                                                                 dragEnd:function(){
+                                                                     
+                                                                 }
+                                                             });
+
+                                                            $('.btn_multi_{$field.name}').on('click',
+
+                                                                function(){
+                                                                    var ifm_src = $(this).attr('data-src');
+                                                                    var title = $(this).attr('data-title');
+                                                                    var redirect = $(this).attr('data-redirect');
+                                                                    var height = $(this).attr('data-height');
+                                                                    var width = $(this).attr('data-width');
+                                                                    var before = $(this).attr('data-before');
+
+                                                                    open_pop_file(ifm_src,title,redirect,height,width,before,1,"{$field.name}",1);
+                                                                });
+
+                                                        });
+                                                        </script>
+                                                    </case>
+                                                    <default/>
+                                                    <input type="text" class="text input-large" name="{$field.name}" value="">
+                                                </switch>
+                                            </div>
+                                        </div>
+                                    </if>
+                                </volist>
+                            </div>
+                        </volist>
+
+                        <div class='form-item cf'>
+                            <button class="btn submit-btn btn-blue ajax-post" id="submit" type="submit" target-form="form-horizontal" data-before="before_submit">提交</button>
+                            <if condition="$back_url">
+                                <button class="btn btn-return" type="button" onclick="window.location.href='{$back_url}'">返回</button>
+                                <else/>
+                                <button url="{:get_redirect_url()}" class="btn btn-return btn-history-back" type="button">返回</button>
+                            </if>
+                        </div>
+                    </form>
+                    
+                </div>               
+    </div>
+</block>
+<block name="script">
+    
+    <link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+    <php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+    <link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+
+    <if condition="!empty($belong) and !empty($default_lang)">
+        <if condition="empty($concern)">
+
+            $(function(){
+
+                var data_src = "{:U('Belong/popbelong',array('input'=>$lang_input,'lang'=>$default_lang))}";
+                $('a.belong').attr('data-src',data_src);
+
+                $('select[name=lang]').change(function(){
+
+                    $('.listselect .btn-group .btn-del-belong').click();
+                    
+                    var lang = $(this).children('option:selected').val();
+                    var input = '{$lang_input}';
+                    $('a.belong').attr('data-src',Think.U('Admin/Belong/popbelong','input='+input+'&lang='+lang));
+                });
+            });
+            <else />
+            $(function(){
+                var data_src = "{:U('Belong/popbelong',array('input'=>$lang_input,'lang'=>$default_lang))}";
+                $('a.belong').attr('data-src',data_src);
+            });
+        </if>
+    </if>
+
+    var before_submit = function(){
+        var parent = $('.fields-set');
+        
+        if(parent.length){
+            parent.each(function(index,items){
+                var data = [];
+                $(items).find('.fields-item').each(function(i,item){
+                    var tr = {};
+                    $(item).find('input').each(function(_i,_item){
+                        var name = $(_item).attr('name');
+                        var val = $(_item).val();
+                        tr[name] = val;
+                    });
+                    data.push(tr);
+
+                });
+                //console.log(data);
+                $(items).parent().find('.fields-set-input').val(JSON.stringify(data));
+                //console.log($(items).parent().find('.fields-set-input').val());
+
+            });
+            
+        }
+        //return false;
+    }
+
+    $(function(){
+        $('.time').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            language:"zh-CN",
+            minView:2,
+            autoclose:true
+        });
+
+        showTab();
+    });
+
+    var nav_url='{$nav_url}';
+    var nav_active = nav_url&& nav_url!=''?nav_url: '{:U("add")}';
+    var nav_custom_active = '{$nav_active}';
+    nav_active = nav_custom_active && nav_custom_active != '' ? nav_custom_active : nav_active;
+    highlight_subnav(nav_active);
+
+    </script>
+</block>
+

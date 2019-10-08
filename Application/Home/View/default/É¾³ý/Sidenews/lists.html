@@ -1,0 +1,9 @@
+<div class="iConTitle">资讯推荐</div>
+<div class="items_container" >
+	<ul>
+		<!-- <li><a href=""></a></li> -->
+		<volist name="list" id="vo">
+			<li><a href="{:U('Articles/detail?cate='.$vo['category_id'].'&id='.$vo['id'])}">{$vo['title']}</a></li>
+		</volist>
+	</ul>
+</div>

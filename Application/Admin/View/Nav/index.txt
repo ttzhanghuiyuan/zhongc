@@ -1,0 +1,86 @@
+<!-- <li id='1'>
+                            <div class="menu-head">Some content <a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+                            <div class="menu-setting">
+                                <p>
+                                    <label>
+                                        链接网址
+                                        <br />
+                                        <input type="text" name="nav_url" />
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        导航命名
+                                        <br />
+                                        <input type="text" name="nav_name" />
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        <input type="checkbox"  value="1" name="target" >
+                                        <span>在新窗口或分页开启链接</span>
+                                    </label>
+                                </p>
+                                <p>
+                                    <a class="del" href="javascript:void(0);">移除</a>
+                                </p>
+                            </div>
+                        </li>
+                        <li id='2'>
+                            <div class="menu-head">Some content<a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+                            <div class="menu-setting">
+                                <p>
+                                    <label>
+                                        链接网址
+                                        <br />
+                                        <input type="text" name="nav_url" />
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        导航命名
+                                        <br />
+                                        <input type="text" name="nav_name" />
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        <input type="checkbox"  value="1" name="target" >
+                                        <span>在新窗口或分页开启链接</span>
+                                    </label>
+                                </p>
+                                <p>
+                                    <a class="del" href="javascript:void(0);">移除</a>
+                                </p>
+                            </div>
+                            <ul>
+                                <li id='3'>
+                                    <div class="menu-head">Some sub-item content<a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+                                    <div class="menu-setting">
+                                        <p>
+                                            <label>
+                                                链接网址
+                                                <br />
+                                                <input type="text" name="nav_url" />
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <label>
+                                                导航命名
+                                                <br />
+                                                <input type="text" name="nav_name" />
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <label>
+                                                <input type="checkbox"  value="1" name="target" >
+                                                <span>在新窗口或分页开启链接</span>
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <a class="del" href="javascript:void(0);">移除</a>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li> -->

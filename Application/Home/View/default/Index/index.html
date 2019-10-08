@@ -1,0 +1,462 @@
+<extend name="Base/common"/>
+<block name="style">
+</block>
+<block name="body">
+    <main role="main" id="main" >
+    <!--导航-->
+    <div class="slide_content">
+        <div class="slide_image">
+            <div class="swiper-container slide_container">
+                <div class="swiper-wrapper">
+
+                    <foreach name="advs" item="vo" key='k'>
+                        <if condition=" $k eq 0 ">
+                            <div class="swiper-slide">
+                                <div class="slide_back" style="background-image: url({$vo['path']})"></div>
+                            </div>
+                            <else/>
+                            <div class="swiper-slide">
+                                <div class="slide_back" style="background-image: url({$vo['path']})"></div>
+                            </div>
+                        </if>
+                    </foreach>
+                </div>
+            </div>
+
+            <!--&lt;!&ndash; 如果需要分页器 &ndash;&gt;-->
+            <!-- <div class="swiper-pagination"></div> -->
+
+            <!--&lt;!&ndash; 如果需要导航按钮 &ndash;&gt;-->
+            <!--<div class="swiper-button-prev"></div>-->
+            <!--<div class="swiper-button-next"></div>-->
+
+        </div>
+    </div>
+
+    <!--首页服务模块-->
+    <div class="container block_container">
+        <div class="block" style="padding-top: 5%;"></div>
+        <div class="block">
+            <div class="element-text">
+                <div class="element-text-content">
+                    <div class="html-content">
+                        <p style="line-height: 1; text-align: center; margin-bottom: 8px;"><span
+                                style="font-family: SimHei; font-size: 24px; color: #333333;">服务</span></p>
+                        <p style="height: 5px; text-align: center; width: 100%; text-align: center;margin-bottom: 6px; ">
+                            <span style="display: block;background: #999999; width: 20px; height: 5px;margin:0 auto;  "></span>
+                        </p>
+                        <p style="line-height: 1; text-align: center;"><span
+                                style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: rgb(153, 153, 153);">SERVICE</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block" style="padding-top: 2.5%; "></div>
+        <div class="block">
+            <div class="row wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1"
+                 style="margin: 0px;">
+
+                <div class="col-lg-4" style="padding: 0px;">
+                    <div class="element-article">
+                        <div class="element-img">
+                            <img src="__IMG__/index01.png">
+                        </div>
+                        <div class="element-content">
+                            <div class="block">
+                                <p>
+						  <span style="font-family: SimHei; font-size: 18px; color: rgb(51, 51, 51);">
+							品质选材
+						  </span>
+                                </p>
+                            </div>
+                            <div class="block">
+                                <p>
+						  <span style="font-family:'Microsoft Yahei'; font-size: 14px; color: rgb(153, 153, 153);">
+							32次智能测试，17道人工检测
+						  </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4" style="padding: 0px;">
+                    <div class="element-article">
+                        <div class="element-img">
+                            <img src="__IMG__/index02.png">
+                        </div>
+                        <div class="element-content">
+                            <div class="block">
+                                <p>
+						  <span style="font-family: SimHei; font-size: 18px; color: rgb(51, 51, 51);">
+							品质选材
+						  </span>
+                                </p>
+                            </div>
+                            <div class="block">
+                                <p>
+						  <span style="font-family:'Microsoft Yahei'; font-size: 14px; color: rgb(153, 153, 153);">
+							32次智能测试，17道人工检测
+						  </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4" style="padding: 0px;">
+                    <div class="element-article">
+                        <div class="element-img">
+                            <img src="__IMG__/index03.png">
+                        </div>
+                        <div class="element-content">
+                            <div class="block">
+                                <p>
+						  <span style="font-family: SimHei; font-size: 18px; color: rgb(51, 51, 51);">
+							品质选材
+						  </span>
+                                </p>
+                            </div>
+                            <div class="block">
+                                <p>
+						  <span style="font-family:'Microsoft Yahei'; font-size: 14px; color: rgb(153, 153, 153);">
+							32次智能测试，17道人工检测
+						  </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block" style="padding-top: 2.5%; "></div>
+        <div class="block">
+            <div class="row wow fadeInRight" data-wow-duration="1s" data-wow-delay="0s" data-wow-iteration="1"
+                 style="margin: 0px;">
+
+                <div class="col-lg-4" style="padding: 0px;">
+                    <div class="element-article">
+                        <div class="element-img">
+                            <img src="__IMG__/index04.png">
+                        </div>
+                        <div class="element-content">
+                            <div class="block">
+                                <p>
+						  <span style="font-family: SimHei; font-size: 18px; color: rgb(51, 51, 51);">
+							品质选材
+						  </span>
+                                </p>
+                            </div>
+                            <div class="block">
+                                <p>
+						  <span style="font-family:'Microsoft Yahei'; font-size: 14px; color: rgb(153, 153, 153);">
+							32次智能测试，17道人工检测
+						  </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4" style="padding: 0px;">
+                    <div class="element-article">
+                        <div class="element-img">
+                            <img src="__IMG__/index05.png">
+                        </div>
+                        <div class="element-content">
+                            <div class="block">
+                                <p>
+						  <span style="font-family: SimHei; font-size: 18px; color: rgb(51, 51, 51);">
+							品质选材
+						  </span>
+                                </p>
+                            </div>
+                            <div class="block">
+                                <p>
+						  <span style="font-family:'Microsoft Yahei'; font-size: 14px; color: rgb(153, 153, 153);">
+							32次智能测试，17道人工检测
+						  </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4" style="padding: 0px;">
+                    <div class="element-article">
+                        <div class="element-img">
+                            <img src="__IMG__/index06.png">
+                        </div>
+                        <div class="element-content">
+                            <div class="block">
+                                <p>
+						  <span style="font-family: SimHei; font-size: 18px; color: rgb(51, 51, 51);">
+							品质选材
+						  </span>
+                                </p>
+                            </div>
+                            <div class="block">
+                                <p>
+						  <span style="font-family:'Microsoft Yahei'; font-size: 14px; color: rgb(153, 153, 153);">
+							32次智能测试，17道人工检测
+						  </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block" style="padding-top:9.70873786407767%; "></div>
+    </div>
+
+    <!--首页空间展示模块-->
+    <div style="width: 100%; height: auto;  background: #F9F9F9;">
+        <div class="container block_container">
+            <div class="block" style="padding-top: 5%;"></div>
+            <div class="block">
+                <div class="element-text">
+                    <div class="element-text-content">
+                        <div class="html-content">
+                            <p style="line-height: 1; text-align: center; margin-bottom: 8px;"><span
+                                    style="font-family: SimHei; font-size: 24px; color: #333333;">空间展示</span></p>
+                            <p style="height: 5px; text-align: center; width: 100%;text-align: center;margin-bottom: 6px; ">
+                                <span style="display: block;background: #999999; width: 20px; height: 5px;margin:0 auto;  "></span>
+                            </p>
+                            <p style="line-height: 1; text-align: center;"><span
+                                    style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: rgb(153, 153, 153);">SPACE</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block" style="padding-top: 2.5%; "></div>
+            <div class="block">
+                <div class="row" style="margin: 0px;">
+                    <foreach name="spaceshows" item="vo" >
+                        <div class="col-lg-4" style="padding: 0px;">
+                            <div class="element-article element-article-display">
+                                <div class="block">
+                                    <div class="back" style="background-image:url({$vo['path']}) "></div>
+                                    <div class="opacity"></div>
+                                    <a href="/Space/index">
+                                        <div class="view_link">
+                                            <span>VIEW MORE</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </foreach>
+                </div>
+            </div>
+            <div class="block" style="padding-top: 2.5%; "></div>
+
+            <div class="block">
+                <a href="/Space/index" style="text-decoration:none">
+                    <div class="more_button">
+                        <span>MORE</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="block" style="padding-top: 5%; "></div>
+
+        </div>
+    </div>
+
+    <!--首页关于我们模块-->
+    <div class="container block_container">
+        <div class="block" style="padding-top: 5%;"></div>
+        <div class="block" style="display:table;">
+            <div class="element-about-img" style="display:table-cell;">
+                <img src="{$about_us['path']}" class="about_img">
+            </div>
+            <div class="element-about-text" style="display:table-cell;">
+                <div class="block" style=" padding-top:4.530011325028313%;"></div>
+                <div class="block">
+                    <div class="element-text">
+                        <div class="element-text-content">
+                            <div class="html-content">
+                                <p style="line-height: 1; text-align: left; margin-bottom: 8px;"><span
+                                        style="font-family: SimHei; font-size: 24px; color: #333333;">关于我们</span></p>
+                                <p style="height: 5px; text-align: left; width: 100%; text-align: center; margin-bottom: 6px; ">
+                                    <span style="display: block;background: #999999; width: 20px; height: 5px; "></span>
+                                </p>
+                                <p style="line-height: 1; text-align: left;"><span
+                                        style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: rgb(153, 153, 153);">ABOUT US</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block" style="padding-top:2.2650056625141564%;"></div>
+                <div class="block" style="text-align: justify">
+				  <span style="font-family:'Microsoft YaHei'; font-size: 14px; color: rgb(153, 153, 153);">
+                      {$about_us['aboutus_content']}
+				  </span>
+                </div>
+
+                <div class="block element-about-button">
+                    <a href="/About/index">
+                        <div class="more_button_s2">
+                            <p style="padding: 0; margin: 0">
+                                <img src="__IMG__/arrow.png" class="arrow_img">
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="block" style="padding-top: 5%;"></div>
+    </div>
+
+    <!--首页团队模块-->
+    <div style="width: 100%; height: auto;  background-image: url('__IMG__/bac.png');">
+        <div class="container block_container">
+            <div class="block" style="padding-top: 5%;"></div>
+            <div class="block">
+                <div class="element-text">
+                    <div class="element-text-content">
+                        <div class="html-content">
+                            <p style="line-height: 1; text-align: center; margin-bottom: 8px;"><span
+                                    style="font-family: SimHei; font-size: 24px; color: #FFFFFF ;">团队</span></p>
+                            <p style="height: 5px; text-align: center; width: 100%;text-align: center;margin-bottom: 6px; ">
+                                <span style="display: block;background: #FFFFFF ; width: 20px; height: 5px;margin:0 auto;  "></span>
+                            </p>
+                            <p style="line-height: 1; text-align: center;"><span
+                                    style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color:#FFFFFF ;">TEAM</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block" style="padding-top: 2.5%;"></div>
+      <!--       <div class="block swiper-container3">
+                <div class="row swiper-wrapper" style="margin: 0px; overflow:hidden ">
+                    <foreach name="worker" item="vo" >
+                        <div class="col-lg-3 swiper-slide" style="padding: 0">
+                            <div class="element-about-team">
+                                <div class="img">
+                                    <img src="{$vo['path']}">
+                                </div>
+                                <div class="tag">
+                                    <div class="text">
+                                        <a  href="/About/detail?id={$vo['id']}">
+                                            <p style="font-family: MicrosoftYaHei;font-size: 18px;color: #333333; padding:0;margin:0;letter-spacing: 0;text-align: center">
+                                                {$vo['worker_name']}
+                                            </p>
+
+                                        </a>
+                                        <p style="font-family: MicrosoftYaHei;font-size: 14px;color: #999999; padding:0;margin:0;letter-spacing: 0;text-align: center">
+                                            {$vo['worker_position']}
+                                        </p>
+                                    </div>
+                                </div>
+                                <a href="/About/detail?id={$vo['id']}">
+                                    <div class="opacity">
+                                        <p>{$vo['worker_brief']}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </foreach>
+                </div>
+            </div> -->
+             <div class="block swiper-container3" style="overflow: hidden">
+                    <div class="swiper-wrapper" style="margin: 0px;">
+                        <foreach name="worker" item="vo">
+                            <div class="col-lg-3 swiper-slide" style="padding: 0">
+                                <div class="element-about-team">
+                                    <div class="img">
+                                        <img src="{$vo['path']}">
+                                    </div>
+                                    <div class="tag">
+                                        <div class="text">
+                                            <a href="/About/detail?id={$vo['id']}">
+                                                <p style="font-family: MicrosoftYaHei;font-size: 18px;color: #333333; padding:0;margin:0;letter-spacing: 0;text-align: center">
+                                                    {$vo['worker_name']}</p>
+                                            </a>
+                                            <p style="font-family: MicrosoftYaHei;font-size: 14px;color: #999999; padding:0;margin:0;letter-spacing: 0;text-align: center">
+                                                {$vo['worker_position']}</p>
+                                        </div>
+                                    </div>
+                                    <a href="/About/detail?id={$vo['id']}">
+                                        <div class="opacity">
+                                            <p>{$vo['worker_brief']}</p>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+            </div>
+            <div class="block" style="padding-top: 5%;"></div>
+        </div>
+    </div>
+
+    <!--首页资讯模块-->
+    <div style="width: 100%; height: auto;">
+        <div class="container block_container">
+            <div class="block" style="padding-top: 5%;"></div>
+            <div class="block">
+                <div class="element-text">
+                    <div class="element-text-content">
+                        <div class="html-content">
+                            <p style="line-height: 1; text-align: center; margin-bottom: 8px;"><span
+                                    style="font-family: SimHei; font-size: 24px; color: #333333 ;">资讯中心</span></p>
+                            <p style="height: 5px; text-align: center; width: 100%;text-align: center;margin-bottom: 6px; ">
+                                <span style="display: block;background: #999999 ; width: 20px; height: 5px;margin:0 auto;  "></span>
+                            </p>
+                            <p style="line-height: 1; text-align: center;"><span
+                                    style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color:rgb(153, 153, 153) ;">NEWS</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block" style="padding-top: 2.5%;"></div>
+            <div class=" block swiper-container2">
+                <div class=" row swiper-wrapper" style="margin: 0px;">
+                    <foreach name="infomation" item="vo" >
+                        <div class="col-lg-3 swiper-slide" style="padding: 0">
+                            <div class="element-about-news">
+                                <a href="/Info/detail?id={$vo['id']}">
+                                    <div class="img">
+                                        <img src="{$vo['path']}"/>
+                                    </div>
+                                </a>
+                                <a href="/Info/detail?id={$vo['id']}" style="text-decoration: none">
+                                    <div class="tag">
+                                        <p style="font-family: MicrosoftYaHei;font-size: 18px;color: #333333; padding:0;margin:0;letter-spacing: 0;text-align: justify; padding-bottom: 11px; padding-top: 11px; overflow:hidden;">
+                                            {$vo['info_title']}</p>
+                                    </div>
+                                </a>
+
+                            </div>
+                        </div>
+                    </foreach>
+                </div>
+            </div>
+
+
+            <div class="block" style="padding-top: 2.5%;"></div>
+            <div class="block">
+                <a href="/Info/index" style="text-decoration:none">
+                    <div class="more_button">
+                        <span>MORE</span>
+                    </div>
+                </a>
+            </div>
+            <div class="block" style="padding-top: 5%;"></div>
+        </div>
+    </div>
+    </main>
+
+</block>
+
+<block name="script">
+    <script src="__STATIC__/public_js/index.js"></script>
+</block>

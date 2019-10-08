@@ -1,0 +1,62 @@
+<nav class="navbar navbar-inverse navbar-fixed-top site-navbar">
+    <?php
+        $l = cookie('l');
+        $concern =  get_trans('concern'.'_'.$l);
+        $qrcode = get_trans('qrcode'.'_'.$l);
+        $_bespoke =  get_trans('bespoke'.'_'.$l);
+    ?>
+    <div class="container">
+        <!--不知道干嘛用的-->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{:U('Index/index')}"><img style="max-height:100%;" class="img-lazyload" data-src="{$webcontent['logo_path']}"></a>
+        </div>
+
+        <!--菜单列表-->
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+
+                <foreach name="nav" item="vo" >
+                    <li><a href="{$vo['nav_url']}">{$vo['nav_name']}</a>
+                    </li>
+                </foreach>
+                <li class="show">
+                    <!-- <a href="javascript:void(0);">{$concern}</a>
+                    <div class="followmain">
+                        <div class="showqrcode">
+                            <div class="qrcode img-lazyload" data-lazy-type="bg" data-src="{$webcontent['rcode_path']}" ></div>
+                            <div class="qrcode_tip">{$qrcode}</div>
+                        </div>
+                    </div> -->
+                    <span style="padding:15px;cursor:pointer;display:inline-block;line-height: 20px;" data-toggle="modal" data-target="#qrcode_modal" >{$concern}</span>
+                </li>
+                <li>
+                    <span style="padding:15px;cursor:pointer;display:inline-block;line-height: 20px;" data-toggle="modal" data-target="#book_modal" >{$_bespoke}</span>
+                </li>
+
+                <!-- <li>
+                    <a href="javascript:void(0);">中文</a>
+
+                </li>
+                <li>
+                    <a href="javascript:void(0);">EN</a>
+
+                </li> -->
+                <?php
+                    $_l = cookie('l');
+                ?>
+                <foreach name="lang" item="vo" >
+                    <div class="fl lang" <eq name="vo.id" value="$_l">style='display:none'</eq> >
+                        <a href="?l={$vo['id']}">{$vo['lang_name']}</a>
+                    </div>
+                </foreach>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>

@@ -1,0 +1,79 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	</style>
+</block>
+<block name="body">
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		<div class='member-wrap-content'>
+			<div class="clearfix mhead">
+				<a class="item selected inline-block" href="javascript:void(0)">取样管理</a>
+			</div>
+			<div class="div-tables">
+				<table cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed">
+					<thead class="purpose-head">
+						<tr>
+							<th class="part first">产品/型号</th>
+							<th class="part">取样时间</th>
+							<th class="part ptotal">物流单号</th>
+						</tr>
+					</thead>
+					<tbody class="purpose-body">
+						
+							<volist name='list_data' id="vo">
+								<tr>
+									<td>{$vo['good_name']}<span>&nbsp;/&nbsp;</span>{$vo['name']}</td>
+									<td>{$vo['sample_date']|time_format}</td>
+									<td>{$vo['express_no']|default='暂无'}<span>(</span>{$vo['express_name']|default='暂无'}<span>)</span></td>
+								</tr>
+							</volist>
+							
+					</tbody>
+				</table>
+				<notempty name="list_data">
+					<else />
+						<div class="textcenter">
+							噢，您还没有此类信息。
+						</div>
+				</notempty>
+			</div>
+			<div class="page-box">
+                {$_page}
+            </div>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	 $(function(){
+		$('div.i_service').wrap("<div class='wappers'></div>");
+	});
+	  highlight_subnav("{:U('samples')}");
+	</script>
+</block>

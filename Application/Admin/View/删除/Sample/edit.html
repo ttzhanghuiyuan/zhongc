@@ -1,0 +1,267 @@
+<extend name="Public/base"/>
+ <block name="style">
+ <style type="text/css">
+ .form-horizontal .item-label{
+ 	font-weight: normal;
+ }
+
+ .form-horizontal .form-item{
+ 	margin-bottom: 14px;
+ }
+
+ .form-horizontal .form-item:last-child{
+ 	margin-top:35px; 
+ }
+
+ .form-horizontal .form-item span:first-child{
+ 	display: inline-block;
+ 	width: 75px;
+ }
+
+ .uploadify{
+ 	display: inline-block;
+ }
+ .uploadify-button {
+ 	display: inline-block;
+ }
+.form-horizontal .form-item  span.uploadify-button-text{
+ 	width: auto;
+ }
+ </style>
+ </block>
+
+<block name="body">
+	<div class="main-title">
+		<h2>取样详情编辑</h2>
+	</div>
+	<div class="tab-wrap">
+		
+		<form action="{:U()}" method="post" class="form-horizontal">
+			<div class="form-item">
+				<table>
+					<tr><th colspan='4'>取样项</th></tr>
+					<tr><td>取样编号：</td><td>{$info['sample_no']|default=''}</td>
+						<td>取样时间：</td><td>{$info['sample_date']|time_format}</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="form-item">
+				<table>
+					<tr><th colspan='4'>取样商品信息</th></tr>
+					<tr><td>商品类型：</td><td>{$info['name']|default=''}</td>
+						<td>商品名称：</td><td>{$info['good_name']|default=''}</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="form-item">
+				<table>
+					<tr><th colspan='4'>会员信息</th></tr>
+					<tr><td>公司名称：</td><td>{$info['company_name']|default=''}</td>
+						<td>联系人：</td><td>{$info['linkman']|default=''}</td>
+					</tr>
+					<tr><td>联系电话：</td><td>{$info['mobile']|default=''}</td>
+						<td>联系地址：</td><td>{$info['addr']|default=''}</td>
+					</tr>
+				</table>
+			</div>	
+
+			<div class="form-item">
+				<table>
+					<tr><th colspan='4'>收货地址</th></tr>
+					<tr><td>收货人：</td><td>{$info['recipients']|default=''}</td>
+						<td>收货人联系电话：</td><td>{$info['recipient_phone']|default=''}</td>
+					</tr>
+					<tr><td>邮编：</td><td>{$info['zip_code']|default=''}</td>
+						<td>收货地址：</td><td>{$info['address']|default=''}</td>
+					</tr>
+				</table>
+			</div>		
+			
+			<div class="form-item">
+				<label class="item-label">备注<span class="check-tips"></span></label>
+				<div class="controls">
+					<label class="textarea input-large">
+						<textarea name="remarks">{$info.remarks|htmlspecialchars_decode}</textarea>
+					</label>  
+				</div>
+			</div>
+			<h3>取样单状态</h3>
+			<if condition="$status eq 1">
+			<div class="form-item">
+				<label class="item-label">
+					<span>审核状态</span><span>：</span>
+					<select name="audit_status">
+						<option value="1">通过</option>
+						<option value="0">未审核</option>
+						<option value="2">不通过</option>
+					</select>
+					<span class='distanse'></span>
+					<span>审核时间</span><span>：</span>
+					<input type="text" name="audit_date" class="text input-large time" value="{:time_format(time())}" placeholder="请选择时间" />
+				</label>
+			</div>
+			</if>
+			<if condition="$status eq 3">
+			<div class="form-item">
+				<label class="item-label">
+					<span>取样状态</span><span>：</span>
+					<select name="order_status">
+						<option value="0">未完成</option>
+						<option value="1">已完成</option>
+					</select>
+					<span class='distanse'></span>
+					<span>完成时间</span><span>：</span>
+					<input type="text" name="complete_date" class="text input-large time" value="{:time_format(time())}" placeholder="请选择时间" />
+				</label>
+			</div>
+			</if>
+			<if condition="$status eq 5">
+				<div class="form-item">
+					<label class="item-label">
+						<span>取样状态</span><span>：完成</span>
+					</label>
+				</div>
+			</if>
+			<if condition="$status neq 1">
+			<h3>快递信息</h3>
+
+			<div class='form-item'>
+				<span>公司名称</span><span>：</span>
+				<input type="text" name="express_name" class="text input-large" value="{$info['express_name']|default=''}" />
+			</div>
+
+			<div class='form-item'>
+				<span>快递单号</span><span>：</span>
+				<input type="text" name="express_no" class="text input-large" value="{$info['express_no']|default=''}" />
+			</div>
+
+			<div class='form-item'>
+				<span>发货时间</span><span>：</span>
+				<input type="text" name="express_date" class="text input-large time" value="{$info['express_date']|time_format}" placeholder="请选择时间" />
+			</div>
+
+			<div class="form-item">
+				<span>快递单图片</span><span>：</span>
+				<input type="file" id="upload_picture">
+				<input type="hidden" name="picture_id" id="icon" value="{$info['picture_id']|default=''}"/>
+				<div class="upload-img-box">
+					<notempty name="info['picture_id']">
+						<div class="upload-pre-item"><img src="__ROOT__{$info.picture_id|get_cover='path'}"/></div>
+					</notempty>
+				</div>
+			</div>
+			<if condition="($status eq 3) or ($status eq 5)">
+			<div class='form-item'>
+				<span>签收人</span><span>：</span>
+				<input type="text" name="signer" class="text input-large" value="{$info['signer']|default=''}" />
+			</div>
+
+			<div class='form-item'>
+				<span>签收时间</span><span>：</span>
+				<input type="text" name="sign_date" class="text input-large time" value="{$info['sign_date']|time_format}" placeholder="请选择时间" />
+			</div>
+			</if>
+			</if>
+
+			<div class='form-item'>
+				<span>操作人</span><span>：</span>
+				<span>{:session('user_auth.username')}</span>
+			</div>
+
+			<div class="form-item">
+
+				<input type="hidden" name="status" value="{$status}">
+				
+				<input type="hidden" name="id" value="{$info.id|default=''}">
+
+				<input type='hidden' name="brokerage" value="{:session('user_auth.username')}">
+				<if condition="$status neq 5">
+					<button type="submit"  class="btn submit-btn ajax-post" target-form="form-horizontal" >确定</button>
+				</if>
+
+				<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+
+				<a class='btn' href="{:U( 'Sample/printview?id='.$info['id'] )}" target='_blank'>打印预览</a>
+			</div>
+		</form>
+		
+	</div>
+</block>
+
+<block name="script">
+	<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+	<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+	<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+	    
+
+		$(function(){
+			showTab();
+
+            $('.form-horizontal').find('input').keyup(function(event){
+            	if(event.keyCode===13){
+            		$('.ajax-post').click();
+            	}
+            });
+
+            $('.time').datetimepicker({
+            	format: 'yyyy-mm-dd hh:ii',
+            	language:"zh-CN",
+            	minView:2,
+            	autoclose:true
+            });
+
+		});
+		//导航高亮
+		var id='{$info["id"]}';
+		var nav_active = id >0 && id!= '' ?"{:U('lists')}": '{:U("add")}';
+		var nav_custom_active = '{$nav_active}';
+		nav_active = nav_custom_active && nav_custom_active != '' ? nav_custom_active : nav_active;
+		highlight_subnav(nav_active);
+
+
+
+	</script>
+	<if condition="$status neq 1">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<script type="text/javascript">
+		//上传图片
+		/* 初始化上传插件 */
+		$("#upload_picture").uploadify({
+			"height"          : 30,
+			"swf"             : "__STATIC__/uploadify/uploadify.swf",
+			"fileObjName"     : "download",
+			"buttonText"      : "上传快递单图片",
+			"uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+			"width"           : 120,
+			'removeTimeout'	  : 1,
+			'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+			"onUploadSuccess" : uploadPicture,
+			'onFallback' : function() {
+				alert('未检测到兼容版本的Flash.');
+			}
+		});
+		function uploadPicture(file, data){
+			var data = $.parseJSON(data);
+			var src = '';
+			if(data.status){
+				$("#icon").val(data.id);
+				src = data.url || '__ROOT__' + data.path;
+				$("#icon").parent().find('.upload-img-box').html(
+					'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+					);
+			} else {
+				updateAlert(data.info);
+				setTimeout(function(){
+					$('#top-alert').find('button').click();
+					$(that).removeClass('disabled').prop('disabled',false);
+				},1500);
+			}
+		}
+	</script>
+	</if>
+</block>

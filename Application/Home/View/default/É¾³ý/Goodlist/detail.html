@@ -1,0 +1,393 @@
+<extend name="Base/common"/>
+<block name="style">
+    <style type="text/css">
+    .i_leftTit{
+        border-bottom: 1px solid #ccc;
+        padding: 10px 25px 5px 5px;
+        margin-bottom: 15px;
+    }
+    .i_leftTit a{
+        display: inline-block;
+        padding: 0 5px;
+    }
+    .i_leftCon{
+        width: auto;
+        border: 1px solid #ccc;
+        margin: 0px;
+    }
+    .i_market_left {
+      float: right;
+    }
+    .i_market_right {
+      float: left;
+    }
+
+    /*.bdsharebuttonbox{
+        height: 36px;
+        line-height: 36px;
+        text-align: right;
+        
+    }*/
+    .index_height{
+        height: auto;
+        border: 0px;
+    }
+    .iConWrap .iConTitle{
+         border-bottom: 1px solid #ccc;
+         background-color: #3399cc;
+         color: #fff;
+         padding: 10px 25px;
+
+    }
+    /*@media screen and (max-width: 600px) {
+        .bdsharebuttonbox{
+            text-align: left;
+        }
+    }*/
+    </style>
+</block>
+
+<block name="body">
+	<div class="i_market clearfix">
+
+        <div class="i_leftTit">
+            <a href="{:U('Index/index')}">首页</a>
+            <span> &gt; </span>
+            <a href="{:U('Goodlist/index?c1='.$info['pid'])}">{$info['pcatename']}</a> &gt; {$info['good_name']}
+        </div>
+        
+        <include file="Public/alert"/>
+        <include file="Public/address" />
+
+        <div class="i_market_left" id="usd_market">
+            <div class='good-detail clearfix'>
+                <div class='img-box left'>
+                    <notempty name="info['path']">
+                        <img class="img-lazyload" data-src="{$info['path']}" />
+                        <else />
+                        <img class="img-lazyload" data-src="__IMG__/item-pic.jpg" />
+                    </notempty>
+                </div>
+                <div class='detail-box'>
+                    <h1>
+                         {$info['pcatename']} <span>(</span>{$info['catename']}<span>)</span>
+                    </h1>
+                    <h1 class="name">
+                         {$info['good_name']}
+                    </h1>
+                    <div class='product-attr'>
+                        <p>
+                            <span class='label'>市场参考价：</span>
+                            <span class='value'><span class="font-color">¥</span><span class="font-color font-weight unit_price">2000</span></span> /kg&nbsp;(含6%税费) <a class="inquiry" href="tencent://message/?uin={$contact['inquiry']}&site=qq&menu=yes" target="_blank" rel="nofollow">点击询价</a>
+                        </p>
+                        <p>
+                            <span class='label'>包装&nbsp;&nbsp;规格：</span>
+                            <span class='value'>{$info['package']}</span>
+                        </p>
+                        <p>
+                            <span class='label'>重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：</span>
+                            <span class='value'>{$info['weight']}</span> kg <span>/</span> {$info['package']}
+                        </p>
+                        <p>
+                            <span class='label'>服&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务：</span>
+                            <span class='value'>由化工商城配送,并提供售后服务</span>
+                        </p>
+                        <!-- <div class="bdsharebuttonbox">
+                            <span style='height:24px; line-height:24px;'>分享到：</span>
+                            <a style='float:none;display:inline-block;margin:0;' href="#" class="bds_more" data-cmd="more" ></a>
+                            <a style='float:none;display:inline-block;margin:0;' href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" ></a>
+                            <a style='float:none;display:inline-block;margin:0;' href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" ></a>
+                            <a style='float:none;display:inline-block;margin:0;' href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+                            <a style='float:none;display:inline-block;margin:0;' href="#" class="bds_renren" data-cmd="renren" title="分享到人人网" ></a>
+                            <a style='float:none;display:inline-block;margin:0;' href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信" ></a>
+                        </div> -->
+                    </div>
+                    <div class='product-attr-btn'>
+                        <p>
+                            <span class='label'>账期内容：</span>
+                            <!-- <span class="price-term" data-id="210">一个月到账</span>
+                            <span class="price-term" data-id="420">三个月到账</span>
+                            <span class="price-term" data-id="1010">半年到账</span> -->
+                            <volist name="prices" id="vo">
+                                <span class="price-term" data-id="{$vo['val']}" >{$vo['attr']}</span>
+                            </volist>
+                        </p>
+                        <p>
+                            <span class='label'>购买数量：</span>
+                            <span class="btn-cnt">
+                                <span class='btn-minus' onclick="changebuynum(1)"> - </span>
+                                <input id="buy-num" type="text" value="1" maxval="{$info['stocksize']}" onkeypress="return HG.isNumberKey(event);" onkeyup="changebuynum(0);" />
+                                <span class='btn-plus' onclick="changebuynum(2)">+</span>
+                            </span>
+                            <span class="stock">库存：<span class="stock_num">{$info['stocksize']}&nbsp;</span>{$info['package']}</span>
+                        </p>
+                        <p>
+                            <span class="label">总价：</span>
+                            <span class='value'>
+                                <span class="font-color">¥</span>
+                                <span class="font-color font-weight"><span class="total_price">2000</span></span>
+                            </span>
+                        </p>
+                        <p>
+                            <div>
+                                <input class="values" type="hidden" name="good_id" value="{$info['id']}" />
+                                <input class="values" type="hidden" name="good_nums" value="1" />
+                                <input class="values" type="hidden" name="price_attr" value="" />
+                                <input class="values" type="hidden" name="good_price" value="" />
+                            </div>
+                            <span class="label device-none"></span>
+                             <a class='ajax-post purchase' target-form="values" href="{:U('Cart/order_add')}"><span>立即购买</span></a>
+                            <a class='ajax-post' target-form="values" href="{:U('Cart/add')}"><span>加入购物车</span></a>
+                            <a class='ajax-sample orange'  href="{:U('Sample/check_addr')}"><span>取样</span></a><!-- {:U('Sample/index?id='.$info['id'])} -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="tabs-detail">
+                <ul class="clearfix">
+                    <li><a href="javascript:void(0);" class="">商品说明书</a></li>
+                    <li><a href="javascript:void(0);" class="">交易记录</a></li>
+                    <li><a href="javascript:void(0);" class="">工程师寄语</a></li>
+                </ul>
+            </div>
+            <div class="tabs-content-detail">
+                <div class="box-content">
+                    
+                    {$info['describe']|htmlspecialchars_decode}
+                </div>
+                <div class="box-content">
+                   <div class="tab_topnav hide-device">
+                    <table>
+                        <tbody >
+                            <tr >
+                                <th class="cel_1">买家</th>
+                                <th class="cel_1">商品名称/型号</th>
+                                <th class="cel_1">数量</th>
+                                <th class="cel_1">成交时间</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div> 
+                    <div class="tab_data">
+                        <table>
+                            <tbody>
+                                <volist name="trads" id="vo">
+                                    <tr>
+                                        <?php
+                                        if(!empty($vo['company_name']))
+                                        {
+                                            $company_name = mb_substr($vo['company_name'],0,1,'utf-8').'***公司';
+                                        }
+                                        else if(!empty($vo['linkman']))
+                                        {
+                                            $company_name = mb_substr($vo['linkman'],0,1,'utf-8').'***个人';
+                                        }
+                                        else{
+
+                                            $company_name = "市***公司";
+                                        }
+                                        ?>
+                                        <td data-title="买家" class="cel_1">{$company_name}</td>
+                                        <td data-title="商品名称/型号" class="cel_1">{$vo['good_name']}({$info['pcatename']})</td>
+                                        <td data-title="数量" class="cel_1">{$vo['good_nums']}</td>
+                                        <td data-title="成交时间" class="cel_1">
+                                            {$vo['order_date']|time_format=###,'Y-m-d'}
+                                            <br/>
+                                            <span class="hour">{$vo['order_date']|time_format=###,'H:i:s'}</span>
+                                        </td>
+                                    </tr>
+                                </volist>
+                            </tbody>
+                        </table>
+                    </div>   
+                </div>
+                <div class="box-content">
+                   {$info['params']|htmlspecialchars_decode}
+                </div>
+            </div>
+        </div>
+        
+        <div class="i_market_right">
+            
+
+            <div class="iConWrap index_height div-border" >
+                <div class="iConTitle">可能感兴趣的产品</div>
+                <div class="items_container" >
+                    
+                    <volist name="intrest" id="vo">
+                        <div class="good-box">
+                            <div class="good-box-img left">
+                                <a href="{:U('Goodlist/detail?id='.$vo['id'])}">
+                                    <notempty name="vo['path']">
+                                        <img class="img-lazyload" data-src="{$vo['path']}" />
+                                        <else/>
+                                        <img class="img-lazyload" data-src="__IMG__/item-pic.jpg" />
+                                    </notempty>
+                                </a>
+                            </div>
+                            <div class="good-box-detail right">
+                                <div><a href="">{$vo['good_name']}</a></div>
+                                <div>{$vo['catename']}</div>
+                                <div>
+                                    <span class="a_btn">
+                                        <span class="arrow-left"></span>
+                                        <a class='a_sample'  href="{:U('Goodlist/detail?id='.$vo['id'])}">取样<span class='tip'>&nbsp;</span></a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </volist>
+                </div>
+            </div>
+
+            <div class="iConWrap index_height div-border" style='margin-bottom:0px;'>
+                <div class="iConTitle">最近浏览过的商品</div>
+                <div class="items_container" >
+                    <volist name="RecentViews" id="vo">
+                        <div class="good-box">
+                            <div class="good-box-img left">
+                                <a href="{:U('Goodlist/detail?id='.$vo['id'])}">
+                                    <notempty name="vo['path']">
+                                        <img class="img-lazyload" data-src="{$vo['path']}" />
+                                        <else/>
+                                        <img class="img-lazyload" data-src="__IMG__/item-pic.jpg" />
+                                    </notempty>
+                                </a>
+                            </div>
+                            <div class="good-box-detail right">
+                                <div><a href="">{$vo['good_name']}</a></div>
+                                <div>{$vo['catename']}</div>
+                                <div>
+                                    <span class="a_btn">
+                                        <span class="arrow-left"></span>
+                                        <a class=''  href="{:U('Goodlist/detail?id='.$vo['id'])}">取样<span class='tip'>&nbsp;</span></a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </volist>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</block>
+<block name='script'>
+    <script>
+    /*window._bd_share_config=
+    {"common":{"bdSnsKey":{},"bdText":"{$info['title']}","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];*/
+
+    $(function(){
+         /*tab切换 begin*/
+        $(".tabs-detail ul li a").removeClass("selected");
+        $(".tabs-detail ul li:first a").addClass("selected"); 
+
+        $(".tabs-content-detail .box-content").siblings().hide().eq(0).show();
+
+        $(".tabs-detail ul li a").click(function() { 
+
+            $(".tabs-detail ul li a").removeClass("selected");
+
+            $(this).addClass("selected");
+
+            var index=$('.tabs-detail ul li').index($(this).parent());
+
+            $(".tabs-content-detail .box-content").siblings().hide().eq(index).show();
+
+            return false;  
+        }); 
+        /*tab切换 end*/
+
+        $(".price-term").click(function(){
+
+            var num = $("#buy-num").val();
+            var unit_price = $(this).attr('data-id');
+            var price_attr = $(this).text();
+
+            $('span.unit_price').text(unit_price);
+            var total_price = parseFloat(unit_price) * parseInt(num);
+            $('span.total_price').text(fmoney(total_price,2));
+            $('input[name=price_attr]').val(price_attr);
+            $('input[name=good_price]').val(unit_price);
+
+            $(".price-term").siblings().removeClass('selected');
+            $(this).addClass('selected');
+
+        });
+
+        $(".price-term").eq(0).click();
+
+        /*$("a.a_cart").click(function(){
+            var target = $(this).attr('href');
+            var tip=$(this).children('span.tip');
+            var query = $('div.values').find('input').serialize();
+            $.post(target,query).success(function(data){
+                if(data.status){
+                        tip.addOne({
+                            str: data.info,
+                            style: 'font-weight:600;',
+                            endSize: "24px",
+                            interval:800
+                        });
+
+                        var url = "{:U('Cart/getCount')}";
+
+                        $.get(url).success(function(data){
+                            if(data.status){
+
+                                $('b#surplusShopCartCount').text(data.info);
+                                $('span#shopcart-count').text(data.info);
+                            }
+                            else{
+                                $('b#surplusShopCartCount').text(0);
+                                $('span#shopcart-count').text(0);
+                            }
+                        });
+                    }
+                    else{
+                        if(data.url){
+                            alert(data.info);
+                            window.location = data.url;
+                        }
+                        else{
+                            tip.addOne({
+                                str: data.info,
+                                style: 'font-weight:600;',
+                                endSize: "24px",
+                                interval:800
+                            });
+                        }
+                    }
+                });
+            return false;
+        });*/
+        $('.ajax-sample').click(function(){
+            var target = $(this).attr('href');
+
+            $.get(target).success(function(data){
+                if(data.status){
+                    showaddr(data);
+                }
+                else{
+                    updateAlert(data.info);
+                    setTimeout(function(){
+                        if (data.url) {
+                            location.href=data.url;
+                        }else{
+                            $('#top-alert').find('button').click();
+                        }
+                    },2500);
+                }
+            });
+            return false;
+        });     
+
+    });
+
+    var url="{:U('Goodlist/index')}";
+    highlight_nav(url);
+    </script>
+</block>

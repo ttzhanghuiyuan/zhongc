@@ -1,0 +1,114 @@
+<extend name="Base/logincommon" />
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #F2F2F2;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		border-top: 2px solid rgb(50,156,198);
+
+	}
+	#wraper{
+		  padding-top: 25px;
+	}
+	#forget-form-group p.tips{
+		height: auto;
+		margin: 0px;
+	}
+	#site-logo{
+		background: url("{$company['logo']|get_cover=path}") center center no-repeat;
+	}
+	@media screen and (max-width: 600px){
+		#site-logo{
+			/*width: 30%;
+			background-size: cover;
+			background-position: 22px center;*/
+			width: 320px;
+			margin: 0 auto;
+		    background-size: contain;
+		    background-position: center;
+		    float: none;
+		}
+		#header-grid .title{
+			display: none;
+		}
+	}
+	</style>
+</block>
+<block name='body'>
+<div id="wraper">
+	<div id="forget-container">
+		<p id="process-status" class="process-status hide-device"></p>
+		<div id="forget-form-group">
+			<form id="process-1-form" action="{:U('Public/identity')}">
+				<p><label>手机号：</label>
+					<input type="text" name="mobile" placeholder="手机号码">
+				</p>
+				<p><label>验证码：</label>
+
+					<input type="text" name="verify_code">
+
+					<img class="verifyimg reloadverify" alt="点击切换" src="{:U('Public/verify')}" style="cursor:pointer;">
+				</p>
+				<p><label></label>
+					<button type="submit" class="submit-btn">下一步</button>
+				</p>
+				<p class='tips'><label></label><span class="check-tips"></span></p>
+			</form>
+		</div>
+	</div>	
+</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	
+	$(document)
+	.ajaxStart(function(){
+		$("button:submit").addClass("log-in").attr("disabled", true);
+	})
+	.ajaxStop(function(){
+		$("button:submit").removeClass("log-in").attr("disabled", false);
+	});
+
+	$("form").submit(function(){
+		var self = $(this);
+		//alert(self.attr('action'));
+		$.post(self.attr("action"), self.serialize(), success, "json");
+		return false;
+
+		function success(data){
+			if(data.status){
+				window.location.href = data.url;
+			} else {
+				self.find(".check-tips").text(data.info);
+				$(".reloadverify").click();
+    			}
+    		}
+    });
+
+    $(function(){
+		$('div.i_service').wrap("<div class='wappers'></div>");
+
+		var verifyimg = $(".verifyimg").attr("src");
+    	$(".reloadverify").click(function(){
+    		if( verifyimg.indexOf('?')>0){
+    			$(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+    		}else{
+    			$(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+    		}
+    	});
+
+	});
+
+
+	</script>
+
+</block>

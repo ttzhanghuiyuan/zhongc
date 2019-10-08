@@ -1,0 +1,95 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.small{
+		display: none;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	</style>
+</block>
+<block name="body">
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		<div class='member-wrap-content' >
+			<div class="clearfix mhead">
+				<a class="item selected inline-block" href="javascript: void(0)">系统公告
+				</a>	
+			</div>
+			<div class="data-table">
+				<table>
+					<!-- 表头 -->
+					<thead>
+						<tr>
+							<th class="td-width">
+								标题
+							</th>
+							<th>
+								时间
+							</th>
+						</tr>
+					</thead>
+					<!-- 列表 -->
+					<tbody>
+						<notempty name="list_data">
+							<volist name="list_data" id="vo">
+								<tr>
+									<td class="td-width"><a href="{:U('Articles/detail?cate=44&id='.$vo['id'])}" target="_blank">{$vo['title']} </a> </td>
+									<td>{$vo['create_time']}</td>
+								</tr>
+							</volist>
+							<else />
+							<tr>
+								<td colspan="2" style="text-align:center;font-size:15px;">
+									 aOh! 暂时还没有内容! 
+								</td>
+							</tr>
+						</notempty>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="page-box">
+                {$_page}
+            </div>
+
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<!--<script type="text/javascript" src="__JS__/jquery.smint.js"></script>-->
+	<script type="text/javascript">
+	 $(function(){
+
+	});
+
+	highlight_subnav("{:U('notices')}");
+	</script>
+
+</block>

@@ -1,0 +1,89 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	</style>
+</block>
+<block name="body">
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		<div class='member-wrap-content'>
+			<div class="clearfix mhead">
+				<a class="item selected inline-block" href="javascript:void(0)">物流查询</a>
+			</div>
+			<div class="div-tables">
+				<table cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed">
+					<thead class="purpose-head">
+						<tr>
+							<th class="part-l second">订单编号</th>
+							<th class="part-l hide-device">产品名称/型号</th>
+							<th class="part-l hide-device">下单时间</th>
+							<th class="part-l ">物流详情</th>
+							<th class="part-l ptotal">状态</th>
+						</tr>
+					</thead>
+					<tbody class="purpose-body">
+						
+							<volist name='list_data' id="vo">
+								<tr>
+									<td>{$vo['order_no']}</td>
+									<td class="hide-device">{$vo['good_name']}<span>&nbsp;/&nbsp;</span>{$vo['name']}</td>
+									<td class="hide-device">{$vo['order_date']|time_format=###,'Y-m-d H:m:s'}</td>
+									<td><a style="color:#f70;" href="{:U('logitic?expressid='.$vo['id'])}">查看</a></td>
+									<td>
+										<if condition="($vo['express_status'] eq 1)"> 已签收
+											<elseif condition="($vo['express_status'] eq  0)"/>未发货
+											<elseif condition="($vo['express_status'] eq  2)"/>发货中
+											<else /> 未签收
+										</if>
+									</td>
+								</tr>
+							</volist>
+							
+					</tbody>
+				</table>
+				<notempty name="list_data">
+				<else />
+					<div class="textcenter">
+						噢，您还没有此类信息。
+					</div>
+				</notempty>
+			</div>
+			<div class="page-box">
+                {$_page}
+            </div>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	 $(function(){
+		$('div.i_service').wrap("<div class='wappers'></div>");
+	});
+	  highlight_subnav("{:U('logitics')}");
+	</script>
+</block>

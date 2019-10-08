@@ -1,0 +1,213 @@
+<extend name="Base/common"/>
+<block name="style">
+
+</block>
+<block name="body">
+    <!--关于我们-->
+    <main role="main" id="main">
+        <!--导航-->
+        <div class="slide_content">
+            <div class="slide_image">
+                <div class="swiper-container slide_container" style="height: auto">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide swiper-no-swiping">
+                            <div class="slide_back about" style="background-image: url({$banner_url})"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--公司简介-->
+        <div class="container block_container">
+            <div class="block" style="padding-top: 5%;"></div>
+            <div class="block">
+                <div class="element-text">
+                    <div class="element-text-content">
+                        <div class="html-content">
+                            <p style="line-height: 1; text-align: center; margin-bottom: 8px;"><span
+                                    style="font-family: SimHei; font-size: 24px; color: #333333;">公司简介</span></p>
+                            <p style="height: 5px; text-align: center; width: 100%; text-align: center;margin-bottom: 6px; ">
+                                <span style="display: block;background: #999999; width: 20px; height: 5px;margin:0 auto;  "></span>
+                            </p>
+                            <p style="line-height: 1; text-align: center;"><span
+                                    style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: rgb(153, 153, 153);">WHO ARE WE</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block" style="padding-top: 2.5%; "></div>
+            <div class="block">
+                <div class="row text-row"
+                     style="text-align: justify;font-family: MicrosoftYaHei;font-size: 14px;color: #999999;letter-spacing: 0;line-height: 30px;">
+                    <p>{$aboutus['aboutus_content']}</p>
+                </div>
+            </div>
+            <div class="block" style="padding-top: 2.5%; ">
+                <div class=" container block_container block_border" style="border-bottom:1px dashed #D8D8D8; "></div>
+            </div>
+        </div>
+
+        <!--企业风采-->
+        <div style="width: 100%; height: auto;">
+            <div class="container block_container">
+                <div class="block" style="padding-top: 5%;"></div>
+                <div class="block">
+                    <div class="element-text">
+                        <div class="element-text-content">
+                            <div class="html-content">
+                                <p style="line-height: 1; text-align: center; margin-bottom: 8px;"><span
+                                        style="font-family: SimHei; font-size: 24px; color: #333333;">企业风采</span></p>
+                                <p style="height: 5px; text-align: center; width: 100%;text-align: center;margin-bottom: 6px; ">
+                                    <span style="display: block;background: #999999; width: 20px; height: 5px;margin:0 auto;  "></span>
+                                </p>
+                                <p style="line-height: 1; text-align: center;"><span
+                                        style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: rgb(153, 153, 153);">STYLE</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block" style="padding-top: 2.5%; "></div>
+                <div class="block swiper-container4" style="overflow: hidden">
+                    <div class="swiper-wrapper" style="margin: 0px;">
+                        <foreach name="adv" item="vo">
+                            <div class="swiper-slide about-slide wow fadeInUp" data-wow-delay=".{$vo['count']}s"
+                                 style="padding: 0px;">
+                                <div class="element-article element-article-display style">
+                                    <div class="block" style="transform: none">
+                                        <div class="back" style="background-image:url({$vo['path']}) "></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+                </div>
+                <div class="block" style="padding-top: 2.5%; ">
+                    <div class=" container block_container block_border"
+                         style="border-bottom:1px dashed #D8D8D8; "></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="element-swiperImgPreview">
+            <div class="swiper-container5">
+              <div class="swiper-wrapper"  style="margin: 0px;">
+                <foreach name="adv" item="vo">
+                    <div class="about-slide  swiper-slide"  style="padding: 0">
+                      <div class="element-middle">
+                        <div class="element-middle-center">
+                          <img src="{$vo['path']}">
+                        </div>
+                      </div>
+                    </div>
+                </foreach>
+              </div>
+              <div class="element-swiper-button-close">
+                <img src="__IMG__/cancel.png" style="width: 26px; margin: 2px">
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+        <!--团队-->
+        <div style="width: 100%; height: auto;">
+            <div class="container block_container">
+                <div class="block" style="padding-top: 5%;"></div>
+                <div class="block">
+                    <div class="element-text">
+                        <div class="element-text-content">
+                            <div class="html-content">
+                                <p style="line-height: 1; text-align: center; margin-bottom: 8px;"><span
+                                        style="font-family: SimHei; font-size: 24px; color: #333333 ;">团队</span></p>
+                                <p style="height: 5px; text-align: center; width: 100%;text-align: center;margin-bottom: 6px; ">
+                                    <span style="display: block;background: #999999 ; width: 20px; height: 5px;margin:0 auto;  "></span>
+                                </p>
+                                <p style="line-height: 1; text-align: center;"><span
+                                        style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color:#333333 ;">TEAM</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block" style="padding-top: 2.5%;"></div>
+                <div class="block swiper-container3" style="overflow: hidden">
+                    <div class="swiper-wrapper" style="margin: 0px;">
+                        <foreach name="worker" item="vo">
+                            <div class="col-lg-3 swiper-slide" style="padding: 0">
+                                <div class="element-about-team">
+                                    <div class="img">
+                                        <img src="{$vo['path']}">
+                                    </div>
+                                    <div class="tag">
+                                        <div class="text">
+                                            <a href="/About/detail?id={$vo['id']}">
+                                                <p style="font-family: MicrosoftYaHei;font-size: 18px;color: #333333; padding:0;margin:0;letter-spacing: 0;text-align: center">
+                                                    {$vo['worker_name']}</p>
+                                            </a>
+                                            <p style="font-family: MicrosoftYaHei;font-size: 14px;color: #999999; padding:0;margin:0;letter-spacing: 0;text-align: center">
+                                                {$vo['worker_position']}</p>
+                                        </div>
+                                    </div>
+                                    <a href="/About/detail?id={$vo['id']}">
+                                        <div class="opacity">
+                                            <p>{$vo['worker_brief']}</p>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+                </div>
+                <div class="block" style="padding-top: 2.5%; ">
+                    <div class=" container block_container block_border"
+                         style="border-bottom:1px dashed #D8D8D8; "></div>
+                </div>
+            </div>
+        </div>
+
+        <!--合作伙伴-->
+        <div style="width: 100%; height: auto;">
+            <div class="container block_container">
+                <div class="block" style="padding-top: 5%;"></div>
+                <div class="block">
+                    <div class="element-text">
+                        <div class="element-text-content">
+                            <div class="html-content">
+                                <p style="line-height: 1; text-align: center; margin-bottom: 8px;"><span
+                                        style="font-family: SimHei; font-size: 24px; color: #333333 ;">合作伙伴</span></p>
+                                <p style="height: 5px; text-align: center; width: 100%;text-align: center;margin-bottom: 6px; ">
+                                    <span style="display: block;background: #999999 ; width: 20px; height: 5px;margin:0 auto;  "></span>
+                                </p>
+                                <p style="line-height: 1; text-align: center;"><span
+                                        style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color:rgb(153, 153, 153) ;">PARTNER</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block" style="padding-top: 2.5%;"></div>
+                <div class=" block"
+                     style="display: flex; flex-wrap: wrap; margin: 0 auto;   justify-content:center ;    align-items: flex-start; ">
+                    <foreach name="partners" item="vo">
+                        <div style="width: 150px; height:100px;background-image:url({$vo['path']}) "></div>
+                    </foreach>
+                </div>
+
+                <div class="block" style="padding-top: 2.5%; ">
+                </div>
+            </div>
+        </div>
+    </main>
+</block>
+
+<block name="script">
+    <script src="__STATIC__/public_js/swiper.min.js"></script>
+    <script src="__STATIC__/public_js/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="__STATIC__/public_js/about.js"></script>
+    <script src="__STATIC__/public_js/jquery.min.js"></script>
+</block>

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<include file="Public/head"/>
+	<style type="text/css">
+    .base_search_form{
+        overflow: hidden;
+        float: left;
+    }
+    .base_search_box{
+        position:relative;
+        
+    }
+    .base_search_drop{
+        position: absolute;
+        z-index: 10000;
+        background: #fff;
+        width: 420px;
+        border:1px solid #ccc;
+    }
+    .base_search_drop>ul{
+        font-size:14px;
+    }
+    .base_search_drop>ul>li{
+        cursor: pointer;
+        padding:2px 3px;
+    }
+    .base_search_drop>ul>li:hover{
+        /* background: #BEBEBE; */
+        background: #efefef;
+    }
+    .base_search_drop_activity{
+        background: #efefef;
+    }
+    @media screen and (max-width: 600px) {
+        .base_search_form{
+            float: none;
+        }
+    }
+    </style>
+</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public/header"/>
+	<!-- /头部 -->
+	
+	<!-- 主体 -->
+	<include file="Public/body"/>
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	<include file="Public/footer"/>
+	<!-- /底部 -->
+</body>
+</html>

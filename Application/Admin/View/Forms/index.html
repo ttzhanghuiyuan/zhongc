@@ -1,0 +1,163 @@
+<extend name="Public/basenav"/>
+<block name="style">
+    <style type="text/css">
+    .tab-wrap{
+        background: transparent;
+    }
+    </style>
+</block>
+<block name="body">
+    <include file="Public/input_item"/>
+    <include file="Public/textarea_item"/>
+    <include file="Public/select_item"/>
+    <div class="main-title cf">
+        <h2>前台表单</h2>
+    </div>
+    <div class="manage-menus">
+        <form method="get" action="{:U('')}">
+            <label class="selected-menu">选择编辑的表单：</label>
+            <select name="forms">
+                <option value="0">选择表单</option>
+                <volist name="forms" id="vo" >
+                    <option value="{$vo['id']}" <eq name="_GET['forms']" value="$vo['id']">selected</eq>>{$vo['forms_name']}&nbsp;&nbsp;{$vo['forms_lang']|get_lang_tag}</option>
+                </volist>
+            </select>
+            <input type="submit" class="btn " value="选取">
+            或&nbsp;&nbsp;<input class="text" type="text" placeholder="输入创建的表单名" />&nbsp;<a href="javascript:void(0);" class="btn_form_add">新建一个表单</a>
+        </form>
+    </div>
+    <div class="tab-wrap">
+        <div class="nav-frame">
+            <div class="nav_holder">
+
+                
+                <p class="menu_header"><span>输入框</span></p>
+                <div style="display:block" class="menu_body" data-model="0" >
+                    <div class="">
+                        
+                        <div class="tab_panel active">
+                            <p class="extra"><label>输入框名</label><input name="input_name" type="text " class="text"></p>
+                            <p class="extra"><label>输入框规则</label><select name="input_rule">
+                                <option value='0'>否</option>
+                                <option value='1'>必填</option>
+                                <option value="2">手机</option>
+                                <option value="3">电话</option>
+                                <option value="4">邮箱</option>
+                            </select></p>
+                            
+                        </div>
+                    </div>
+                    <div class="p">
+                        <a class="add_to_form" href="javascript:void(0);" style="float:right">新增至表单</a>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+
+                <p class="menu_header"><span>文本框</span></p>
+                <div style="display:none" class="menu_body" data-model="1" >
+                    <div class="">
+                        
+                        <div class="tab_panel active">
+                           <p class="extra"><label>文本框名</label><input name="input_name" type="text " class="text"></p>
+                            <p class="extra"><label>文本框规则</label><select name="input_rule">
+                                <option value='0'>否</option>
+                                <option value='1'>必填</option>
+                            </select></p>
+
+                            
+                        </div>
+                    </div>
+                    <div class="p">
+                        <a class="add_to_form" href="javascript:void(0);" style="float:right">新增至表单</a>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+
+                <p class="menu_header"><span>下拉框</span></p>
+                <div style="display:none" class="menu_body" data-model="2" >
+                    <div class="">
+                        
+                        <div class="tab_panel active">
+                            <p class="extra"><label>下拉框名</label><input name="input_name" type="text " class="text"></p>
+
+                            <p class="extra option"><label>下拉选项</label><input type="text" class="text middle"><a  class="option-del" href="javascript:void(0);">删除</a></p>
+
+                            <p class="extra"><a class="option-add" href="javascript:void(0);">添加</a>
+                                <span class="block clear"></span>
+                            </p>
+
+                            <p class="extra"><label>输入框规则</label><select name="input_rule">
+                                <option value='0'>否</option>
+                                <option value='1'>必填</option>
+                            </select></p>
+
+
+                            
+                        </div>
+                    </div>
+                    <div class="p">
+                        <a class="add_to_form" href="javascript:void(0);" style="float:right">新增至表单</a>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="nav_content">
+                <div class="nav-header">
+                    <div class="menu_name">
+                        <a class="btn btn_form_save" href="javascript:void(0);">保存表单</a>
+                        <label class="menu-name-label">
+                            <span>表单名称</span>
+                            <input name="forms_name" type="text" class="menu-name" value="{$item['forms_name']|default=''}" />
+                            <input name="id" type="hidden" value="{$item['id']|default=0}"  />
+                        </label>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="nav-body-setting">
+                    <h3>表单结构</h3>
+                    <p>拖曳各个项目至你想要的顺序。</p>
+                    <ul class="sortable">
+                        {:R('Forms/lists', array($forms_struct))}
+                    </ul>
+                </div>
+                
+                <div class="nav-setting">
+                    <h3>表单设定</h3>
+                    <div class="nav-location">
+                        <?php
+                            $lang = getlang();
+                        ?>
+                        <div class="item-head">表单语言</div>
+                        <volist name="lang" id="vo">
+                            <div class="item">
+                                <input type="radio" name="pos" value="{$vo['id']}" <eq name="item['forms_lang']" value="$vo['id']" >checked</eq> >
+                                <label>{$vo['lang_name']}</label>
+                            </div>
+                        </volist>
+                    </div>
+                </div>
+                <div class="nav-footer">
+                    <div class="menu_name">
+                        <a class="btn btn_form_save" href="javascript:void(0);">保存表单</a>
+                        <label class="menu-name-label">
+                            <a class="del btn_form_del" href="javascript:void(0);">删除表单</a>
+                        </label>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__STATIC__/jquery-ui-1.8.16.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/jquery.nestedSortable.js"></script>
+    <script type="text/javascript" src="__JS__/form.js"></script>
+    <script type="text/javascript">
+    //导航高亮
+    highlight_subnav('{:U('index')}');
+    </script>
+</block>

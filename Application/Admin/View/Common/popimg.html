@@ -1,0 +1,182 @@
+<extend name="Public/basefull"/>
+<block name="style">
+     <link rel="stylesheet" type="text/css" href="__CSS__/popimg.css" media="all">
+</block>
+<block name="body">
+    <div class="main-title">
+        <h2>{$meta_title}</h2>
+    </div>
+    <div class="cf">
+        <div class="fl">
+            <div class="btn-group">
+                 <if condition="$is_display_picture">
+                     <input type="file" id="upload_picture" />
+                     <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+                     <script type="text/javascript">
+                     var error =0;
+                     //上传图片
+                    /* 初始化上传插件 */
+                    $("#upload_picture").uploadify({
+                        "height"          : 30,
+                        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                        "fileObjName"     : "download",
+                        "buttonText"      : "上传图片",
+                        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+                        "width"           : 120,
+                        'removeTimeout'   : 1,
+                        'fileTypeExts'    : '*.jpg; *.png; *.gif;',
+                        "onUploadSuccess" : uploadPicture,
+                        "onQueueComplete" : complete,
+                        'onFallback' : function() {
+                            alert('未检测到兼容版本的Flash.');
+                        }
+                    });
+                    function uploadPicture(file, data){
+                        var data = $.parseJSON(data);
+                        var src = '';
+                        if(data.status){
+                            
+                            
+                        } else {
+                            error = 0;
+                            alert(data.info);
+                        }
+                    }
+                    function complete(status){
+                        
+                        if(error==0)
+                        {
+                            window.location.reload();
+                        }
+                    }
+                    </script>
+                </if>
+            </div>
+        </div>
+        <if condition="!$is_hide_rightbox">
+            <div class="search-form fr cf">
+                <form action="{:U('','extra='.$model['name'],false)}" method="get">
+                <div class="sleft">
+                        <php>
+                            $search_key_arr=explode(':',$model['search_key']);
+                            $search_key =$search_key_arr? $search_key_arr[0]:'title';
+                        </php>
+                    <button type="submit" class="btn search">搜索</button>
+                    <input type="text" name="{$search_key}" class="search-input" value="{:I($search_key)}" placeholder="请输入{$search_key_arr[1]}">
+                   
+                    <if condition="$data_row">
+                            <div class="search-row">
+                                <select name="row" class="form-control input-sm">
+                                    <option selected="selected" value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                    </if> 
+                </div>
+                </form>
+            </div>
+        </if>
+    </div>
+    <div class="data-table">
+        
+        <div class="img_list">
+            
+            <volist name="list_data" id="vo">
+                <div class="item">
+                    <div class="img">
+                        <img class="img-lazyload" data-src="{$vo['path']}"  >
+                        <span></span>
+                        <input class="ids" type="checkbox" name="id[]" value="{$vo['id']}">
+                        <div class="img_mask"></div>
+                    </div>
+                    <div class="name">{$vo['picture_name']}</div>
+                </div>
+            </volist>
+        </div>
+    </div>
+    <if condition="$_page">
+        <div class="page">
+            {$_page}
+        </div>
+    </if>
+    <div class="imglist_footer">
+        <input type="button" value="确认" class="btn btn_ok">
+        <input type="button" value="取消" class="btn btn_cancel">
+    </div>
+</block>
+
+<block name="script">
+    <script>
+        
+        $(function(){
+            $('.data-table .img_list .item .img').click(function(){
+               if( $(this).parent().hasClass('cur') ){
+
+                    $(this).parent().removeClass('cur');
+                    $(this).parent().find('.ids').prop("checked", false);
+               }else{
+
+                    $(this).parent().addClass('cur');
+                    $(this).parent().find('.ids').prop("checked", true);
+               }
+            });
+
+            $('.btn_cancel').click(function(){
+                window.parent.viceframe_close();
+            });
+
+            $('.btn_ok').click(function(){
+
+                var parent = $(window.parent.document).find('.viceframe').attr('data-parent');
+                var cover = $(window.parent.document).find('.viceframe').attr('data-cover');
+                var multi = $(window.parent.document).find('.viceframe').attr('data-multi');
+                
+                if(multi != 1){
+
+                    var cover_img = parent == 1 ?  $(window.parent.document) : $(window.parent.frames['mainframe'].document);
+
+                    if($('input:checkbox[class=ids]:checked').length){
+
+                        cover_img.find("#"+cover).val($('input:checkbox[class=ids]:checked').eq(0).val());
+
+                        cover_img.find("#"+cover).parent().find('.upload-img-box').html(
+                            '<div class="upload-pre-item"><img src="' + $('input:checkbox[class=ids]:checked').eq(0).parent().find('img').attr('src') + '"/></div>'
+                        );
+
+                        window.parent.viceframe_close();
+
+                    }else{
+                        return false;
+                    }
+                }else{
+
+                    var cover_imgs = parent == 1 ?  $(window.parent.document) : $(window.parent.frames['mainframe'].document);
+
+                    var strs = '';
+
+                    if($('input:checkbox[class=ids]:checked').length){
+
+                        $('input:checkbox[class=ids]:checked').each(function(i,item){
+                            
+                            strs += '<div class="item"><p class="thumbnail"><img src="'
+                                + $(item).parent().find('img').attr('src') +
+                                '"><span></span>'
+                                + '<input type="hidden" name="'+ cover +'[]" value="'
+                                + $(item).val()+'">'+
+                                '</p><p><a class="del" href="javascript:void(0);">删除</a></p></div>';
+                            
+                        });
+                        cover_imgs.find('#multi_'+cover).append(strs);
+                        window.parent.viceframe_close();
+
+                    }else{
+                        return false;
+                    }
+                    
+                }
+            });
+        });      
+    </script>
+</block>

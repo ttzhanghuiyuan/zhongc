@@ -1,0 +1,226 @@
+<extend name="Base/common"/>
+<block name="style">
+<link rel="stylesheet" type="text/css" href="__STATIC__/swiper/swiper.css">
+<style type="text/css">
+	html,body{
+		background:#fff;
+	}
+	.about{
+		max-width: 1100px;
+	}
+	.h{
+		padding-top: 50px;
+	}
+	.navbar-inverse{
+		background:#fff;
+		border-bottom: 1px solid #eee;
+	}
+
+	.swiper-container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .swiper-slide {
+        background-size: cover;
+        background-position: center;
+       	background: transparent;
+       	display: block;
+       	line-height: 32px;
+    }
+    .gallery-top {
+        /*height: 180px;*/
+        height: auto;
+        width: 100%;
+    }
+    .gallery-thumbs {
+        box-sizing: border-box;
+        padding: 10px 0;
+        width: 80%;
+    }
+    .gallery-thumbs .swiper-slide {
+        width: 80px;
+        opacity: 0.4;
+        padding: 0;
+        margin: 12px 0;
+    }
+    .gallery-thumbs .swiper-slide-active {
+        opacity: 0.4;
+    }
+
+    .gallery-thumbs .active{
+    	opacity: 1;
+    }
+    .thubmail{
+    	width: 80px;
+    	height: 80px;
+    	background: center no-repeat #fff;
+    	background-size: cover; 
+    	border-radius: 50%;
+    }
+    .partner .thubmail{
+    	display: inline-block;
+    	margin: 15px 20px;
+    }
+    .about .thumbnail{
+    	height: 200px; width: 100%;
+    }
+    @media (max-width: 760px){
+    	.gallery-thumbs{
+	        display: inherit;
+	    }.gallery-top{
+	    	height: auto;
+	    }
+
+    }
+</style>
+
+
+</block>
+<block name="body">
+<div class="h" ></div>
+
+<div class="about">
+	<if condition=" !empty($is_empty) ">
+	<div style="text-align:center">
+		<img src="__IMG__/404/404.jpg">
+	</div>
+	<else/>
+		<div class="companyname">{$title}</div> 
+		<div class="buleline"></div>
+		<div class="companystr">
+			{$content}
+		</div> 
+		<div style="margin-bottom:20px"></div>
+	</if>
+</div>
+<div class="map img-lazyload"  data-lazy-type="bg" data-src="{$contact['map_path']}" >
+	<div class="i-c-l-mask"></div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="thumbnail">
+			<?php
+				$l = cookie('l');
+				$_contact =  get_trans('contact'.'_'.$l);
+			?>
+				
+				<div class="caption">
+					<p>{$_contact}</p>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-4">
+			<div class="thumbnail">
+				<div class="ico  img-lazyload"  data-lazy-type="bg" data-src="{$contact['mobile_path']}" ></div>
+				<div class="caption">
+					<p>{$contact['contact_phone']}</p>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-4">
+			<div class="thumbnail">
+				<div class="ico  img-lazyload"  data-lazy-type="bg" data-src="{$contact['email_path']}" ></div>
+				<div class="caption">
+					<p>{$contact['contact_email']}</p>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-4">
+			<div class="thumbnail">
+				<div class="ico  img-lazyload"  data-lazy-type="bg" data-src="{$contact['adr_path']}" ></div>
+				<div class="caption">
+					<p>{$contact['contact_adr']}</p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="footer_warp">
+	<div class="footer clearfix">
+		<div class="fl footerl">
+			<ul class="footerlmain" >
+				<li>
+				<?php
+					$intro = get_trans('intro'.'_'.$l);
+					$act = get_trans('act'.'_'.$l);
+					$link = get_trans('link'.'_'.$l);
+					$cus = get_trans('cus'.'_'.$l);
+					$qrcode = get_trans('qrcode'.'_'.$l);
+					$law = get_trans('law'.'_'.$l);
+				?>
+					<div class="footertitle"><a href="{$about}"  style="font-weight: bold;">{$intro}</a></div>
+				</li>
+				<!-- <li>
+					<div class="footertitle"><a href="{$active}">{$act}</a></div>
+				</li> -->
+				<li>
+					<div class="footertitle">{$link}</div>
+					<foreach name="links" item="vo">
+			        	<a class="_a" href="{$vo['links_url']}" target="_blank">{$vo['links_name']}</a>
+					</foreach>
+				</li>
+				<li>
+					<div class="footertitle">{$_contact}</div>
+					<a class="_a" href="javascript:void(0);">{$contact['contact_phone']}</a>
+					<a class="_a" href="javascript:void(0);">{$contact['contact_email']}</a>
+					<a class="_a" href="javascript:void(0);">{$contact['contact_adr']}</a>
+				</li>
+				<li>
+					<div class="footertitle">{$cus}</div>
+					<a class="_a" href="javascript:void(0);">{$webcontent['webcontent_tel']}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="fr footerr">
+			<div class="fr clearfix">
+				<div class="qrcode img-lazyload" data-lazy-type="bg" data-src="{$webcontent['rcode_path']}" ></div>
+				<div class="qrcode_tip">{$qrcode}</div>
+			</div>
+		</div>
+	</div>
+	<div class="bottom clearfix">
+		<div class="fl footertitle"><a href="{:U('Content/index')}">{$law}</a></div>
+		<div class="fr footertitle"><a target="_blank" href="http://www.miitbeian.gov.cn/"> Copyright © 2011-2020. All Rights Reserved 邦部科技版权所有 粤ICP备13081459号-2 </a></div>
+	</div>
+</div>
+
+
+</block>
+<block name="script">
+<script type="text/javascript" src="__JS__/common.js"></script>
+<script type="text/javascript" src="__STATIC__/swiper/swiper.js" ></script>
+<script>
+	var galleryTop = new Swiper('.gallery-top', {
+		spaceBetween: 10,
+		onSlideChangeStart: function(){
+
+			$(".gallery-thumbs .swiper-slide").removeClass('active');
+	     	
+		    $(".gallery-thumbs .swiper-slide").eq(galleryTop.activeIndex).addClass('active'); 
+		    
+	    }
+
+	});
+	var galleryThumbs = new Swiper('.gallery-thumbs', {
+		spaceBetween: 26,
+		slidesPerView: 'auto',
+		touchRatio: 0.2,
+		slideToClickedSlide: true
+	});
+	$(function(){
+		$(".gallery-thumbs .swiper-slide").on('touchstart mousedown',function(e){
+		    e.preventDefault()
+		    $(".gallery-thumbs .swiper-slide").removeClass('active');
+		    $(this).addClass('active');
+		    galleryTop.slideTo( $(this).index() )
+		})
+		  $(".gallery-thumbs .swiper-slide").click(function(e){
+		    e.preventDefault()
+		})
+
+	})
+</script>
+</block>

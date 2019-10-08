@@ -1,0 +1,19 @@
+<!-- <div class="search-data-range">
+                                <script src="__THEME_JS__/datetime/moment.js"></script>
+                                <script src="__THEME_JS__/datetime/daterangepicker.js"></script>
+                                <input type="text" readonly="readonly" name="{$date_range['name']}" class="form-control date-range-picker" value="{$date_range['value']}" placeholder="{:L('please_choose_the_time_range')}">
+                                <script>
+                                $(function(){
+                                    $('.date-range-picker').daterangepicker({
+                                        format  : 'YYYY/MM/DD',
+                                        opens   : 'left',
+                                        locale: {
+                                            cancelLabel: 'Clear'
+                                        }
+                                    });
+                                    $('.date-range-picker').on('cancel.daterangepicker', function(ev, picker) {
+                                        $(ev.target).val('');
+                                    });
+                                });
+                                </script>
+                            </div> -->

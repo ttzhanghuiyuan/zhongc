@@ -1,0 +1,233 @@
+<extend name="Public/base"/>
+<block name="style">
+	<style>
+		.tongji2
+		{
+			margin:30px 0 20px 0;
+		}
+		.tongji
+		{
+			overflow:hidden;
+			background:#f1f1f1;
+			padding:20px 0;
+		}
+
+		.tongji ul
+		{
+			overflow:hidden;
+		}
+
+		.tongji ul li
+		{
+			float:left;
+			width:32%;
+			text-align:center;
+			border-right:1px #e2e2e2 solid;
+		}
+
+		.tongji ul li h3
+		{
+			font-size:36px;
+			color:#f60;
+			margin-top:8px;
+			font-weight:800!important;
+			line-height:54px;
+		}
+
+
+	</style>
+</block>
+
+
+
+
+<block name="body">
+
+
+<form action="{:U('')}" method="get">
+	下单时间：
+	<input type='text' name='min_time' class='text input-small time' value="{:I('min_time')}" placeholder='请选择起始时间' />
+	<input type='text' name='max_time' class='text input-small time' value="{:I('max_time')}" placeholder='请选择结束时间' />
+	&nbsp;&nbsp;
+	用户名：
+    <input placeholder="可模糊查询" type="text" name="keyword" class='text input-small' value="" />
+    &nbsp;&nbsp;
+    订单状态：
+    <select name="statusitem" class="form-control input-sm">
+        <!-- <option  value="10">10</option> -->
+        <option selected="selected" value="0">全部</option>
+        <option value="1">待付款</option>
+        <option value="2">待发货</option>
+        <option value="3">已发货</option>
+        <option value="4">取消</option>
+        <option value="5">完成</option>
+    </select>
+    <input type="submit" value="查询" style="height:28px; width:50px;background:#eee;border:1px solid #ccc;margin-left:12px;"/>
+</form>
+
+
+
+<div class="tongji tongji2">
+	    <ul>
+	        <li>
+	            <p>下单量</p>
+	            <h3><if condition="$list_data['count'] eq 0">0<else />{$list_data['count']}</if></h3>
+	        </li>
+
+	        <li>
+	            <p>订单平均值</p>
+	            <h3><if condition="$list_data['count'] eq 0">0<else />{$list_data['avg']}</if></h3>
+	        </li>
+
+	        <li>
+	            <p>订单总金额</p>
+	            <h3><if condition="$list_data['count'] eq 0">0<else />{$list_data['sum']}</if></h3>
+	        </li>
+
+	        <!-- <li style="border-right:0;">
+	            <p>IP数总计</p>
+	            <h3><if condition="$list_data['ipcount'] eq null">0<else />{$list_data['ipcount']}</if></h3>
+	        </li> -->
+
+	    </ul>
+</div>
+
+<!-- 图表 -->
+<!-- <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div> -->
+
+<h3 style="padding:20px 0 10px 20px;">会员订单统计详情</h3> 
+      <div class="data-table" style="padding-bottom:20px;">
+        <div class="table-striped">
+          <table cellspacing="1">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th >订单号</th>
+                <th >会员账号</th>
+                <th >会员姓名</th>
+                <th >会员注册日期</th>
+                <th >商品</th>
+                <th >订购数量</th>
+                <th >订单价格</th>
+                <th >下单日期</th>
+                <!-- <th >状态</th>   -->            
+              </tr>
+            </thead>
+            
+            <!-- 列表 -->
+            <tbody>
+	            <if condition="$list eq null">
+	               <tr>
+	                  <td style="text-align: center;padding: 20px 0;color:#f00;" colspan="7"> aOh! 暂时还没有内容! </td>
+	               </tr>
+
+	               <else />
+	               		<volist name="list" id="vo">
+		               		<tr>
+		               			<td>{$vo['order_no']}</td>
+		               			<td>{$vo['account']}</td>
+		               			<td>{$vo['fullname']}</td>
+		               			<td>{$vo['create_date']|date="Y-m-d H:i:s",###}</td>
+		               			<td>{$vo['good_name']}</td>
+		               			<td>{$vo['good_nums']}</td>
+		               			<td>{$vo['total_price']}</td>
+		               			<td>{$vo['order_date']|date="Y-m-d H:i:s",###}</td>
+		               			<!-- <td>{$vo['adress']}</td> -->
+		               		<tr>
+	               		</volist>
+	            </if>            
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="page">{$page}</div>
+    
+</block>
+
+<block name="script">
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<!-- <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css"> -->
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script src="__JS__/highcharts.js"></script>
+<script src="__JS__/exporting.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+highlight_subnav('{:U('index')}');
+
+Think.setValue('statusitem',{$statusitem|default = 0});
+
+
+$(document).ready(function(){
+
+// var json = {$data};
+
+//  $.each(json,function(index,data){
+
+//  	 $('#container').highcharts({
+
+// 						            title: {
+// 						                text: '近日流量统计',
+// 						                x: -20 //center
+// 						            },
+// 						            subtitle: {
+// 						                text: '<php>echo date("Y-m-d",time());</php>',
+// 						                x: -20
+// 						            },
+// 						            xAxis: {
+// 						                categories: json.createtime
+// 						            },
+// 						            yAxis: {
+// 						                title: {
+// 						                    text: '流量数'
+// 						                },
+// 						                plotLines: [{
+// 						                    value: 0,
+// 						                    width: 1,
+// 						                    color: '#808080'
+// 						                }]
+// 						            },						      
+// 						            legend: {
+// 						                layout: 'vertical',
+// 						                align: 'right',
+// 						                verticalAlign: 'middle',
+// 						                borderWidth: 0
+// 						            },
+// 						            series: [{
+// 						                name: 'IP',
+// 						                data: json.ipcount
+// 						            }, {
+// 						                name: 'UV',
+// 						                data: json.userview
+// 						            }, {
+// 						                name: 'PV',
+// 						                data: json.pageview
+// 						            }, {
+// 						                name: '会员',
+// 						                data: json.membership
+// 						            }]
+// 						        });
+
+
+
+// });
+
+
+ $('.time').datetimepicker({
+            	format: 'yyyy-mm-dd',
+            	language:"zh-CN",
+            	minView:2,
+            	autoclose:true
+            });
+
+
+
+			
+})
+
+
+
+</script>
+
+</block>

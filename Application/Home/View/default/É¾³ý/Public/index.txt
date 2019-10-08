@@ -1,0 +1,125 @@
+indexController
+
+<div class="i_market">
+        <!--产品展示-->
+        <volist name="cate" id="vos" key="k" >
+        <div class="row-title"><a class="more right bg_color_{$k}" href="{:U('Goodlist/index?c1='.$vos['id'])}">更多&gt;</a>
+            <span class="h1"><span class="fcolor_{$k}">{$k}F&nbsp;</span>{$vos['name']}</span>
+        </div>
+        <div class="rows bdcolor_{$k} clearfix">
+            <div class="block left border-right-bottom">
+                <div class='block-title'>应用领域</div>
+                <div class="block-content">
+                    <ul class="clearfix">
+                        <volist name=":get_explode($vos['application'],get_apply(),6)" id="vo">
+                            <li><i></i>{$vo}</li>
+                        </volist>
+                    </ul>
+                    <div class="block-img">
+                        <notempty name="vos['path']">
+                            <img class="img-lazyload"  data-src="{$vos['path']}" />
+                            <else />
+                            <img class="img-lazyload"  data-src="__IMG__/item-pic.jpg" />
+                        </notempty>
+                    </div>
+                </div>
+            </div>
+            <div class="box left">
+                <div class="box-title">适用产品</div>
+                <div class="box-content">
+                    <ul class="item-ul clearfix">
+                        <volist name="goods" id="vo">
+                            <eq name="vo['pid']" value="$vos['id']">
+                                <li class="item-style  border-right-bottom">
+                                    <div class="item-name">
+                                        <a href="">{$vo['good_name']}</a>
+                                    </div>
+                                    <div class="itme-content">
+                                        <div class="content left">
+                                            <div class="name">{$vo['name']}</div>
+                                            <div class="a-btn">
+                                                <span class="a_btn">
+                                                    <a class="a_sample" href="{:U('Goodlist/detail?id='.$vo['id'])}">取样<span class='tip'>&nbsp;</span></a>
+                                                    <span class="arrow-right"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="img-box left">
+                                            <a href="{:U('Goodlist/detail?id='.$vo['id'])}">
+                                                <notempty name="vo['path']">
+                                                    <img class="img-lazyload"  data-src="{$vo['path']}" />
+                                                    <else />
+                                                    <img class="img-lazyload"  data-src="__IMG__/item-pic.jpg" />
+                                                </notempty>
+                                            </a>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div> 
+                                </li>
+                            </eq>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+            <div class="i_market_right border-right-bottom">
+                <div class="iConWrap" style='margin-bottom:0px;'>
+                    <div class="iConTitle">火热<span class="fcolor_{$k}">交易</span></div>
+                    <div class="items_container jy jy_{$k}">
+                        <ul style="top: 0px;">
+                            <volist name="orders" id="vo">
+                                <eq name="vo['pid']" value="$vos['id']">
+                                    <li>
+                                       <php>
+                                         
+                                        if(!empty($vo['company_name']))
+                                        {
+                                            $company_name = mb_substr($vo['company_name'],0,1,'utf-8').'***公司';
+                                        }
+                                        else if(!empty($vo['linkman']))
+                                        {
+                                            $company_name = mb_substr($vo['linkman'],0,1,'utf-8').'***个人';
+                                        }
+                                        else{
+                                            $company_name = "市***公司";
+                                        }
+                                       </php>
+                                       {$company_name}
+                                        <em class="red">成功采购</em>{$vo['good_name']}{$vo['total_weight']} kg
+                                    </li>
+                                </eq>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </volist>
+</div>
+
+<volist name="orders" id="vo">
+<eq name="vo['pid']" value="$vos['id']">
+<li>
+<php>
+
+if(!empty($vo['company_name']))
+{
+$company_name = mb_substr($vo['company_name'],0,1,'utf-8').'***公司';
+}
+else if(!empty($vo['linkman']))
+{
+$company_name = mb_substr($vo['linkman'],0,1,'utf-8').'***个人';
+}
+else{
+$company_name = "市***公司";
+}
+</php>
+{$company_name}
+<em class="red">成功采购</em>{$vo['good_name']}{$vo['total_weight']} kg
+</li>
+</eq>
+</volist>
+
+index.css
+
+

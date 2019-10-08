@@ -1,0 +1,264 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<!--<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>-->
+	<div class="main-title">
+		<h2>{:isset($info['id'])?'编辑':'新增'}订单快递信息</h2>
+	</div>
+	<div class="tab-wrap">
+		
+		<form action="{:U()}" method="post" class="form-horizontal">
+			<!-- 基础 -->
+			<div class="form-item">
+				<label class="item-label">订单号<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" class="text input-large" disabled="disabled"  value="{$orderid|default=''}"/>
+					<input type='hidden' name='express_order_no' value="{$orderid|default=''}" />
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">快递单号<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="express_no" class="text input-large"  value="{$info['express_no']|default=''}"/>
+				</div>
+			</div>
+			<div class="form-item">
+				<label class="item-label">快递联系人</label>
+				<div class="controls">
+					<input type="text" name="courier" class="text input-large"  value="{$info['courier']|default=''}"/>
+				</div>
+			</div>
+			<div class="form-item">
+				<label class="item-label">快递联系号码<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="courier_mobile" class="text input-large"  value="{$info['courier_mobile']|default=''}"/>
+				</div>
+			</div>
+			<div class="form-item">
+				<label class="item-label">发货时间<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="express_date" class="text input-large time"  value="{$info['express_date']|time_format}" placeholder="请选择时间" />
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">收件人<span class="check-tips"></span></label>
+				<div class="controls">
+					{$order['recipients']|default=''} 
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">收件人联系电话<span class="check-tips"></span></label>
+				<div class="controls">
+					{$order['recipient_phone']|default=''} 
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">邮编<span class="check-tips"></span></label>
+				<div class="controls">
+					{$order['zip_code']|default=''} 
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">收件地址<span class="check-tips"></span></label>
+				<div class="controls">
+					{$order['address']|default=''} 
+				</div>
+			</div>
+
+			<if condition="($status eq 7) or ($status eq 8)">
+			<div class="form-item">
+				<label class="item-label">签收人<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="signer" class="text input-large"  value="{$info['signer']|default=''}"/> 
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">完成时间<span class="check-tips"></span></label>
+				<div class="controls">
+					<input type="text" name="complete_time" class="text input-large time"  value="{$info['complete_time']|time_format}" placeholder="请选择时间" />
+				</div>
+			</div>
+			</if>
+
+			<div class="form-item">
+				
+				<label class="item-label">物流状态<span class="check-tips"></span></label>
+				<if condition=" $status eq  8">
+					已收货
+				<else />
+				<div class="controls">
+					<select name="express_status">
+						<if condition="$status eq 5">
+						<option value="2">发货中</option>
+						<elseif condition="$status eq 6" />
+						<option value="3">未签收</option>
+						<option value="1">已签收</option>
+						</if>
+					</select>
+				</div>
+				</if>
+			</div>
+			
+			<div class="form-item" id='expressdetails'>
+				<label class="item-label">快递详情内容<span class="check-tips">(快递时间:快递详情)</span></label>
+				<notempty name='expressdetails'>
+					<volist name='expressdetails' id='vo'>
+						<div class="controls">
+							<input type="text" name="detail_time[]" class="text input-medium time" placeholder="快递时间"  value="{$vo.detail_time|time_format}"/>  ：
+							<input type="text" name="detail_content[]" class="text input-small" placeholder="快递详情"  value="{$vo.detail_content}"/> 
+							<a class='btn-remove' href="javascript:void(0);">删除</a>  
+						</div>
+					</volist>
+					<else/>
+					<div class="controls">
+						<input type="text" name="detail_time[]" class="text input-medium time" placeholder="快递时间"  value=""/>  ：
+						<input type="text" name="detail_content[]" class="text input-small" placeholder="快递详情"  value=""/> 
+						<a class='btn-remove' href="javascript:void(0);">删除</a>  
+					</div>
+				</notempty>
+				<div class="controls">
+					<a class='btn-add' href="javascript:void(0);">+添加</a> 
+				</div>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label">备注<span class="check-tips"></span></label>
+				<div class="controls">
+					<label class="textarea input-large">
+						<textarea name="remark">{$info.remark|htmlspecialchars_decode}</textarea>
+					</label>  
+				</div>
+			</div>
+
+			<div class="form-item">
+
+				<input type="hidden" name="id" value="{$info.id|default=''}">
+
+				<input type='hidden' name='expressdetail' value="" />
+				<eq name="is_hide_confirm" value="1">
+					<else/>
+					<button type="button" id="submit" class="btn submit-btn" >确 定</button>
+				</eq>
+
+				<button type="submit"  class="btn submit-btn ajax-post" target-form="form-horizontal" style='display:none;'>确 定</button>
+
+				<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+			</div>
+		</form>
+		
+	</div>
+</block>
+
+<block name="script">
+	<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+	<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+	<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+	<script type="text/javascript">
+		
+
+		function bindtime(object){
+			/*object.on('click',function(){
+
+				$(this).datetimepicker({
+				format: 'yyyy-mm-dd hh:ii',
+				language:"zh-CN",
+				minView:2,
+				autoclose:true
+			});
+
+			});*/
+
+			object.datetimepicker({
+				format: 'yyyy-mm-dd hh:ii',
+				language:"zh-CN",
+				minView:2,
+				autoclose:true
+			});
+		}
+
+		$(function(){
+
+			//showTab();
+			/*$('.time').datetimepicker({
+            	format: 'yyyy-mm-dd hh:ii',
+            	language:"zh-CN",
+            	minView:2,
+            	autoclose:true
+            });*/
+			bindtime($('.time'));
+
+			$('body').on('click','#expressdetails .btn-remove,#charge .btn-remove',function(){
+				var count=$(this).parent().siblings().length;
+				if(count<3)
+					return false;
+                $(this).parent().remove();
+            });
+
+            $('body').on('click',"#expressdetails .btn-add",function()
+            {
+            	/*var copy=$(this).parent().prev().clone();
+
+            	copy.children('.text').attr('value','');*/
+
+            	var copy='<div class="controls">'
+            	        + '<input type="text" name="detail_time[]" class="text input-medium time" placeholder="快递时间"  value=""/>  ：'
+						+ '<input type="text" name="detail_content[]" class="text input-small" placeholder="快递详情"  value=""/> '
+						+ '<a class="btn-remove" href="javascript:void(0);">删除</a></div>';
+
+            	//copy.children('.time').datetimepicker();
+
+            	$(this).parent().before(copy);
+
+            	bindtime($(this).parent().prev().find('.time'));
+
+            	//$(this).parent.prev().children('.time').datetimepicker();
+
+            	//$('.time').datetimepicker();
+            });
+
+            $('#submit').click(function(){
+
+            	$('input[name="expressdetail"]').val('1');
+
+            	var attr = $('input[name="detail_time[]"]'),
+			       vals = $('input[name="detail_content[]"]');
+
+            	$(attr).each(function(i,item){
+
+            		var val = $(item).val(),
+            		val2 = vals.eq(i).val();
+
+            		if(val == '' || val2 == ''){
+            			$('input[name="expressdetail"]').val('0');
+            			return false;
+            		}
+            	});
+
+            	$('.ajax-post').click();
+            	return false;
+            });
+
+            $('.form-horizontal').find('input').keyup(function(event){
+            	if(event.keyCode===13){
+            		$("#submit").click();
+            	}
+            });
+		});
+		//导航高亮
+		var id='{$orderid}';
+		var nav_active = id >0 && id!= '' ?"{:U('lists')}": '{:U("add")}';
+		var nav_custom_active = '{$nav_active}';
+		nav_active = nav_custom_active && nav_custom_active != '' ? nav_custom_active : nav_active;
+		highlight_subnav(nav_active);
+
+	</script>
+</block>

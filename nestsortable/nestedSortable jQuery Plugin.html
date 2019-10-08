@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://mjsarfatti.com/sandbox/nestedSortable/ -->
+<html><!-- =================================================================================================================== -->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="description" content="Demo page of the nestedSortable jQuery Plugin">
+	<style type="text/css">
+		html {
+			background-color: #eee;
+		}
+		body {
+			
+			color: #444;
+			background-color: #fff;
+			font-size: 13px;
+			width: 860px;padding: 2em 4em;
+			margin: 15px auto;
+			
+		}
+		ul {
+			padding-left: 30px;
+		}
+
+		ul.sortable, ul.sortable ul {
+			margin: 0 0 0 25px;
+			list-style-type: none;
+		}
+
+		ul.sortable {
+			margin: 4em 0;
+		}
+
+		.sortable li {
+			margin: 10px 0 0 0;
+			padding: 0;
+		}
+		.sortable li div  {
+			border: 1px solid #dfdfdf;
+			padding: 10px 15px;
+			margin: 0;
+			cursor: move;
+			width: 382px;
+			
+		}
+		.sortable li div.menu-head{
+			background: #fafafa;
+		}
+		.sortable li div.menu-head a{
+			float: right;
+			text-decoration: none;
+			color: #ccc;
+		}
+		.sortable li div.menu-head a.fold{
+			display: none;
+		}
+		.sortable li div.menu-setting{
+			border-top: none;
+			display: none;
+		}
+		.sortable li div.menu-setting a.del{
+			color: #a00;
+		}
+		.sortable li div.menu-setting input[type=text]{
+			border: 1px solid #ddd;
+		    color: #333;
+		    outline: 0;
+		    padding: 6px 2px;
+		    width: 90%;
+		}
+	</style>
+
+
+<!-- =================================================================================================================== -->
+</head>
+<body style="cursor: auto;">
+
+<!--<header>
+	 <h1>nestedSortable jQuery Plugin</h1>
+	<h2>2.0</h2> 
+</header>-->
+
+
+<div id="demo">
+	<ul class="sortable">
+		<li id='1'>
+			<div class="menu-head">Some content <a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+			<div class="menu-setting">
+				<p>
+					<label>
+						链接网址
+						<br />
+						<input type="text" name="nav_url" />
+					</label>
+				</p>
+				<p>
+					<label>
+						导航命名
+						<br />
+						<input type="text" name="nav_name" />
+					</label>
+				</p>
+				<p>
+					<label>
+						<span>在新窗口或分页开启链接</span>
+						<input type="checkbox"  value="1" name="target" style="float:left;">
+					</label>
+				</p>
+				<p>
+					<a class="del" href="javascript:void(0);">移除</a>
+				</p>
+			</div>
+		</li>
+		<li id='2'>
+			<div class="menu-head">Some content<a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+			<div class="menu-setting">
+				<p>
+					<label>
+						链接网址
+						<br />
+						<input type="text" name="nav_url" />
+					</label>
+				</p>
+				<p>
+					<label>
+						导航命名
+						<br />
+						<input type="text" name="nav_name" />
+					</label>
+				</p>
+				<p>
+					<label>
+						<span>在新窗口或分页开启链接</span>
+						<input type="checkbox"  value="1" name="target" style="float:left;">
+					</label>
+				</p>
+				<p>
+					<a class="del" href="javascript:void(0);">移除</a>
+				</p>
+			</div>
+			<ul>
+				<li id='3'>
+					<div class="menu-head">Some sub-item content<a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+					<div class="menu-setting">
+						<p>
+							<label>
+								链接网址
+								<br />
+								<input type="text" name="nav_url" />
+							</label>
+						</p>
+						<p>
+							<label>
+								导航命名
+								<br />
+								<input type="text" name="nav_name" />
+							</label>
+						</p>
+						<p>
+							<label>
+								<span>在新窗口或分页开启链接</span>
+								<input type="checkbox"  value="1" name="target" style="float:left;">
+							</label>
+						</p>
+						<p>
+							<a class="del" href="javascript:void(0);">移除</a>
+						</p>
+					</div>
+				</li>
+				<li id='4'>
+					<div class="menu-head">Some sub-item content<a class="deploy" href="javascript:void(0);">▽</a><a class="fold" href="javascript:void(0);">△</a></div>
+					<div class="menu-setting">
+						<p>
+							<label>
+								链接网址
+								<br />
+								<input type="text" name="nav_url" />
+							</label>
+						</p>
+						<p>
+							<label>
+								导航命名
+								<br />
+								<input type="text" name="nav_name" />
+							</label>
+						</p>
+						<p>
+							<label>
+								<span>在新窗口或分页开启链接</span>
+								<input type="checkbox"  value="1" name="target" style="float:left;">
+							</label>
+						</p>
+						<p>
+							<a class="del" href="javascript:void(0);">移除</a>
+						</p>
+					</div>
+				</li>
+			</ul>
+		</li>
+		
+	</ul>
+
+	<p>
+		<input type="submit" name="toArray" id="toArray" value="To array">
+	</p>
+	<pre id="toArrayOutput"></pre>
+
+
+	<p>
+		<input type="submit" name="toadd" id="toadd" value="To add">
+	</p>
+
+</div> 
+<script type="text/javascript" src="./nestedSortable jQuery Plugin_files/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="./nestedSortable jQuery Plugin_files/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="./nestedSortable jQuery Plugin_files/jquery.mjs.nestedSortable.js"></script>
+
+<script>
+
+
+
+	$(document).ready(function(){
+
+		$('ul.sortable').nestedSortable({
+			forcePlaceholderSize: true,
+			handle: 'div',
+			helper:	'clone',
+			items: 'li',
+			opacity: .6,
+			placeholder: 'placeholder',
+			revert: 250,
+			tabSize: 25,
+			tolerance: 'pointer',
+			toleranceElement: '> div',
+			maxLevels: 4,
+			isTree: true,
+			expandOnHover: 700,
+			startCollapsed: true
+		});
+
+		$('#toadd').click(function(){
+			var copy= $('#1').clone(true);
+			$('ul.sortable').append(copy);
+		})
+
+
+
+		$('#toArray').click(function(e){
+			arraied = $('ul.sortable').nestedSortable('toArray', {startDepthCount: 0});
+			//console.log(arraied);
+			arraied = dump(arraied);
+			(typeof($('#toArrayOutput')[0].textContent) != 'undefined') ?
+			$('#toArrayOutput')[0].textContent = arraied : $('#toArrayOutput')[0].innerText = arraied;
+		})
+
+		$('.menu-head a.deploy').click(function(){
+			$(this).hide();
+			$(this).parent().children('.fold').show();
+			$(this).parent().next().slideDown();
+		});
+
+		$('.menu-head a.fold').click(function(){
+			$(this).hide();
+			$(this).parent().children('.deploy').show();
+			$(this).parent().next().slideUp();
+		});
+
+		$('a.del').click(function(){
+			$(this).closest('li').remove();
+		});
+
+	});
+
+	function dump(arr,level) {
+		var dumped_text = "";
+		if(!level) level = 0;
+
+		//The padding given at the beginning of the line.
+		var level_padding = "";
+		for(var j=0;j<level+1;j++) level_padding += "    ";
+
+		if(typeof(arr) == 'object') { //Array/Hashes/Objects
+			for(var item in arr) {
+				var value = arr[item];
+
+				if(typeof(value) == 'object') { //If it is an array,
+					dumped_text += level_padding + "'" + item + "' ...\n";
+					dumped_text += dump(value,level+1);
+				} else {
+					dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+				}
+			}
+		} else { //Strings/Chars/Numbers etc.
+			dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
+		}
+		return dumped_text;
+	}
+
+</script>
+</body>
+</html>
+

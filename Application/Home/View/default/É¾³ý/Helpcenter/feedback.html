@@ -1,0 +1,127 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.small{
+		display: none;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	.member-wrapper .member-side-menu{
+		border:none;
+	}
+	.member-wrap-content{
+		padding: 0 50px;
+	}
+	@media screen and (max-width: 600px){
+		.member-wrapper .member-wrap-content {
+  			padding: 0 12px; 
+		}
+	}
+	</style>
+</block>
+<block name="body">
+	<div class="i_leftTit clearfix user-head">
+		<a href="{:U('Index/index')}">首页</a>
+		<span> &gt; </span>
+		<span class='a-item'>帮助中心</span> &gt; 
+		<span class='a-item'>意见反馈</span>
+	</div>
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			<div class="head"><span class="home-icon"></span>帮助中心</div>
+			<div class="item-wrap">				
+				<volist name="cates" id="cate">
+					<div class="item">
+						<span class="content"  >
+							{$cate['title']}
+						</span>
+					</div>
+					<div class="article-wrap" >
+						<volist name="list" id="vo">
+							<eq name="vo['category_id']" value="$cate['id']">
+								<a href="{:U( 'index?cate='.$vo['category_id'].'&id='.$vo['id'] )}" >
+									{$vo['title']}
+								</a>
+							</eq>
+						</volist>                
+					</div>
+				</volist>
+				<div class="item">
+					<span class="content selected"  >
+						<a href="{:U('feedback')}">意见反馈</a>
+					</span>
+				</div>  
+			</div>
+		</div>
+		<div class='member-wrap-content' >
+
+			<include file="Public/alert"/>
+
+			<form id="password-form" method="post" action="{:U()}"  class="form-horizontal">
+				<div class="pass-info clearfix">
+					<span class="left">用户：</span>
+					<input type="text" name="username" value="" >
+				</div>
+
+				<div class="pass-info clearfix">
+					<span class="left">手机号码：</span>
+					<input type="text" name="mobile" value="" >
+				</div>
+
+				<div class="pass-info clearfix">
+					<span class="left">邮箱：</span>
+					<input type="text" name="email" value="" >
+				</div>
+
+				<div class="pass-info clearfix">
+					<span class="left">主题：</span>
+					<input type="text" name="subject" value="" >
+				</div>
+
+				<div class="pass-info clearfix">
+					<span class="left">反馈消息：</span>
+					<textarea class='' name="msg" style='height:76px;'></textarea>
+				</div>
+
+
+				<a  class="password-save ksbtn ajax-post"  href="javascript:void(0);" target-form="form-horizontal" >提交</a>
+
+				<button class="password-save ksbtn" type="reset" style="margin-left: 12px;  height: 32px;">重置</button>
+			</form>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	 $(function(){
+	 	
+	 	 $(".member-side-menu .item-wrap .item").click(function() {
+            $(this).next(".article-wrap").toggle()
+        });
+	 });
+	</script>
+
+</block>

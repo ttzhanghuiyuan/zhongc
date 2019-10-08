@@ -1,0 +1,94 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>订单打印预览</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/printview.css" media="all">
+     <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <![endif]--><!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.mousewheel.js"></script>
+    <!--<![endif]-->
+</head>
+<body>
+	<div class='print'>
+		<a id="btn-print" class="btn btn-default" href="javascript:;">打印报表</a>
+	</div>
+	
+	<div class='my_show'>
+		<div class='title'>起点发货通知单</div>
+		<div class='title-no'>NO.<span class='order-no'>{$info['order_no']|default=''}</span></div>
+		<table>
+			<tbody>
+				<tr>
+					<td>客户名称</td>
+					<td colspan='3'>{$info['company_name']|default=''}</td>
+					<td>联系人</td>
+					<td colspan='3'>{$info['linkman']|default=''}</td>
+				</tr>
+				<tr>
+					<td>联系电话</td>
+					<td colspan='2'>{$info['mobile']|default=''}</td>
+					<td>客户地址</td>
+					<td colspan='4'>{$info['addr']|default=''}</td>
+				</tr>
+				<tr>
+					<td>是否含税</td>
+					<td></td>
+					<td>交货日期</td>
+					<td></td>
+					<td>付款日期</td>
+					<td></td>
+					<td>付款方式</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>产品类型</td>
+					<td>产品名称</td>
+					<td>包装规格(kg/桶)</td>
+					<td>数量(桶)</td>
+					<td>重量</td>
+					<td>单价(元/kg)</td>
+					<td>账期内容</td>
+					<td>合计(元)</td>
+				</tr>
+				<volist name='list' id='vo'>
+					<tr>
+						<td>{$vo.catename}</td>
+						<td>{$vo.good_name}</td>
+						<td>{$vo.package}</td>
+						<td>{$vo.good_nums}</td>
+						<td>{$vo.weight}</td>
+						<td>{$vo.unit_price}</td>
+						<td>{$vo.priceterms}</td>
+						<td>{$vo.total_price}</td>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+		<div class='remark'>说明：开单员必须凭业务员签署此单并经批准后才可发货，否则每次罚款200元。
+		</div>
+		<table class='no-border'>
+			<tr>
+				<td>业务员签名：</td>
+				<td>开单员签名：</td>
+			</tr>
+			<tr>
+				<td>日&nbsp;&nbsp;&nbsp;期：</td>
+				<td>日&nbsp;&nbsp;&nbsp;期：</td>
+			</tr>
+		</table>
+	</div>
+	<div class='my_hidden'>
+	</div>
+	<script type="text/javascript" src="__JS__/jquery-migrate-1.1.0.js"></script>
+	<script type="text/javascript" src="__JS__/jquery.jqprint.js"></script>
+	<script type="text/javascript"> 
+	$(document).ready(function() { 
+		$("#btn-print").click(function(){ 
+			$(".my_show").jqprint({ operaSupport: true }); 
+		}) 
+	}); 
+	</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit" />
+    <title>{$meta_title}|管理平台</title>
+    <link href="__ROOT__/Public/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="__CSS__/base.css" media="all">
+    <!-- <link rel="stylesheet" type="text/css" href="__CSS__/common.css" media="all">
+    <link rel="stylesheet" type="text/css" href="__CSS__/module.css"> -->
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css" media="all">
+    <!-- <link rel="stylesheet" type="text/css" href="__CSS__/blue_color.css" media="all"> -->
+	<!--<link rel="stylesheet" type="text/css" href="__CSS__/{$Think.config.COLOR_STYLE}.css" media="all">-->
+     <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <![endif]--><!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+
+    <!--<![endif]-->
+    <block name="style"> <!--<script type="text/javascript" src="__JS__/jquery.mousewheel.js"></script>--></block>
+</head>
+<body class="fubllbody">
+
+
+    
+    <!-- 内容区 -->
+    <div id="main-content">
+        <div id="poptop-alert" class="fixed alert pop alert-error" style="display:none;">
+            <button class="close fixed" style="margin-top: 4px;">&times;</button>
+            <div class="alert-content">这是内容</div>
+        </div>
+        <div id="main" class="main" style="background-color:#fff;">
+
+            <block name="body"> </block>
+        </div>
+        
+    </div>
+    <!-- /内容区 -->
+    <script type="text/javascript">
+    (function(){
+        var ThinkPHP = window.Think = {
+            "ROOT"   : "__ROOT__", //当前网站地址
+            "APP"    : "__APP__", //当前项目地址
+            "PUBLIC" : "__PUBLIC__", //项目公共目录地址
+            "DEEP"   : "{:C('URL_PATHINFO_DEPR')}", //PATHINFO分割符
+            "MODEL"  : ["{:C('URL_MODEL')}", "{:C('URL_CASE_INSENSITIVE')}", "{:C('URL_HTML_SUFFIX')}"],
+            "VAR"    : ["{:C('VAR_MODULE')}", "{:C('VAR_CONTROLLER')}", "{:C('VAR_ACTION')}"]
+        }
+    })();
+    </script>
+    <script type="text/javascript" src="__STATIC__/think.js"></script>
+    <script type="text/javascript" src="__JS__/common.js"></script>
+    <script type="text/javascript">
+        +function(){
+            var $window = $(window), $subnav = $("#subnav"), url;
+            $window.resize(function(){
+                $("#main").css("min-height", $window.height() - 130);
+            }).resize();
+
+	        /* 表单获取焦点变色 */
+	       $("form").on("focus", "input", function(){
+		        $(this).addClass('focus');
+	        }).on("blur","input",function(){
+				        $(this).removeClass('focus');
+			        });
+		    $("form").on("focus", "textarea", function(){
+			    $(this).closest('label').addClass('focus');
+		    }).on("blur","textarea",function(){
+			    $(this).closest('label').removeClass('focus');
+		    });
+
+            
+        }();
+        
+        $(function(){
+            $('.listselect').on('click','.btn-group .btn-del',function(){
+                    var parent = $(this).parents('.listselect');
+                    parent.find('.btn-group').remove();
+                    parent.find('input').val('');
+            });
+        });
+
+        var set_listselect = function(id,value,title){
+            var input = $('input[type=hidden][name=' + id + ']');
+            var btn_group = input.parent().find('.btn-group');
+            var btn_select = input.parent().find('.btn-listselect');
+            var callback = btn_select.attr('data-callback');
+
+            if(!btn_group.length){
+                btn_group = $('<div class="btn-group"><a class="btn btn-blue btn-text" href="javascript:;"></a><a class="btn btn-blue btn-del"  href="javascript:;">X</a></div>');
+                input.parent().prepend(btn_group);
+            }
+            btn_group.find('.btn-text').text(title);
+            btn_group.find('.btn-text').attr('title',title);
+            input.val(value);
+            
+            window.parent.viceframe_close();
+
+            if(callback && callback != ''){
+                eval(callback + "({value:'" + value + "',title:'" + title + "'})");
+            }
+        }
+
+         $('body').on('click','.btn-popfull',function(){
+
+            var ifm_src = $(this).attr('data-src');
+            var title = $(this).attr('data-title');
+            var redirect = $(this).attr('data-redirect');
+            var height = $(this).attr('data-height');
+            var width = $(this).attr('data-width');
+            var before = $(this).attr('data-before');
+
+            window.parent.open_pop_full(ifm_src,title,redirect,height,width,before);
+         });
+
+
+         
+    </script>
+    <block name="script"></block>
+</body>
+</html>

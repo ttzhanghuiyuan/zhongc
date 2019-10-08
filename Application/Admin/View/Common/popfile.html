@@ -1,0 +1,183 @@
+<extend name="Public/basefull"/>
+
+<block name="body">
+    <div class="main-title">
+            <h2>{$meta_title}</h2>
+    </div>
+    <div class="cf">
+        <div class="fl">
+            <php>
+                $btn_add_url = $add_url ? $add_url : U('add?model='.$model['id']);
+                $btn_del_url = $del_url ? $del_url : U('del?model='.$model['id']);
+            </php>
+            <div class="btn-group">
+
+                <a class="btn" href="{$btn_add_url}" <eq name="is_hide_add" value="1">style='display:none;'</eq> >新增</a>
+
+                <if condition="$is_display_file">
+
+                     <input type="file" id="upload_file" />
+                     <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+                     <script type="text/javascript">
+                     var error = 0;
+                     //上传文件
+                    /* 初始化上传插件 */
+                    $("#upload_file").uploadify({
+                        "height"          : 30,
+                        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                        "fileObjName"     : "download",
+                        'multi'           : true,
+                        "buttonText"      : "上传附件",
+                        "uploader"        : "{:U('File/upload',array('session_id'=>session_id()))}",
+                        "width"           : 120,
+                        'removeTimeout'   : 1,
+                        //'fileTypeExts'    : '*.jpg; *.png; *.gif;',
+                        "onUploadSuccess" : uploadFile,
+                        "onQueueComplete" : complete,
+                        'onFallback' : function() {
+                            alert('未检测到兼容版本的Flash.');
+                        }
+                    });
+                    function uploadFile(file, data){
+                        var data = $.parseJSON(data);
+                        var src = '';
+                        if(data.status){
+                            //window.location.reload();
+                        } else {
+                            error = 1;
+                            alert(data.info);
+                        }
+                    }
+                    function complete(status){
+                        
+                        if(error==0)
+                        {
+                            window.location.reload();
+                        }
+                    }
+                    </script>
+                </if>
+
+                <if condition="!$is_hide_del">
+                    <a url="{$btn_del_url}" class="btn ajax-post confirm" target-form="ids" >删除</a>
+                </if>
+
+                <if condition="$btn_back">
+                    <a class="btn btn-default" href="{$btn_back}">返回</a>
+                </if>
+            </div>
+        </div>
+        <if condition="!$is_hide_rightbox">
+            <div class="search-form fr cf">
+                <form action="{:U('','extra='.$model['name'],false)}" method="get">
+                
+                <div class="sleft">
+                        <php>
+                            $search_key_arr=explode(':',$model['search_key']);
+                            $search_key =$search_key_arr? $search_key_arr[0]:'title';
+                        </php>
+                    <button type="submit" class="btn search">搜索</button>
+                    <input type="text" name="{$search_key}" class="search-input" value="{:I($search_key)}" placeholder="请输入{$search_key_arr[1]}">
+                   
+                    <if condition="$data_row">
+                            <div class="search-row">
+                                <select name="row" class="form-control input-sm">
+                                    <option selected="selected" value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                    </if> 
+                </div>
+                </form>
+            </div>
+        </if>
+    </div>
+    <div class="data-table">
+        <table >
+            <thead>
+                <tr >
+                    <th class="row-selected row-selected">
+                        <input class="check-all" type="checkbox">
+                    </th> 
+                    <volist name="list_grids" id="field">
+                        <th>{$field['title']}</th>
+                    </volist>
+                </tr>
+            </thead>
+
+            <tbody>  
+                <notempty name="list_data">
+                    <volist name="list_data" id="data">
+                        <tr>
+                            <td>
+                                <input class="ids" type="checkbox" name="ids[]" value="{$data.id}">    
+                            </td>
+                            <volist name="list_grids" id="grid">
+                                <td>{:get_list_field($data,$grid,$model)}</td>
+                            </volist>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <td colspan="{:count($list_grids) + 1}" class="text-center"> aOh! 暂时还没有内容! </td>
+                </notempty>
+            </tbody>
+        </table>
+    </div>
+    <if condition="$_page">
+        <div class="page">
+            {$_page}
+        </div>
+    </if>
+</block>
+
+<block name="script">
+    <script>
+        //set_nav('{:U()}');
+
+        $(function(){
+            $('.btn-list-select').click(function(){
+                var id = '{:I("extra")}';
+                var input = '{:I("input")}';
+                var value = $(this).parents('tr').find('.ids').val();
+                var title = $(this).parents('tr').find('td').eq(1).text();
+
+                var parent = $(window.parent.document).find('.viceframe').attr('data-parent');
+                var cover = $(window.parent.document).find('.viceframe').attr('data-cover');
+
+                var cover_img = parent == 1 ?  $(window.parent.document) : $(window.parent.frames['mainframe'].document);
+
+                //if($('input:checkbox[class=ids]:checked').length){
+
+                cover_img.find("#"+cover).val(value);
+
+                cover_img.find("#"+cover).parent().find('.upload-img-box').html(
+                        '<div class="upload-pre-file"><span class="upload_icon_all"></span>'+ title+'</div>'
+                        );
+
+                window.parent.viceframe_close();
+
+                // }else{
+                //     return false;
+                // }
+
+               /* var tr = {};
+
+                $(this).parents('tr').find('td').each(function(i,item){
+                    var name = $(this).attr('data-name');
+                    if(name){
+                        tr[name] = $(this).text();
+                    }
+                });*/
+
+                //window.parent.call_mainframe_setlistselect(id,value,title,input,tr);
+
+
+                return false;
+            });
+        });
+
+        
+    </script>
+</block>

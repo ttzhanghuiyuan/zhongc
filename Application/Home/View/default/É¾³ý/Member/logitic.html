@@ -1,0 +1,110 @@
+<extend name="Base/common"/>
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+	}
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	</style>
+</block>
+<block name="body">
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		<div class='member-wrap-content' >
+			<div class="clearfix mhead">
+				<a class="item selected inline-block" href="javascript:void(0)">
+					物流详情
+				</a>	
+			</div>
+			<div class='detail-panel'>
+				<div>
+					<ul class="op_express_delivery_timeline_box">
+						<notempty name="list">
+						<volist name='list' id='vo' offset="0" length='1'>
+						<li class="op_express_delivery_timeline_new c-clearfix">
+							<div class="op_express_delivery_timeline_title">
+								<div class="op_express_delivery_timeline_circle">
+									<i class="c-icon op_express_delivery_timeline_circle_red"></i>
+									<i class="c-text c-text-mult c-gap-left-small">最新</i>
+								</div>
+								<div class="op_express_delivery_timeline_info">{$vo['detail_time']|time_format=###,'Y年m月d日 H:i'}<br>{$vo['detail_content']}
+								</div>
+							</div>
+						</li>
+						</volist>
+						<volist name="list" id="vo" offset="1">
+						<li class="op_express_delivery_timeline_label c-clearfix">
+							<div class="op_express_delivery_timeline_title">
+								<div class="op_express_delivery_timeline_circle">
+									<i class="c-icon op_express_delivery_timeline_circle_blue"></i>
+								</div>
+								<div class="op_express_delivery_timeline_info">{$vo['detail_time']|time_format=###,'Y年m月d日 H:i'}<br>{$vo['detail_content']}
+								</div>
+							</div>
+						</li>
+						</volist>
+						<else />
+						<li class="op_express_delivery_timeline_new c-clearfix">
+							<div class="op_express_delivery_timeline_title">
+								<div class="op_express_delivery_timeline_circle">
+									<i class="c-icon op_express_delivery_timeline_circle_red"></i>
+									<i class="c-text c-text-mult c-gap-left-small">最新</i>
+								</div>
+								<div class="op_express_delivery_timeline_info"><br>没有查询到该订单物流信息
+								</div>
+							</div>
+						</li>
+						</notempty>
+					</ul>
+				</div>
+				<div class="order-detail">
+					<div class="order-row">运单号码：{$info['express_no']|default='***'}</div>
+					<div class="order-row">快递员&nbsp;&nbsp;&nbsp;&nbsp;：{$info['courier']|default='***'}</div>
+					<div class="order-row">联系电话：{$info['courier_mobile']|default='***'}</div>
+					<div class="order-row">收货地址：{$info['address']|default='***'} <strong>&nbsp;&nbsp;&nbsp;&nbsp;{$info['zip_code']|default='***'} &nbsp;&nbsp;&nbsp;&nbsp;{$info['recipients']|default='***'}&nbsp;&nbsp;&nbsp;&nbsp;{$info['recipient_phone']|default='***'}</strong></div>
+				</div>
+				<div class="order-pic">
+					<volist name="goodpics" id="vo">
+					<!-- <span class="pic"><a href=""><img src="" /></a></span>
+					<span class="pic"><a href=""><img src="" /></a></span> -->
+						<span class="pic"><a href=""><img alt="{$vo['good_name']}" class="img-lazyload"  data-src="{$vo['path']|default='__IMG__/item-pic.jpg'}" /></a></span>
+					</volist>
+				</div>
+			</div>	
+		</div>
+	</div>
+</block>
+<block name='script'>
+
+	<script type="text/javascript">
+
+	 $(function(){
+	 	$('div.i_service').wrap("<div class='wappers'></div>");
+
+	});
+
+	 highlight_subnav("{:U('logitics')}");
+	</script>
+
+</block>

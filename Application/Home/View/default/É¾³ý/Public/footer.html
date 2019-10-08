@@ -1,0 +1,98 @@
+<div class="i_service clearfix auto">
+	<span></span>
+	<div class="iServiceCon">
+		
+		<ul class="HomeService_other">
+			<li class="iServiceTit">新手指南</li>
+			<li class="iServiceText">
+				<!-- <p><a href="" rel="nofollow"><b>【订单管理】</b>管理我的订单及邀请我的好友</a></p>
+				<p><a href="" rel="nofollow"><b>【完善信息】</b>注册成功后尽快完善公司信息 </a></p>
+				<p><a href="" rel="nofollow"><b>【站内消息】</b>管理我的站内消息</a></p> -->
+				<volist name="guid" id="vo">
+					<p>
+						<a href="{:U('Helpcenter/index?cate='.$vo['category_id'].'&id='.$vo['id'] )}" rel="nofollow">
+						<b>【{$vo['title']}】</b>
+						 <notempty name="vo['description']">
+						{$vo['description']}
+						<else />
+						内容暂无
+						</notempty>
+						</a>
+					</p>
+				</volist>
+			</li>
+			<li class="iServiceTit">常见问题</li>
+			<li class="iServiceText">
+				<volist name="quiz" id="vo">
+					<p>
+						<a href="{:U('Helpcenter/index?cate='.$vo['category_id'].'&id='.$vo['id'] )}" rel="nofollow">
+						<b>【{$vo['title']}】</b>
+						<notempty name="vo['description']">
+						{$vo['description']}
+						<else />
+						内容暂无
+						</notempty>
+						</a>
+					</p>
+				</volist>
+			</li>
+		</ul>
+		<ul class="i_Contact" >
+			<li class="iServiceTit">联系我们</li>
+			<li><s class="i_ContactImg_1"></s>{$contact['contact_fax']}</li>
+			<li><s class="i_ContactImg_2"></s>{$contact['contact_tel']}</li>
+			<li><s class="i_ContactImg_3"></s>{$contact['contact_mobile']}</li>
+			<li><s class="i_ContactImg_4"></s>{$contact['contact_email']}</li>
+			<li><s class="i_ContactImg_6"></s><a href="{$contact['blogurl']}" rel="nofollow">{$contact['blog']}</a></li>
+			<li><s class="i_ContactImg_5"></s><img src="{$contact['webchat']|get_cover=path}" alt="起点微信二维码"></li>
+		</ul>
+		<ul class="margin-left">
+			<li class="iServiceTit iServiceimg"><s class="iS_img1"></s>免费撮合</li>
+			<li class="iServiceText">起点为您提供免费、智能、高效、安全的线上、线下撮合服务，一站式解决您的找货、卖货、比价问题</li>
+			<li class="iServiceTit iServiceimg"><s class="iS_img2"></s>物流支持</li>
+			<li class="iServiceText">7*24小时服务，线路覆盖全面，货物交付畅行，全程信息透明</li>
+		</ul>
+		<ul>
+			<li class="iServiceTit iServiceimg"><s class="iS_img4"></s>金融支持</li>
+			<li class="iServiceText">提供专业、安全、可靠的支付服务和融资服务，解除后顾之忧，助您安心完成交易过程和资金周转</li>
+			<li class="iServiceTit iServiceimg"><s class="iS_img3"></s>仓储服务</li>
+			<li class="iServiceText">全天候服务，保障货物安全，省时、省力、省心</li>
+		</ul>
+	</div>
+</div>
+
+<div class="FooterBox">
+	<div class="Footer auto">
+		<ul class="f_left">
+			<li>COPYRIGHT ©{$company['name']} 2015</li>
+			<!-- <li><a href="http://www.miitbeian.gov.cn"  target="_blank">{$company['filing_no']}</a></li> -->
+		</ul>
+		<!-- <div class="footItem"><img src=""> </div> -->
+		<ul class="f_right">
+			<!-- <li><a href="" target="_blank">关于我们</a></li>
+			<li>|</li>
+			<li><a href="" target="_blank">法律声明</a></li>
+			<li>|</li>
+			<li><a href="" target="_blank">联系我们</a></li>
+			<li>|</li>
+			<li><a href="" target="_blank">友情链接</a></li>
+			<li>|</li> -->
+			<volist name="about_us" id="vo">
+				<li><a href="{:U('Helpcenter/index?cate='.$vo['category_id'].'&id='.$vo['id'] )}" >{$vo['title']}</a></li>
+				<li>|</li>
+			</volist>
+			<li><a href="{:U('Helpcenter/feedback')}">意见反馈</a></li>			
+		</ul>
+	</div>			
+</div>
+<include file="Public/var"/>
+
+<include file="Public/qqs"/>
+
+<block name="script">
+	
+</block>
+<!-- <div class="hidden">
+	<block name="hidden">
+	</block>
+</div> -->

@@ -1,0 +1,429 @@
+<extend name="Base/logincommon" />
+<block name='style'>
+	<style type="text/css">
+
+	body{
+		background-color: #F2F2F2;
+	}
+	input{
+		  background-color: white;
+	}
+	#wraper {
+		margin: 0 auto;
+		width: 610px;
+		padding-bottom: 20px;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		border-top: 2px solid rgb(50,156,198);
+	}
+	#register-tabs-wraper {
+		padding-top: 24px;
+		height: 36px;
+		line-height: 36px;
+		border-bottom: 1px solid #ccc;
+	}
+	#go-login {
+		float: right;
+	}
+	#wraper .link {
+		color: #278ef2!important;
+	}
+	#register-tabs {
+		margin-left: 150px;
+	}
+	#register-tabs li.active {
+		position: relative;
+		border-bottom: 1px solid #fff;
+		height: 33px;
+		line-height: 33px;
+		border-top: 3px solid #278ef2;
+	}
+	#register-tabs li {
+		cursor: pointer;
+		margin-right: 10px;
+		border: 1px solid #ccc;
+		border-bottom: 0;
+		background: #fff;
+		float: left;
+		width: 100px;
+		height: 35px;
+		line-height: 35px;
+		text-align: center;
+		font-size: 14px;
+	}
+	#register-container form>div {
+		clear: both;
+		height: 60px;
+		margin-bottom: 5px;
+	}
+	#register-container label {
+		font-size: 14px;
+		width: 158px;
+		text-align: right;
+		float: left;
+		height: 36px;
+		line-height: 36px;
+		vertical-align: middle;
+	}
+	#register-container input {
+		float: left;
+		width: 220px;
+		padding: 0 5px;
+		height: 34px;
+		border: 1px solid #ccc;
+		line-height: 34px;
+	}
+	input {
+		outline: 0;
+		box-sizing: content-box;
+	}
+	.submit-btn {
+		background: #278ef2;
+		width: 232px;
+		height: 50px;
+		border: 0;
+		color: #fff;
+		font-size: 16px;
+		line-height: 50px;
+		cursor: pointer;
+	}
+	#register-container {
+		padding-top: 50px;
+		min-height: 410px;
+		background-color: #fff;
+		/*width: 988px;*/
+		border: 1px solid #ccc;
+		border-top: 0;
+		background-repeat: no-repeat;
+		background-position: 600px 50px;
+	}
+	#register-container .msg-btn {
+		width: 103px;
+		height: 34px;
+		display: inline-block;
+		text-align: center;
+		border: 1px solid #ddd;
+		background: #f4f4f4;
+		line-height: 34px;
+		float: left;
+		padding: 0px;
+		cursor: pointer;
+	}
+	#register-container .verifyimg {
+		cursor: pointer;
+		width: 103px;
+		height: 36px;
+		display: inline-block;
+		text-align: center;
+		border: 0;
+		/*margin-left: 12px;*/
+		vertical-align: middle;
+		float: left;
+	}
+	#register-container .msg {
+		width: 105px;
+		margin-right: 10px;
+		float: left;
+	}
+	#register-container form div.tips{
+		height: 30px;
+	}
+	#site-logo{
+		background: url("{$company['logo']|get_cover=path}") center center no-repeat;
+	}
+	@media screen and (max-width: 600px){
+		#site-logo{
+			background-size: contain;
+    		background-position: center;
+		}
+		#wraper{
+			width: 100%;
+		}
+		#register-tabs{
+			margin-left: 8px;
+			display: inline-block;
+		}
+		#register-tabs li{
+			width: 65px;
+    		font-size: 12px;
+    		margin-right: 3px;
+		}
+		#register-container .msg,#register-container .verifyimg,#register-container .msg-btn,#register-container input,#register-container label{
+			float: none;
+		}
+		#register-container form>div{
+			height: auto;
+			width: 91%;
+    		margin: auto;
+		}
+		#register-container label{
+			display: block;
+			width: auto;
+			text-align: left;
+		}
+		#register-container input{
+			width: 90%;
+		}
+		#register-container .msg-btn{
+			width: 80px;
+		}
+		#register-form-person,#register-form-company{
+			/*width: 100%;*/
+			padding: 0 10px;
+			margin: 0 auto;
+		}
+
+		#register-container,
+		#register-tabs-wraper{
+			/*width: 85%;
+			margin: 0 auto;*/
+
+			width: 90%;
+    		margin: auto;
+		}
+	}
+	</style>
+</block>
+<block name='body'>
+<div id="wraper">
+	<include file="Public/alert"/>
+	<div id="register-tabs-wraper">
+		<span id="go-login">我已经注册，马上
+			<a href="{:U('Public/login')}" class="link">登录 &gt;</a>
+		</span>
+		<ul id="register-tabs">
+			<li class="active" >个人用户</li>
+			<li class="">企业用户</li>
+		</ul>
+	</div>
+	<div id="register-container" class="p">
+		<form id="register-form-person" action="{:U('Public/register')}" method="post" style="display: block;" >
+			<div>
+				<label>手机号码：</label>
+				<input class='mobile' type="text" name="mobile" tabindex="1" placeholder="用于网站登录，请输入您的手机号">
+			</div>
+			<div>
+				<label>设置密码：</label>
+				<input type="password" name="password" tabindex="2" placeholder="密码">
+				
+			</div>
+			<div>
+				<label>确认密码：</label>
+				<input type="password" name="confirmPassword" tabindex="3" placeholder="密码确认">
+				
+			</div>
+			<div>
+				<label>验证码：</label>
+				<input type="text" name="verify_code" class="msg" tabindex="4" placeholder="请输入您的验证码">
+				<img class="verifyimg reloadverify" alt="点击切换" src="{:U('Public/verify')}" style="cursor:pointer;">
+			</div>
+			<div>
+				<label>短信验证码：</label>
+				<input type="text" name="msgCode" class="msg" tabindex="5" placeholder="请输入验证码">
+				<input type="button" class="msg-btn" value="获取验证码">
+			</div>
+			<input name='type' type="hidden" value="1">
+			<php>
+				$time=NOW_TIME;
+			</php>
+			<input name="create_date" type="hidden" value="{$time|time_format}" >
+			<input name='member_status' type='hidden' value='1' >
+			<input name='audit_status' type='hidden' value='0'> 
+			<div>
+				<label></label>
+				<button type="submit" class="submit-btn login" id=''>
+					<span class="in">注册中 ...</span>
+                    <span class="on">注 册</span>
+				</button>
+			</div>
+			<div class='tips'><label class="hide-device"></label><span class="check-tips"></span></div>
+		</form>
+		<form id="register-form-company" style="display: none;" action="{:U('Public/register')}" method="post">
+			<div>
+				<label>单位名称：</label>
+				<input type="text" name="company_name" tabindex="1" placeholder="请填写营业执照的单位名称">
+			</div>
+			<div>
+				<label>邮箱：</label>
+				<input type="text" name="email" tabindex="1" placeholder="邮箱">
+			</div>
+			<div>
+				<label>设置密码：</label>
+				<input type="password" name="password" tabindex="2" placeholder="密码">
+				
+			</div>
+			<div>
+				<label>确认密码：</label>
+				<input type="password" name="confirmPassword" tabindex="3" placeholder="密码确认">
+			</div>
+			<div>
+				<label>单位地址：</label>
+				<input type="text" name="addr" tabindex="1" placeholder="请填写营业执照的联系地址">
+			</div>
+			<div>
+				<label>联系人：</label>
+				<input type="text" name="linkman" tabindex="1" placeholder="联系人">
+			</div>
+			<div>
+				<label>联系手机：</label>
+				<input class='mobile' type="text" name="mobile" tabindex="1" placeholder="请输入正确的手机，方便联系">
+			</div>
+			<div>
+				<label>验证码：</label>
+				<input type="text" name="verify_code" class="msg" tabindex="4" placeholder="请输入您的验证码">
+				<img class="verifyimg reloadverify" alt="点击切换" src="{:U('Public/verify')}" style="cursor:pointer;">
+			</div>
+			<div>
+				<label>短信验证码：</label>
+				<input type="text" name="msgCode" class="msg" tabindex="5" placeholder="请输入验证码">
+				<input type="button" class="msg-btn" value="获取验证码">
+			</div>
+			<input name='type' type="hidden" value="0">
+			<php>
+				$time=NOW_TIME;
+			</php>
+			<input name="create_date" type="hidden" value="{$time|time_format}" >
+			<input name='member_status' type='hidden' value='1' >
+			<input name='audit_status' type='hidden' value='0'> 
+			<div>
+				<label></label>
+				<button type="submit" class="submit-btn login" id=''>
+					<span class="in">注册中 ...</span>
+                    <span class="on">注 册</span>
+				</button>
+			</div>
+			<div class='tips'><label class="hide-device" ></label><span class="check-tips"></span></div>
+		</form>
+	</div>
+	
+</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	$(document)
+	.ajaxStart(function(){
+		$("button:submit").addClass("log-in").attr("disabled", true);
+	})
+	.ajaxStop(function(){
+		$("button:submit").removeClass("log-in").attr("disabled", false);
+	});
+
+	$("form").submit(function(){
+		var self = $(this);
+		//alert(self.attr('action'));
+		$.post(self.attr("action"), self.serialize(), success, "json");
+		return false;
+
+		function success(data){
+			if(data.status){
+				window.location.href = data.url;
+			} else {
+				self.find(".check-tips").text(data.info);
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    });
+	
+    $(function(){
+		$('div.i_service').wrap("<div class='wappers'></div>");
+	});
+
+    $(function(){
+    	var verifyimg = $(".verifyimg").attr("src");
+    	$(".reloadverify").click(function(){
+    		if( verifyimg.indexOf('?')>0){
+    			$(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+    		}else{
+    			$(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+    		}
+    	});
+
+
+    	$('#register-tabs li').click(function(){
+    		//$(".reloadverify").click();
+    		$(this).addClass("active").siblings().removeClass();
+    		var index=$('#register-tabs li').index(this);
+    		//$('form').eq(index).find('.reloadverify').click();
+			$("#register-container > form").hide().eq(index).show();
+			
+		}); 
+
+		$('.msg-btn').click(function(){
+
+			/*var preg=/^1[3|4|5|8][0-9]\d{4,8}$/;
+			if (!preg.test( $(this).parents('form').find('.mobile').val())) {
+				alert("请输入正确的手机号码 !");
+            	return false;
+        	}*/
+        	var target = "{:U('Public/SendSMS')}";
+
+
+        	var query = {'mobile': $(this).parents('form').find('.mobile').val()};
+
+        	$.post(target,query).success(function(data){
+        		//alert(data.info);
+
+                if (data.status==1) {
+
+                    updateAlert(data.info ,'alert-success');
+
+                    time($('.msg-btn'),60);
+
+                    setTimeout(function(){
+                        //$(that).removeClass('disabled').prop('disabled',false);
+                        /*if (data.url) {
+                            location.href=data.url;
+                        }else if( $(that).hasClass('no-refresh')){
+                            $('#top-alert').find('button').click();
+                        }else{
+                            location.reload();
+                        }*/
+                        $('#top-alert').find('button').click();
+                    },2500);
+
+                }else{
+                    updateAlert(data.info);
+                    setTimeout(function(){
+                        //$(that).removeClass('disabled').prop('disabled',false);
+                        /*if (data.url) {
+                            location.href=data.url;
+                        }else{
+                            $('#top-alert').find('button').click();
+                        }*/
+                        $('#top-alert').find('button').click();
+                    },2500);
+                }
+            });
+		});
+
+    });
+
+    //var wait=60;
+    function time(o,wait) {
+    	if (wait == 0) { 
+			o.removeAttr("disabled"); 
+			o.val("获取验证码");//改变按钮中value的值 
+			wait = 60;
+			return;
+		} 
+		else { 
+			o.attr("disabled", true);//倒计时过程中禁止点击按钮 
+			o.val(wait + "秒");//改变按钮中value的值 
+			wait--; 
+			 
+		} 
+		setTimeout(function() { 
+			time(o,wait);//循环调用 
+			}, 1000);
+	} 
+
+
+	</script>
+
+</block>

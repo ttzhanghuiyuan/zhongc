@@ -1,0 +1,81 @@
+.data-table .img_list {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.data-table .img_list .item {
+    width: 180px;
+    float: left;
+    display: inline;
+    margin: 10px;
+}
+
+.data-table .img_list .item .img {
+    border: 1px solid #eff0f4;
+    border-bottom: none;
+    width: 180px;
+    height: 180px;
+    line-height: 180px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    cursor: pointer; 
+}
+.data-table .img_list .item .img span {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.data-table .img_list .item .img img {
+    vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+}
+.data-table .img_list .item .img input {
+    display: none;
+}
+
+.data-table .img_list .item .img_mask {
+    display: none;
+    background: url(../images/r.png) repeat center;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 182px;
+    height: 181px;
+    z-index: 3;
+}
+
+.data-table .img_list .cur .img_mask {
+    display: block;
+}
+
+.data-table .img_list .item .name {
+    width: 182px;
+    text-align: center;
+    margin: 0 auto;
+    overflow: hidden;
+    height: 20px;
+    line-height: 20px;
+    padding: 5px 0;
+    background: #eff0f4;
+    overflow: hidden;
+}
+
+.page{
+    padding-bottom: 35px;
+}
+
+.imglist_footer{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    background: #fff;
+    z-index: 100;
+    border-top: 1px solid #eee;
+}

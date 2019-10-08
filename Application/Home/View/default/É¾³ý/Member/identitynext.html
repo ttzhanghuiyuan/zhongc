@@ -1,0 +1,153 @@
+<extend name="Base/logincommon" />
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #F2F2F2;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		border-top: 2px solid rgb(50,156,198);
+
+	}
+	#wraper{
+		  padding-top: 25px;
+	}
+	#forget-form-group p.tips{
+		height: auto;
+		margin: 0px;
+	}
+	#site-logo{
+		background: url("{$company['logo']|get_cover=path}") center center no-repeat;
+	}
+	@media screen and (max-width: 600px){
+		#site-logo{
+			/*width: 30%;
+			background-size: cover;
+			background-position: 22px center;*/
+			width: 320px;
+		    background-size: contain;
+		    background-position: center;
+		    float: none;
+		}
+		#header-grid .title{
+			display: none;margin: 0 auto;
+		}
+	}
+	</style>
+</block>
+<block name='body'>
+<div id="wraper">
+	<include file="Public/alert"/>
+	<div id="forget-container">
+		<p id="process-status" class="process-status next hide-device"></p>
+		<div id="forget-form-group">
+			<form id="process-1-form" action="{:U('Public/identitynext')}">
+				<p><label>手机号：</label>
+					<input type="text" disabled="disabled"  placeholder="手机号码" value="{$mobile}">
+					<input type="hidden" class="mobile" name="mobile" value="{$mobile}">
+				</p>
+				<p><label>短信验证码：</label>
+
+					<input type="text" name="msgCode" class="msg" tabindex="5" placeholder="请输入验证码">
+					<input type="button" class="msg-btn" value="获取验证码">
+					<a href="{:U('Public/identity')}">返回上一步</a>
+				</p>
+				<p><label></label>
+					<button type="submit" class="submit-btn">下一步</button>
+				</p>
+				<p class='tips'><label></label><span class="check-tips"></span></p>
+			</form>
+		</div>
+	</div>	
+</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	
+	$(document)
+	.ajaxStart(function(){
+		$("button:submit").addClass("log-in").attr("disabled", true);
+	})
+	.ajaxStop(function(){
+		$("button:submit").removeClass("log-in").attr("disabled", false);
+	});
+
+	$("form").submit(function(){
+		var self = $(this);
+		//alert(self.attr('action'));
+		$.post(self.attr("action"), self.serialize(), success, "json");
+		return false;
+
+		function success(data){
+			if(data.status){
+				window.location.href = data.url;
+			} else {
+				self.find(".check-tips").text(data.info);
+				/*$(".reloadverify").click();*/
+    			}
+    		}
+    });
+
+    $(function(){
+		$('div.i_service').wrap("<div class='wappers'></div>");
+
+		$('.msg-btn').click(function(){
+
+        	var target = "{:U('Public/SendSMS')}";
+
+        	var query = {'mobile': $(this).parents('form').find('.mobile').val()};
+        	//alert($(this).parents('form').find('.mobile').val());
+
+        	$.post(target,query).success(function(data){
+
+                if (data.status==1) {
+
+                    updateAlert(data.info ,'alert-success');
+
+                    time($('.msg-btn'),60);
+
+                    setTimeout(function(){
+                        
+                        $('#top-alert').find('button').click();
+                    },2500);
+
+                }else{
+                    updateAlert(data.info);
+                    setTimeout(function(){
+                        $('#top-alert').find('button').click();
+                    },2500);
+                }
+            });
+		});
+
+	});
+
+	function time(o,wait) {
+    	if (wait == 0) { 
+			o.removeAttr("disabled"); 
+			o.val("获取验证码");//改变按钮中value的值 
+			wait = 60;
+			return;
+		} 
+		else { 
+			o.attr("disabled", true);//倒计时过程中禁止点击按钮 
+			o.val(wait + "秒");//改变按钮中value的值 
+			wait--; 
+			 
+		} 
+		setTimeout(function() { 
+			time(o,wait);//循环调用 
+			}, 1000);
+	} 
+
+
+	</script>
+
+</block>

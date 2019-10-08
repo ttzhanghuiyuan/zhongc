@@ -1,0 +1,405 @@
+<script type="text/javascript">
+String.prototype.getQuery = function(name)
+{
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = this.substr(this.indexOf("\?")+1).match(reg);
+    if (r!=null) return unescape(r[2]); return null;
+}
+
+function ajax_lists(model,page){
+    var target = Think.U('Admin/Nav/lists');
+
+    $.get( target , { model: model, p: page},function(data){
+
+        var tab_panels = $('.menu_body[data-model='+model+']').find('.tab_panel');
+
+        tab_panels.eq(0).html('');
+
+        tab_panels.eq(0).html(data);
+
+    });
+}
+
+function ajax_search(model,key){
+
+    var target = Think.U('Admin/Nav/ajax_search');
+
+    $.get( target, { model: model, key: key},function(data){
+
+        var tab_panels = $('.menu_body[data-model='+model+']').find('.tab_panel');
+
+        tab_panels.eq(1).find('div.ajaxresult').html('');
+
+        tab_panels.eq(1).find('div.ajaxresult').html(data);
+
+    });
+}
+
+function ajax_add_menu(nav_name){
+
+    var target = Think.U('Admin/Nav/ajax_add_menu');
+
+    $.post( target, { nav_name: nav_name }, function(data){
+
+        if(data.status){
+
+            $('select[name=menu]').append("<option value='"+data.value+"'>"+data.text+"</option>");
+            alert(data.info);
+
+        }else{
+            alert(data.info);
+        }
+
+    });
+
+}
+
+
+$(function(){
+
+    $('ul.sortable').nestedSortable({
+        forcePlaceholderSize: true,
+        handle: 'div',
+        helper: 'clone',
+        items: 'li',
+        opacity: .6,
+        placeholder: 'placeholder',
+        revert: 250,
+        tabSize: 25,
+        tolerance: 'pointer',
+        toleranceElement: '> div',
+        maxLevels: 4,
+        isTree: true,
+        expandOnHover: 700,
+        startCollapsed: true
+    });
+
+    $('body').on('click','.menu-head a.deploy',function(){
+
+        $(this).hide();
+        $(this).parent().children('.fold').show();
+        $(this).parent().next().slideDown();
+    });
+
+    $('body').on('click','.menu-head a.fold',function(){
+
+        $(this).hide();
+        $(this).parent().children('.deploy').show();
+        $(this).parent().next().slideUp();
+    });
+
+
+    $('body').on('click','a.del',function(){
+
+        $(this).closest('li').remove();
+    });
+
+    $(".nav_holder .menu_body:eq(0)").show();
+    $(".nav_holder p.menu_header").click(function(){
+        $(this).next("div.menu_body").slideToggle(300).siblings("div.menu_body").slideUp("slow");
+    });
+
+    $('.menu_body').each(function(index,item){
+
+        var model = $(item).attr('data-model');
+
+        if( model != null && typeof model != "undefinded" && model.length  != 0){
+
+            ajax_lists(model,0);
+
+        }
+        
+    });
+
+
+    $('body').on('click','.ajax_page_div a',function(){
+
+        var model = $(this).attr('href').getQuery('model');
+        var p = $(this).attr('href').getQuery('p');
+        ajax_lists(model,p);
+
+        return false;
+    });
+
+    $(".select-all").click(function(){
+
+        var that =  $(this).parents('.menu_body').find('.tab_panel.active .ids');
+        var that_length = that.length;
+
+        var this_length = $(this).parents('.menu_body').find('.tab_panel.active input[class="ids"]:checked').length;
+
+        var checked;
+
+        if(!that_length)
+            return false;
+
+        if(this_length==that_length){
+
+            checked = true;
+
+        }else{
+
+            checked = false;
+            
+        }
+
+        that.prop("checked",!checked);
+
+    });
+
+    $('.add_to_menu').click(function(){
+
+        var ids = $(this).parents('.menu_body').find('.tab_panel.active').find("input[class='ids']:checked");
+        
+        var count = $('ul.sortable').find('.menu-head').length;
+
+        count = (count !== null && typeof count !== "undefinded" ) ? count : 0;
+
+        var i = 1;
+
+        var model = $(this).parents('.menu_body').attr('data-model');
+
+        var action ;
+
+        var remark; 
+
+        switch(model){
+
+            case 'belong' :
+                action = "lists";
+                remark = "归类"
+                break;
+
+            case 'essay' :
+                action = "detail";
+                remark = "内容";
+                break; 
+        }
+
+        $(ids).each(function(index,item){
+
+            var tpl = $('.menu_item_li').clone();
+
+            tpl.removeClass('hide');
+
+            tpl.removeClass('menu_item_li');
+
+            tpl.attr('id',(count+i));
+
+            tpl.find('a.nav_url').attr( 'href', Think.U('Home/Essay/'+action,'id='+$(item).val() ) );
+
+            tpl.find('a.nav_url').html($(item).next().text());
+            tpl.find('input[name=nav_url]').val( Think.U('Home/Essay/'+action,'id='+$(item).val() ) );
+            tpl.find('.text_url').addClass('hidden');
+            tpl.find('.title').text($(item).next().text());
+            tpl.find('span.remark').text(remark);
+            tpl.find('input[name=remark]').val(remark);
+            tpl.find('input[name=nav_name]').val($(item).next().text());
+            tpl.find('input[name=nav_type]').val(model);
+            tpl.find('input[name=concern_id]').val($(item).val());
+
+            $('ul.sortable').append(tpl);
+
+            i++;
+
+        });
+
+    });
+
+    $('.add_to_menu_link').click(function(){
+
+        var that = $(this).parents('.menu_body').find('.tab_panel.active');
+        var nav_name = that.find('input[name=nav_name]').val();
+        var nav_url =that.find('input[name=nav_url]').val();
+
+        if( nav_name==null || nav_name.length == 0 || nav_url == null || nav_url.length ==0 ){
+
+            alert('链接文字和网址必填');
+            return false;
+        }
+
+        var tpl = $('.menu_item_li').clone();
+
+        var count = $('ul.sortable').find('.menu-head').length;
+
+        count = (count !== null && typeof count !== "undefinded" ) ? count : 0;
+
+        tpl.removeClass('hide');
+
+        tpl.removeClass('menu_item_li');
+
+        tpl.attr('id',(count+1));
+
+        tpl.find('.title').text(nav_name);
+        tpl.find('input[name=nav_url]').val(nav_url);
+        tpl.find('input[name=nav_name]').val(nav_name);
+        tpl.find('.a_url').addClass('hidden');
+
+        tpl.find('span.remark').text('自定义链接');
+        tpl.find('input[name=nav_type]').val('link');
+        tpl.find('input[name=concern_id]').val('');
+        tpl.find('input[name=remark]').val('自定义链接');
+
+        $('ul.sortable').append(tpl);
+
+    });
+
+    $('.add_to_menu_lang').click(function(){
+
+        if(! $(this).parents('.menu_body').find('input[name=lang_support]').is(":checked")){
+
+            return false;
+        }
+
+        var that = $(this).parents('.menu_body').find('.tab_panel.active');
+       
+        var tpl = $('.menu_item_li').clone();
+
+        var count = $('ul.sortable').find('.menu-head').length;
+
+        count = (count !== null && typeof count !== "undefinded" ) ? count : 0;
+
+        tpl.removeClass('hide');
+
+        tpl.removeClass('menu_item_li');
+
+        tpl.attr('id',(count+1));
+
+        tpl.find('.title').text('语言导航');
+        tpl.find('input[name=nav_url]').val('');
+        tpl.find('input[name=nav_name]').val('语言导航');
+        tpl.find('.text_name').addClass('hidden');
+        tpl.find('.text_url').addClass('hidden');
+        tpl.find('span.remark').text('语言切换');
+        tpl.find('a.nav_url').attr( 'href','javascript:void(0);' );
+        tpl.find('a.nav_url').html('语言切换');
+        tpl.find('input[name=nav_type]').val('lang');
+        tpl.find('input[name=concern_id]').val('');
+        tpl.find('input[name=remark]').val('语言切换');
+
+        $('ul.sortable').append(tpl);
+
+    });
+
+    $('.btn_search').click(function(){
+
+        var model = $(this).parents('.menu_body').attr('data-model');
+        var key = $(this).prev().val();
+        ajax_search(model,key);
+
+    });
+
+    $('body').on('keydown','input[name=key]',function(e){
+
+        if(e.keyCode==13){
+
+            $(this).next('.btn_search').click();
+        }
+    });
+
+    $('body').on('keyup','input[name=nav_name]',function(e){
+
+        $(this).parents('.menu-setting').prev().find('.title').text($(this).val());
+
+    });
+
+    $('.btn_menu_add').click(function(){
+
+        var nav_name = $(this).prev().val();
+
+        if(nav_name==null || typeof nav_name == 'undefinded' || nav_name.length ==0 ){
+
+            alert('请输入菜单名');
+            return false;
+        }
+        ajax_add_menu(nav_name);
+
+    });
+
+    $('.btn_menu_del').click(function(){
+
+
+
+        var id = $('input[name=id]').val();
+
+        if( id ==0 || id==null || typeof id == 'undefinded' ){
+            return false;
+        }
+
+        if(!confirm('确认要删除该菜单吗?')){
+            
+            return false;
+        }
+
+        var target = Think.U('Admin/Nav/ajax_del_menu');
+
+        $.post( target, {  'id': id }, function(data){
+
+            if(data.status){
+
+                alert(data.info);
+
+                window.location.href = data.url;
+
+            }else{
+                alert(data.info);
+            }
+
+        });
+
+
+    });
+
+
+    $('.btn_menu_save').click(function(){
+
+        var id = $('input[name=id]').val();
+
+        if( id ==0 || id==null || typeof id == 'undefinded' ){
+            
+            alert('请选菜单');
+            return false;
+        }
+
+        var nav_content = $('ul.sortable').nestedSortable('toHierarchy', {startDepthCount: 0});
+        var pos = $('input[name=pos]:checked').val();
+        var nav_name = $('input[name=menu_name]').val();
+        
+        if(nav_name.length<=0||nav_name==null||typeof nav_name=='undefinded'){
+
+            alert('请填写菜单名称');
+            return false;
+        }
+
+        if($('input[name=pos]:checked').length<=0){
+
+            alert('请选择菜单位置!');
+
+            return false;
+        }
+
+        if(nav_content.length <= 0){
+
+            alert('请设置菜单结构');
+
+            return false;
+        }
+
+        var target = Think.U('Admin/Nav/ajax_save_menu');
+
+        $.post( target, {  'id': id, 'nav_name': nav_name, 'pos': pos, 'nav_content':JSON.stringify(nav_content) }, function(data){
+
+            if(data.status){
+
+                alert(data.info);
+
+            }else{
+                alert(data.info);
+            }
+
+        });
+
+    });
+
+});
+</script>

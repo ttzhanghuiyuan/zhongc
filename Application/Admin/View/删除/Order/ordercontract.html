@@ -1,0 +1,60 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>订单合同</title>
+</head>
+<body>
+	<div class='my_show' style='background:url(__ROOT__{:get_cover(15,'path')}) no-repeat 130px bottom;'>
+		<div style=' text-align: center;font-size: 25px;margin-bottom: 5px;'>起点化工有限公司购销合同及送货凭证</div>
+		<div style='text-align: right;font-size: 18px;font-weight: bold;margin: 12px auto;'>NO.<span style='color: red;'>{$info['sample_no']|default=''}</span></div>
+		<div  style='text-indent:25px; margin:15px auto;line-height: 28px;'>购货单位（乙方）<em style="text-decoration: underline;width:350px;border-bottom: 1px solid #545454;display:inline-block;margin-right:10px;"></em>向供货单位（甲方）七点化工有限公司购进如下产（商）聘，共同遵守如下责任条款</div>
+		<table style='border: 1px solid #151212;border-collapse: collapse;width: 100%;margin: 0 auto;font-size: 16px;'>
+			<tbody>
+				<tr>
+					<td style='padding:8px;border:1px solid #151212;'>产品类型</td>
+					<td style='padding:8px;border:1px solid #151212;'>产品名称</td>
+					<td style='padding:8px;border:1px solid #151212;'>包装规格(kg/桶)</td>
+					<td style='padding:8px;border:1px solid #151212;'>数量(桶)</td>
+					<td style='padding:8px;border:1px solid #151212;'>重量</td>
+					<td style='padding:8px;border:1px solid #151212;'>单价(元/kg)</td>
+					<td style='padding:8px;border:1px solid #151212;'>合计(元)</td>
+				</tr>
+				<tr>
+					<td style='padding:8px;border:1px solid #151212;'>金额合计</td>
+					<td colspan='6' style='padding:8px;border:1px solid #151212;text-align:right;'>¥<em style="text-decoration: underline;width:120px;border-bottom: 1px solid #545454;display:inline-block;margin-right:10px;"></em></td>
+				</tr>
+				<tr>
+					<td style='padding:8px;border:1px solid #151212;'>收货日期</td>
+					<td style='padding:8px;border:1px solid #151212;'></td>
+					<td style='padding:8px;border:1px solid #151212;'>付款方式</td>
+					<td style='padding:8px;border:1px solid #151212;'></td>
+					<td style='padding:8px;border:1px solid #151212;'>付款期限</td>
+					<td colspan='2' style='padding:8px;border:1px solid #151212;'></td>
+				</tr>
+				<tr>
+					<td style='padding:8px;border:1px solid #151212;'>备注</td>
+					<td colspan='6' style='line-height: 28px;padding:8px;border:1px solid #151212; '>
+						1、乙方购进甲方以上产（商）品保证在付款期限内付清所购货款项。逾期不付清该货款，甲方有权将逾期金额按日万分之七计收违约金并向乙方收取欠款。<br/>
+						2、甲方所供上列产（商）品均是合格产品，乙方如有异议应在收货后七天内提出书面异议。逾期不提出的，视为质量合格。甲乙双方对产品质量约定与条款约定有抵触的，以本条款为准。<br/>
+						3、以上合同经甲、乙代表签订生效，必须按期付清货款。如果有争议或纠纷，由甲方所在地人民法院受理起诉。<br/>
+						4、供方保留由于原材料价格的波动而调整价格的权利，并在调价前5天通知需方。<br/>
+						5、本合同经双方签字后具有法律效力，并作违约诉讼依据。本合同并作收货依据、送货凭证。
+						<table  style='text-align:center;border: none;margin:0;margin-top:15px;line-height:28px;' >
+							<tr>
+								
+								<td style='border:none;padding-left:0px;padding-left:50px;'>甲方（盖章）<br/>供货代表：叶晓民</td>
+								
+								<td style='border:none;padding-left:0px;padding-left:70px;'>乙方（盖章）<br/>收货代表：</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		<div style='margin:15px auto;'>
+			①甲方业务存查(白)②甲方财务存查(红)③乙方财务存查(绿)④随货同行(黄)
+		</div>
+	</div>
+</body>
+</html>

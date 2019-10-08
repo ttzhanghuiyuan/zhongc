@@ -1,0 +1,22 @@
+<div class="require"><!--  -->
+	
+		<div class="head">
+			<button class="close right" >×</button>
+			请填写您的需求信息
+		</div>
+		<form class="form-horizon" method="post" action="{:U('Demand/add')}">
+		<div class="pass-info clearfix">
+			<textarea name="demand_content"></textarea>
+		</div>
+		<php>
+			$time=NOW_TIME;
+		</php>
+		<div class="pass-info a clearfix">
+			<input name="create_date" type="hidden" value="{$time|time_format}">
+			<input name="demand_status" type="hidden" value="0">
+			<input name="user_id" type="hidden" value="{:session('member_auth.uid')}">
+			<button type="submit" class="btn no-refresh ajax-post" target-form="form-horizon" >确定</button>
+
+		</div>
+		</form>
+</div>

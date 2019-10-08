@@ -1,0 +1,104 @@
+<extend name="Base/common"/>
+<block name="style">
+
+</block>
+<block name="body">
+
+    <main role="main" id="main">
+      <!--导航-->
+      <div class="slide_content">
+        <div class="slide_image">
+          <div class="swiper-container slide_container" style="height: auto">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide swiper-no-swiping">
+                <div class="slide_back about" style="background-image: url('__IMG__/banner_join_apply.jpg')"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--公司简介-->
+      <div class="container block_container" >
+        <div class="block" style="padding-top: 10%;"></div>
+        <div class="block">
+          <div class="row text-row" style="text-align: justify;font-family: MicrosoftYaHei;font-size: 14px;color: #999999;letter-spacing: 0;line-height: 30px;">
+            <div class="col-lg-12" style="width: 100%; padding: 0">
+              <div class="block element-apply">
+                  <form  action="{:U('apply')}" method="post" class="login-form">
+                    <div class="contain">
+                      <p style="font-family: MicrosoftYaHei;font-size: 28px;color: #333333;letter-spacing: 0;">电话未接通？留下您的信息，<span class="span_block"></span>我们稍后联系您</p>
+                      <div class="block" style="padding-top: 5%;"></div>
+                      <div class="input_style">
+                        <div class="input_border">空间</div>
+                        <input type="text" name="space" placeholder="选择城市与空间">
+                      </div>
+                      <div class="block" style="padding-top: 2.5%;"></div>
+                      <div class="input_style">
+                        <div class="input_border">姓名</div>
+                        <input type="text" name="team_name" placeholder="请输入你的姓名">
+                      </div>
+                      <div class="block" style="padding-top: 2.5%;"></div>
+                      <div class="input_style">
+                        <div class="input_border">手机</div>
+                        <input type="text" name="phone" placeholder="请输入你的手机">
+                      </div>
+                      <div class="block" style="padding-top: 2.5%;"></div>
+                      <div class="input_style">
+                        <div class="input_border">邮箱</div>
+                        <input type="text" name="email" placeholder="用来接收参观邀请">
+                      </div>
+                      <div class="block" style="padding-top: 2.5%;"></div>
+                      <div class="input_style">
+                        <div class="input_border">公司名称</div>
+                        <input type="text" name="company_name" placeholder="您的公司名称或项目名称">
+                      </div>
+                      <div class="block" style="padding-top: 2.5%;"></div>
+                      <div class="input_style">
+                        <div class="input_border">团队人数</div>
+                        <input type="text" name="team_count" placeholder="您要入驻的团队人数">
+                      </div>
+                      <div class="block" style="padding-top: 2.5%;"></div>
+                      <div class="input_style">
+                        <div class="input_border">公司简介</div>
+                        <textarea name="company_desc" type="text" >可以介绍您的软对人数、团队优势可以介绍您的软对人数、团队优势可以介绍您的软对人数、团队优势可以介绍您的软对人数、团队优势可以介绍您的软对人数、团队优势可以介绍您的软对人数、团队优势</textarea>
+                      </div>
+                      <div class="block" style="padding-top: 2.5%;"></div>
+                      <div class="input_style">
+                        <div class="input_border">验证码</div>
+                        <input type="text" name="verify" placeholder="请输入验证码">
+                        <div class="vertify">
+                          <img style="width:100%;height: 100%;" class="verifyimg reloadverify" alt="点击切换" src="{:U('Team/verify')}">
+                        </div>
+                      </div>
+                      <div class="block" style="padding-top: 5%;"></div>
+                      <button class="block button" type="submit">提交申请</button>
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block" style="padding-top:7.5%; "></div>
+
+      </div>
+
+    </main>
+</block>
+
+<block name="script">
+  <script src="__STATIC__/public_js/about.js"></script>
+  <script type="text/javascript">
+      //刷新验证码
+      var verifyimg = $(".verifyimg").attr("src");
+      $(function () {
+          $(".reloadverify").click(function () {
+              if (verifyimg.indexOf('?') > 0) {
+                  $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
+              } else {
+                  $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+              }
+          });
+      })
+  </script>
+</block>

@@ -1,0 +1,104 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+		/*border-top: 2px solid rgb(50,156,198);*/
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	</style>
+</block>
+<block name="body">
+	{:W('Usermenu/userhead')}
+	<div class='member-wrapper clearfix'>
+		<div class='member-side-menu'>
+			{:W('Usermenu/lists')}
+		</div>
+		<div class='member-wrap-content' >
+			<div class="clearfix mhead">
+				<a class="item selected inline-block" href="javascript:void(0)">
+					{:isset($info['id'])?'编辑':'新增'}收货地址
+				</a>	
+			</div>
+
+			<include file="Public/alert"/>
+
+			<form id="password-form" method="post" action="{:U()}"  class="form-horizontal">
+				<div class="pass-info clearfix">
+					<span class="left">收货人：</span>
+					<input type="text" name="recipients" value="{$info['recipients']|default=''}" >
+				</div>
+
+				<div class="pass-info clearfix">
+					<span class="left">手机号码：</span>
+					<input type="text" name="recipient_phone" value="{$info['recipient_phone']|default=''}" >
+				</div>
+
+				<div class="pass-info clearfix">
+					<span class="left">邮编：</span>
+					<input type="text" name="zip_code" value="{$info['zip_code']|default=''}" >
+				</div>
+
+				<div class="pass-info clearfix">
+					<span class="left">地址：</span>
+					<textarea class='' name="address" style='height:76px;'>{$info.address|htmlspecialchars_decode}</textarea>
+				</div>
+
+				<div class="pass-info clearfix" style="margin-bottom: 0px;line-height: 20px;">
+					<span class="left"></span>
+					<input type="hidden" name="id" value="{$info['id']|default=''}">
+					<input type='hidden' name='user_id' value="{:session('member_auth.uid')}">
+					<input type="checkbox" class='ckdefault' style='width:auto'  <eq name="info['isdefault']" value="1"> checked="checked" </eq> /> &nbsp; 设为默认收货地址
+					<input id='isdefault' type='hidden' name='isdefault' value="{$info['isdefault']|default='0'}" />
+				</div>
+
+				<button type="submit"  class="password-save ksbtn ajax-post" id="passwordPersonSave"  target-form="form-horizontal" >保存</button>
+			</form>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<!--<script type="text/javascript" src="__JS__/jquery.smint.js"></script>-->
+	<script type="text/javascript">
+
+	 $(function(){
+	 	$('div.i_service').wrap("<div class='wappers'></div>");
+	 	
+
+	 	$(".ckdefault").click(function(){
+	 		
+	 		if(!this.checked){
+	 			$("#isdefault").val("0");
+	 			
+	 		}else{
+	 			$("#isdefault").val("1");
+	 		}
+
+	 	});
+
+	});
+
+	 highlight_subnav("{:U('addrs')}");
+	</script>
+
+</block>

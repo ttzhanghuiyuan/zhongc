@@ -1,0 +1,102 @@
+<extend name="Public/base"/>
+ <block name="style">
+ <style type="text/css">
+ .form-horizontal .item-label{
+ 	color: #938B8B;
+ }
+ .form-horizontal .item-label span:first-child{
+ 	/*text-align: right;*/
+ 	display: inline-block;
+    width: 60px;
+ }
+
+ .form-horizontal .control{
+ 	text-indent:25px;
+ 	color:#938B8B;
+ }
+ </style>
+ </block>
+
+<block name="body">
+	<!--<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>-->
+	<div class="main-title">
+		<h2>发送回复</h2>
+	</div>
+	<div class="tab-wrap">
+		
+		<form action="{:U()}" method="post" class="form-horizontal">
+			<!-- 基础 -->
+			<div class="form-item">
+				<label class="item-label">
+					<span>会员账号</span><span>：</span><span>{$info['company_name']|default=''}</span>
+				</label>				
+			</div>
+
+			<div class="form-item">
+				<label class="item-label"><span>联系人</span><span>：</span><span >{$info['fullname']|default=''}</span></label>
+			</div>
+
+			<div class="form-item">
+				<label class="item-label"><span>联系手机</span><span>：</span><span >{$info['mobile']|default=''}</span></label>
+			</div>
+
+			
+			<div class="form-item">
+				<label class="item-label"><span>邮箱账号</span><span>：</span><span>{$info['demand_email']|default=''}</span></label>
+				<input type="hidden"  name="email" value="{$info['demand_email']|default=''}"/>	
+			</div>
+
+			<div class="form-item">
+				<label class="item-label"><span>留言内容</span><span>：</span><span></span></label>
+				<div class="control">
+					{$info.demand_content|htmlspecialchars_decode}
+				</div>
+			</div>
+			
+			<div class="form-item">
+				<label class="item-label">回复内容<span class="check-tips"></span></label>
+				<div class="controls">
+					<!-- <label class="textarea"> -->
+						<textarea name="solve_content">{$info.solve_content|htmlspecialchars_decode}</textarea>
+						{:hook('adminArticleEdit', array('name'=>'solve_content','value'=>htmlspecialchars_decode($info['solve_content']) ))}
+					<!-- </label>  --> 
+				</div>
+			</div>
+
+			<div class="form-item">
+
+				<input type="hidden" name="id" value="{$info.id|default=''}">
+
+				<input type='hidden' name="brokerage" value="{:session('user_auth.username')}">
+
+				<button type="submit"  class="btn submit-btn ajax-post" target-form="form-horizontal" >发送邮件</button>
+
+				<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+			</div>
+		</form>
+		
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+
+		$(function(){
+			showTab();
+
+            $('.form-horizontal').find('input').keyup(function(event){
+            	if(event.keyCode===13){
+            		$('.ajax-post').click();
+            	}
+            });
+
+		});
+		//导航高亮
+		var id='{$info["id"]}';
+		var nav_active = id >0 && id!= '' ?"{:U('lists')}": '{:U("add")}';
+		var nav_custom_active = '{$nav_active}';
+		nav_active = nav_custom_active && nav_custom_active != '' ? nav_custom_active : nav_active;
+		highlight_subnav(nav_active);
+
+	</script>
+</block>

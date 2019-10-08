@@ -1,0 +1,153 @@
+<extend name="Base/common"/>
+
+<block name='style'>
+	<style type="text/css">
+	body{
+		background-color: #fff;
+	}
+	input{
+		  background-color: white;
+	}
+	.i_service span{
+		display: none;
+	}
+	.wappers{
+		width: 100%;
+		background: #fff;
+	}
+
+	.i_service{
+		border-top: 2px solid #ccc;
+	}
+	.member-wrap-content{
+		position: relative;
+	}
+	.i_leftTit{
+		border-bottom: none;
+	}
+	.member-wrapper .member-wrap-content{
+		margin-left: 0;
+		border: 0;
+	}
+	.btn-cnt input {
+		border: 0px;
+		/* height: 15px; */
+		width: 56px;
+		text-align: center;
+		padding-top: 6px 0;
+		outline: 0;
+		display: inline-block;
+	}
+	.btn-cnt {
+    	border: 1px solid #ccc;
+    	    display: inline-block;
+	}
+	.btn-cnt .btn-minus,.btn-cnt .btn-plus
+	{
+		height: 31px;
+		line-height: 31px;
+		padding: 0 6px;
+		border-left: 1px solid #ccc;
+		cursor: pointer;
+		display: inline-block;
+	}
+	.btn-cnt .btn-minus {
+		border-left: 0px;
+		border-right: 1px solid #ccc;
+	}
+	</style>
+</block>
+<block name="body">
+	<div class="i_leftTit clearfix user-head">
+		<a href="/index/index.html">首页</a>
+		<span> &gt; </span>
+		<a href="javascript:void(0);">会员中心</a> &gt; 
+		<a href="{:U('Member/orders?mod=0')}">订单列表</a> &gt;
+		<span class="a-item">再次购买</span>
+	</div>
+	<div class='member-wrapper clearfix'>
+		<div class='member-wrap-content' >
+			<include file="Public/alert"/>
+			<div class="address">
+				<h3>确认收货地址</h3>
+				<div class="clearfix selected">
+					<i class=" marker iconfont"></i>
+					<span class="marker-tip">寄送至</span>  
+					<div class="address-info">
+						<label class="user-address">
+							{$addr['address']} ({$addr['recipients']} 收) <em>{$addr['recipient_phone']}</em>
+						</label>
+						<em class="tip">
+							<eq name="addr['isdefault']" value='1'>
+								默认地址
+							</eq>
+						</em>
+					</div>
+				</div>
+			</div>
+
+			<div class="order_no">
+				<span class="head">订单编号：{$order_params['order_no']}</span><span class="time">{$order_params['order_date']|time_format}</span>
+			</div>
+			<div class="cart-head">
+            	<a href="{:U('Member/orders?mod=0')}">&lt;返回订单列表</a>
+        	</div>
+			<form class="form" method="post" action="{:U('')}">
+			<div class="div-tables">
+				<table cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed">
+					<thead class="purpose-head">
+						<tr>
+							<th class="start">产品/型号</th>
+							<th class="">数量</th>
+							<th class="hide-device">账期</th>
+							<th class="hide-device">单价(¥/kg)</th>
+							<th class="hide-device end">单位重量(kg/包装规格)</th>
+						</tr>
+					</thead>
+					<tbody class="purpose-body">
+						<volist name="list" id="vo" key="k">
+							<tr>
+								<td>{$vo['good_name']}<span>/</span>{$vo['name']}</td>
+								<td>
+									<if condition="( empty($vo['stocksize']) ) ">
+										(该商品缺货)
+										<else />
+										<span class="btn-cnt">
+											<span class='btn-minus' onclick="changebuynums(1,'{$k}')"> - </span>
+											<input id="buy-num{$k}"  type="text" value="1" maxval="{$vo['stocksize']}" onkeypress="return HG.isNumberKey(event);" onkeyup="changenum(this);" />
+											<input class="input_buy{$k}" type="hidden" name="num[]" value='1' />
+											<input  type="hidden" name="good_id[]" value="{$vo['good_id']}" />
+											<input  type="hidden" name="good_name[]" value="{$vo['good_name']}" />
+											<input  type="hidden" name="package[]" value="{$vo['package']}" />
+											<input  type="hidden" name="weight[]" value="{$vo['weight']}" />
+											<input  type="hidden" name="unit_price[]" value="{$vo['unit_price']}" />
+											<input  type="hidden" name="priceterms[]" value="{$vo['priceterms']}" />
+											<span class='btn-plus' onclick="changebuynums(2,'{$k}')">+</span>
+										</span>
+									</if>
+								</td>
+								<td class="hide-device">{$vo['priceterms']}</td>
+								<td class="hide-device">{$vo['unit_price']|number_format=2}</td>
+								<td class="hide-device">{$vo['weight']}<span>kg/</span>{$vo['package']}</td>
+							</tr>
+						</volist>
+					</tbody>
+				</table>
+			</div>
+			<div class="census">
+				<input type="hidden" name="order_no" value="{$order_params['order_no']}" >
+				<input type="hidden" name="order_date" value="{$order_params['order_date']}" >
+				<button type="submit" class="btn ajax-post" target-form="form" >提交订单</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</block>
+<block name='script'>
+	<script type="text/javascript">
+	 $(function(){
+	 	$('div.i_service').wrap("<div class='wappers'></div>");
+	});
+	</script>
+
+</block>

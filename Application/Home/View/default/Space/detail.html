@@ -1,0 +1,39 @@
+<extend name="Base/common"/>
+<block name="style">
+</block>
+<block name="body">
+	<main role="main" id="main" >
+	<!--banner展示-->
+	<div class="slide_content">
+			<div class="slide_image">
+				<div class="swiper-container slide_container" style="height: auto">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide swiper-no-swiping">
+							<div class="slide_back about" style="background-image: url({$space_detail['path']})"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!--空间展示细节-->
+	<div style="width: 100%; height: auto;  background:#ffffff;">
+			<div class="container block_container" >
+				<div class="block" style="padding-top: 7.5%;"></div>
+				<div class="block">
+					<div class="detail_article">
+						<p style="font-family: MicrosoftYaHei;font-size: 28px;color: #333333;letter-spacing: 0;">{$space_detail['spaceshow_title']}</p>
+						<div class="block" style="padding-top: 5%; "></div>
+						<p style="font-family: MicrosoftYaHei;font-size: 14px;color: #999999;letter-spacing: 0;line-height: 30px;text-align: justify">{$space_detail['spaceshow_content']}</p>
+					</div>
+				</div>
+
+				<div class="block" style="padding-top: 5%; "></div>
+
+			</div>
+		</div>
+	</main>
+</block>
+
+<block name="script">
+	<script src="__STATIC__/public_js/space.js"></script>
+</block>

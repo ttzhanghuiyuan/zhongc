@@ -1,0 +1,38 @@
+<php>
+	$list = get_hotline();
+</php>
+<div class="QQ_pop">
+	<div class='qq_head clearfix'>
+		QQ在线客服
+		<span class="QQ_gb"><a href="javascript:;" id="fuck_x">x</a></span>
+	</div>
+	<div class="qq_hotline">
+		<p class="head">免费服务热线</p>
+		<p class="tel">{$company['trading_hotline']}</p>
+	</div>
+	<div class="qq_list">
+		<p class="head">免费找货</p>
+		<p class="text">点击下方QQ即可咨询</p>
+	</div>
+    <div class="cs_online_ct">
+    <!-- <div class="cs_online_qq">
+        <a href="tencent://message/?uin=2853299148&site=qq&menu=yes" target="_blank">
+            <img border="0" align="absmiddle" title="点击这里给我发消息" alt="点击这里给我发消息" src="__IMG__/button_121.gif" />
+            &nbsp;客服：CC
+        </a>
+    </div> -->
+    <volist name="list" id="vo">
+    	<div class="cs_online_qq">
+        <a href="tencent://message/?uin={$vo['qqacount']}&site=qq&menu=yes" target="_blank">
+            <img border="0" align="absmiddle" title="点击这里给我发消息" alt="点击这里给我发消息" src="__IMG__/button_121.gif" />
+            &nbsp;{$vo['name']}
+        </a>
+    </div>
+    </volist>
+ </div>
+<script>
+$("#fuck_x").click(function () {
+    $(".QQ_pop").hide();
+});
+</script>
+</div>

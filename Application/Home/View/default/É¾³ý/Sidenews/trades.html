@@ -1,0 +1,26 @@
+<div class="iConTitle">最新交易</div>
+<div class="items_container yichi">
+	<ul style="top: 0px;">
+		<!-- <li>市***公司<em class="red">成功采购1</em>LDPE60.000吨</li> -->
+		<volist name="trads" id="vo">
+				<li>
+					<php>
+
+						if(!empty($vo['company_name']))
+						{
+							$company_name = mb_substr($vo['company_name'],0,1,'utf-8').'***公司';
+						}
+						else if(!empty($vo['linkman']))
+						{
+							$company_name = mb_substr($vo['linkman'],0,1,'utf-8').'***个人';
+						}
+						else{
+							$company_name = "市***公司";
+						}
+					</php>
+					{$company_name}
+					<em class="red">成功采购</em>{$vo['good_name']}{$vo['total_weight']} kg
+				</li>
+		</volist>
+	</ul>
+</div>

@@ -1,0 +1,48 @@
+<extend name="Base/common"/>
+<block name="style">
+
+</block>
+<block name="body">
+
+    <main role="main" id="main">
+      <!--导航-->
+      <div class="slide_content">
+        <div class="slide_image">
+          <div class="swiper-container slide_container" style="height: auto">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide swiper-no-swiping">
+                <div class="slide_back about" style="background-image: url({$banner_url})"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--资讯展示页-->
+      <div style="width: 100%; height: auto;  background:#ffffff;">
+        <div class="container block_container" >
+          <div class="block" style="padding-top: 7.5%; "></div>
+          <div class="block">
+            <div class=" element-news-row"  style="margin: 0px;">
+              <div class="block" style="display: flex; flex-wrap: wrap; margin: 0 auto">
+                <foreach name="infomation" item="vo">
+                  <div class="element-news">
+                  <a href="/Info/detail?id={$vo['id']}">
+                    <img src="{$vo['path']}"/>
+                  </a>
+                  <a href="/Info/detail?id={$vo['id']}" style="text-decoration: none">
+                    <p style="font-family: MicrosoftYaHei;font-size: 18px;color: #333333; padding:0;margin:0;letter-spacing: 0;text-align: justify; padding-bottom: 11px; padding-top: 11px; overflow:hidden;">{$vo['info_title']}</p>
+                  </a>
+                  <P>发布时间：{$vo['add_time']}</P>
+                </div>
+                </foreach>
+
+              </div>
+            </div>
+          </div>
+          <div class="block" style="padding-top: 5%; "></div>
+
+        </div>
+      </div>
+
+    </main>
+</block>

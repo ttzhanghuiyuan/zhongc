@@ -1,0 +1,49 @@
+<extend name="Base/common"/>
+<block name="style">
+</block>
+<block name="body">
+	<main role="main" id="main" >
+	<!--banner展示-->
+	<div class="slide_content">
+		<div class="slide_image">
+			<div class="swiper-container slide_container" style="height: auto">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide swiper-no-swiping">
+						<div class="slide_back about" style="background-image: url({$banner_url})"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--空间展示-->
+	<div style="width: 100%; height: auto;  background:#ffffff;">
+		<div class="container block_container" >
+			<div class="block" style="padding-top: 7.5%;"></div>
+			<div class="block">
+				<div class="row"  style="margin: 0px;">
+					<foreach name="spaceshows" item="vo" key='k'>
+						<div class="col-lg-4" style="padding: 0px;">
+						<div class="element-article element-article-display">
+							<div class="block">
+								<div class="back" style="background-image:url({$vo['path']}) "></div>
+								<div class="opacity"></div>
+								<a href="/Space/detail?id={$vo['id']}">
+									<div class="view_link">
+										<span>VIEW MORE</span>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					</foreach>
+				</div>
+			</div>
+			<div class="block" style="padding-top: 5%; "></div>
+
+		</div>
+	</div>
+	</main>
+</block>
+<block name="script">
+	<script src="__STATIC__/public_js/space.js"></script>
+</block>
